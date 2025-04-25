@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio</title>
+    <style>
+        /* Estilos generales */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #333;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 2rem;
+        }
+
+        .post {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin: 20px auto;
+            max-width: 800px;
+            padding: 20px;
+            overflow: hidden;
+        }
+
+        .post h2 {
+            color: #333;
+            font-size: 1.8rem;
+        }
+
+        .post p {
+            color: #666;
+            line-height: 1.6;
+            font-size: 1rem;
+        }
+
+        .post em {
+            color: #999;
+            font-size: 0.9rem;
+        }
+
+        .post img, .post video {
+            max-width: 100%;
+            border-radius: 10px;
+            margin-top: 15px;
+        }
+
+        .post .content {
+            margin-top: 15px;
+        }
+
+        /* Estilos para el contenedor de la página */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Estilo para el footer */
+        footer {
+            background-color: #333;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+            position: absolute;
+            width: 100%;
+            bottom: 0;
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Bienvenido a Marmorten Production</h1>
+    </header>
+
+    <div class="container">
+        <h1>Lista de Posts</h1>
+        {% for post in posts %}
+            <div class="post">
+                <h2>{{ post.title }}</h2>
+                <p><em>{{ post.fecha_publicacion }}</em></p>
+
+                {% if post.imagen %}
+                    <img src="{{ post.imagen.url }}" alt="Imagen del post">
+                {% endif %}
+
+                {% if post.video %}
+                    <video controls>
+                        <source src="{{ post.video.url }}" type="video/mp4">
+                        Tu navegador no soporta el elemento de video.
+                    </video>
+                {% endif %}
+                
+                <div class="content">
+                    <p>{{ post.content }}</p>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Marmorten Production - Todos los derechos reservados</p>
+    </footer>
+</body>
+</html>
