@@ -172,7 +172,13 @@
     <header>
         <h1>Bienvenido a Marmorten Production</h1>
     </header>
-
+<!-- Ejemplo en base.html o cualquier template -->
+    <nav>
+        <a href="{% url 'inicio' %}">Inicio</a>
+        <a href="{% url 'sobre_nosotros' %}">Sobre Nosotros</a>
+        <a href="{% url 'contacto' %}">Contacto</a>
+        <a href="{% url 'nuestro_equipo' %}">Nuestro Equipo</a>
+    </nav>
     <div class="container">
         <!-- Carrusel Principal -->
         {% if carrusel_items %}

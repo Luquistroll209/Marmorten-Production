@@ -1,0 +1,36 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+<div class="post" style="max-width: 800px; margin: 0 auto;">
+    <h1>Nuestro Equipo</h1>
+    
+    <div class="equipo-detallado" style="display: grid; gap: 30px;">
+        {% for miembro in equipo %}
+        <div style="background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+            <div style="display: flex; flex-direction: column; gap: 20px; padding: 20px;">
+                <div style="display: flex; gap: 20px; align-items: center;">
+                    <img src="{{ miembro.foto.url }}" alt="{{ miembro.nombre }}" style="width: 150px; height: 150px; object-fit: cover; border-radius: 50%;">
+                    <div>
+                        <h2 style="margin: 0; color: #333;">{{ miembro.nombre }}</h2>
+                        <p style="color: #666; margin: 5px 0; font-weight: bold;">{{ miembro.puesto }}</p>
+                        {% if miembro.redes_sociales %}
+                        <div style="display: flex; gap: 10px; margin-top: 10px;">
+                            {% for red, url in miembro.redes_sociales.items %}
+                                {% if url %}
+                                <a href="{{ url }}" target="_blank" style="color: #333; text-decoration: none; font-size: 1.2rem;">{{ red|title }}</a>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+                <div>
+                    <h3 style="color: #333; margin-bottom: 10px;">Biografía</h3>
+                    <p style="color: #666; line-height: 1.6;">{{ miembro.biografia|linebreaks }}</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

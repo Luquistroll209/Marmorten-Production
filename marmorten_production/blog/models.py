@@ -14,6 +14,7 @@ class Post(models.Model):
     
     class Meta:
         ordering = ['-fecha_publicacion']
+    
     def tiene_imagen(self):
         return bool(self.imagen)
     
@@ -44,3 +45,29 @@ class GaleriaImagenes(models.Model):
     
     def __str__(self):
         return self.titulo or f"Imagen {self.id}"
+
+class Equipo(models.Model):
+    nombre = models.CharField(max_length=100)
+    puesto = models.CharField(max_length=100)
+    biografia = models.TextField()
+    foto = models.ImageField(upload_to='equipo/')
+    orden = models.PositiveIntegerField(default=0)
+    redes_sociales = models.JSONField(default=dict, blank=True)
+
+    class Meta:
+        ordering = ['orden']
+        verbose_name_plural = "Miembros del equipo"
+
+    def __str__(self):
+        return self.nombre
+
+class ConfiguracionSitio(models.Model):
+    titulo_sitio = models.CharField(max_length=200, default="Marmorten Production")
+    logo = models.ImageField(upload_to='config/', blank=True, null=True)
+    # ... otros campos ...
+    
+    class Meta:
+        verbose_name_plural = "Configuraciones del Sitio"
+
+    def __str__(self):
+        return "Configuración del Sitio"

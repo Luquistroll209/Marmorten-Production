@@ -1,0 +1,37 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+<div class="post" style="max-width: 800px; margin: 0 auto;">
+    <h1>Contacto</h1>
+    
+    {% if mensaje_enviado %}
+        <div style="background: #d4edda; color: #155724; padding: 15px; border-radius: 5px; margin-bottom: 20px;">
+            ¡Gracias por tu mensaje! Nos pondremos en contacto contigo pronto.
+        </div>
+    {% endif %}
+    
+    <div class="content">
+        <form method="post" style="display: grid; gap: 15px;">
+            {% csrf_token %}
+            {{ form.nombre }}
+            {{ form.email }}
+            {{ form.asunto }}
+            {{ form.mensaje }}
+            <button type="submit" style="background: #333; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer;">Enviar Mensaje</button>
+        </form>
+        
+        <div style="margin-top: 30px;">
+            <h3>Información de Contacto</h3>
+            {% if config.email_contacto %}
+                <p><strong>Email:</strong> {{ config.email_contacto }}</p>
+            {% endif %}
+            {% if config.telefono_contacto %}
+                <p><strong>Teléfono:</strong> {{ config.telefono_contacto }}</p>
+            {% endif %}
+            {% if config.direccion %}
+                <p><strong>Dirección:</strong> {{ config.direccion }}</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
