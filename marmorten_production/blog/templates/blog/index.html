@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inicio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         /* Estilos generales */
         body {
@@ -25,6 +26,86 @@
             font-size: 2rem;
         }
 
+        /* Estilos del carrusel */
+        .carrusel-container {
+            position: relative;
+            max-width: 100%;
+            overflow: hidden;
+            height: 400px;
+        }
+
+        .carrusel {
+            display: flex;
+            transition: transform 0.5s ease;
+            height: 100%;
+        }
+
+        .carrusel-slide {
+            min-width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        .carrusel-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .carrusel-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            padding: 20px;
+        }
+
+        .carrusel-nav {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+            z-index: 10;
+        }
+
+        .carrusel-nav button {
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-size: 1.5rem;
+        }
+
+        .carrusel-dots {
+            position: absolute;
+            bottom: 10px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            z-index: 10;
+        }
+
+        .carrusel-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            border: none;
+            cursor: pointer;
+        }
+
+        .carrusel-dot.active {
+            background: white;
+        }
+
+        /* Estilos de posts */
         .post {
             background-color: white;
             border-radius: 10px;
@@ -74,11 +155,46 @@
             color: white;
             padding: 10px 0;
             text-align: center;
-            position: absolute;
             width: 100%;
-            bottom: 0;
         }
 
+        /* Posts destacados */
+        .destacados {
+            margin: 30px 0;
+        }
+
+        .destacados h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .destacados-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .destacado-item {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .destacado-item img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+        }
+
+        .destacado-content {
+            padding: 15px;
+        }
+
+        .destacado-item h3 {
+            margin: 0 0 10px;
+            font-size: 1.2rem;
+        }
     </style>
 </head>
 <body>
@@ -86,7 +202,64 @@
         <h1>Bienvenido a Marmorten Production</h1>
     </header>
 
+    {% if carrusel %}
+    <div class="carrusel-container">
+        <div class="carrusel" id="mainCarrusel">
+            {% for imagen in carrusel.imagenes_personalizadas.all %}
+            <div class="carrusel-slide">
+                <img src="{{ imagen.imagen.url }}" alt="{{ imagen.titulo }}">
+                {% if imagen.titulo %}
+                <div class="carrusel-content">
+                    <h2>{{ imagen.titulo }}</h2>
+                </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+            
+            {% for post in carrusel.posts.all %}
+            <div class="carrusel-slide">
+                {% if post.imagen %}
+                <img src="{{ post.imagen.url }}" alt="{{ post.title }}">
+                <div class="carrusel-content">
+                    <h2>{{ post.title }}</h2>
+                    <p>{{ post.content|truncatechars:100 }}</p>
+                </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+        
+        <div class="carrusel-nav">
+            <button id="prevBtn"><i class="fas fa-chevron-left"></i></button>
+            <button id="nextBtn"><i class="fas fa-chevron-right"></i></button>
+        </div>
+        
+        <div class="carrusel-dots" id="dotsContainer">
+            <!-- Los puntos se generarán con JavaScript -->
+        </div>
+    </div>
+    {% endif %}
+
     <div class="container">
+        {% if posts_destacados %}
+        <div class="destacados">
+            <h2>Posts Destacados</h2>
+            <div class="destacados-grid">
+                {% for post in posts_destacados %}
+                <div class="destacado-item">
+                    {% if post.imagen %}
+                    <img src="{{ post.imagen.url }}" alt="{{ post.title }}">
+                    {% endif %}
+                    <div class="destacado-content">
+                        <h3>{{ post.title }}</h3>
+                        <p>{{ post.content|truncatechars:100 }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
         <h1>Lista de Posts</h1>
         {% for post in posts %}
             <div class="post">
@@ -114,5 +287,97 @@
     <footer>
         <p>&copy; 2025 Marmorten Production - Todos los derechos reservados</p>
     </footer>
+
+<!-- ... (código anterior se mantiene igual) ... -->
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const carrusel = document.getElementById('mainCarrusel');
+        const slides = document.querySelectorAll('.carrusel-slide');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const dotsContainer = document.getElementById('dotsContainer');
+        
+        let currentIndex = 0;
+        const slideCount = slides.length;
+        let slideInterval;
+        const speed = {{ carrusel.velocidad_transicion|default:5000 }};
+        
+        // Crear puntos de navegación
+        slides.forEach((_, index) => {
+            const dot = document.createElement('button');
+            dot.classList.add('carrusel-dot');
+            if (index === 0) dot.classList.add('active');
+            dot.addEventListener('click', () => {
+                goToSlide(index);
+            });
+            dotsContainer.appendChild(dot);
+        });
+        
+        const dots = document.querySelectorAll('.carrusel-dot');
+        
+        // Función para mover el carrusel
+        function goToSlide(index) {
+            currentIndex = (index + slideCount) % slideCount;
+            const offset = -currentIndex * 100;
+            carrusel.style.transform = `translateX(${offset}%)`;
+            
+            // Actualizar puntos activos
+            dots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === currentIndex);
+            });
+            
+            // Reiniciar el temporizador
+            resetInterval();
+        }
+        
+        // Navegación
+        prevBtn.addEventListener('click', () => {
+            goToSlide(currentIndex - 1);
+        });
+        
+        nextBtn.addEventListener('click', () => {
+            goToSlide(currentIndex + 1);
+        });
+        
+        // Carrusel automático
+        function startInterval() {
+            slideInterval = setInterval(() => {
+                goToSlide(currentIndex + 1);
+            }, speed);
+        }
+        
+        function resetInterval() {
+            clearInterval(slideInterval);
+            startInterval();
+        }
+        
+        // Iniciar el carrusel
+        if (slideCount > 1) {
+            startInterval();
+            
+            // Pausar al hacer hover
+            carrusel.parentElement.addEventListener('mouseenter', () => {
+                clearInterval(slideInterval);
+            });
+            
+            carrusel.parentElement.addEventListener('mouseleave', () => {
+                startInterval();
+            });
+        } else {
+            // Ocultar controles si solo hay un slide
+            prevBtn.style.display = 'none';
+            nextBtn.style.display = 'none';
+            dotsContainer.style.display = 'none';
+        }
+        
+        // Efecto de transición
+        {% if carrusel %}
+            carrusel.style.transition = 'transform 0.5s {% if carrusel.efecto_transicion == "desvanecimiento" %}ease{% else %}cubic-bezier(0.42, 0, 0.58, 1){% endif %}';
+        {% else %}
+            carrusel.style.transition = 'transform 0.5s ease';
+        {% endif %}
+    });
+</script>
 </body>
 </html>
