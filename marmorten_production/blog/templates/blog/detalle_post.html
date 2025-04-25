@@ -1,0 +1,115 @@
+{% extends 'blog/index.html' %}
+
+{% block content %}
+<div class="post" style="max-width: 800px; margin: 0 auto;">
+    <h1>{{ post.title }}</h1>
+    <p><em>Publicado el {{ post.fecha_publicacion|date:"d M Y" }}</em></p>
+    
+    {% if post.imagen %}
+        <img src="{{ post.imagen.url }}" alt="Imagen del post">
+    {% endif %}
+    
+    <div class="content">
+        {{ post.content|linebreaks }}
+    </div>
+    
+    {% if post.video %}
+        <video controls style="max-width: 100%; border-radius: 10px; margin-top: 15px;">
+            <source src="{{ post.video.url }}" type="video/mp4">
+            Tu navegador no soporta el elemento de video.
+        </video>
+    {% endif %}
+    
+    <!-- Galería de imágenes -->
+    {% if galeria %}
+    <div style="margin-top: 30px;">
+        <h2>Galería de imágenes</h2>
+        <div class="carrusel-principal" style="margin-top: 15px;">
+            <div class="carrusel" id="galleryCarrusel">
+                {% for imagen in galeria %}
+                {% if imagen.imagen %}
+                <div class="carrusel-slide">
+                    <img src="{{ imagen.imagen.url }}" alt="{{ imagen.titulo }}" style="height: 500px; object-fit: contain;">
+                    {% if imagen.titulo %}
+                    <div class="carrusel-caption">
+                        <p>{{ imagen.titulo }}</p>
+                    </div>
+                    {% endif %}
+                </div>
+                {% endif %}
+                {% endfor %}
+            </div>
+            
+            <div class="carrusel-nav">
+                <button id="galleryPrevBtn">❮</button>
+                <button id="galleryNextBtn">❯</button>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+<!-- Posts relacionados -->
+{% if relacionados %}
+<div style="max-width: 800px; margin: 40px auto 0;">
+    <h2>Te puede interesar</h2>
+    <div class="destacados-grid">
+        {% for post in relacionados %}
+        <div class="destacado-item">
+            {% if post.imagen %}
+            <img src="{{ post.imagen.url }}" alt="{{ post.title }}">
+            {% endif %}
+            <div class="destacado-content">
+                <h3>{{ post.title }}</h3>
+                <p>{{ post.resumen|truncatechars:100 }}</p>
+                <a href="{% url 'detalle_post' post.id %}" style="color: #333; text-decoration: underline;">Leer más</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
+
+<script>
+    // Script para el carrusel de la galería
+    document.addEventListener('DOMContentLoaded', function() {
+        const galleryCarrusel = document.getElementById('galleryCarrusel');
+        const gallerySlides = document.querySelectorAll('#galleryCarrusel .carrusel-slide');
+        const galleryPrevBtn = document.getElementById('galleryPrevBtn');
+        const galleryNextBtn = document.getElementById('galleryNextBtn');
+        
+        let galleryIndex = 0;
+        
+        function goToGallerySlide(index) {
+            galleryIndex = (index + gallerySlides.length) % gallerySlides.length;
+            const offset = -galleryIndex * 100;
+            galleryCarrusel.style.transform = `translateX(${offset}%)`;
+        }
+        
+        if (gallerySlides.length > 1) {
+            galleryPrevBtn.addEventListener('click', () => {
+                goToGallerySlide(galleryIndex - 1);
+            });
+            
+            galleryNextBtn.addEventListener('click', () => {
+                goToGallerySlide(galleryIndex + 1);
+            });
+            
+            setInterval(() => {
+                goToGallerySlide(galleryIndex + 1);
+            }, 5000);
+        } else {
+            galleryPrevBtn.style.display = 'none';
+            galleryNextBtn.style.display = 'none';
+        }
+    });
+</script>
+{% endblock %}
+
+{% block destacados %}
+{# Bloque vacío para ocultar posts destacados en esta vista #}
+{% endblock %}
+
+{% block carrusel %}
+{# Bloque vacío para ocultar carrusel principal en esta vista #}
+{% endblock %}
