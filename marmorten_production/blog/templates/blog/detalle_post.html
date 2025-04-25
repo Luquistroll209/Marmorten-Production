@@ -1,20 +1,306 @@
 {% extends 'blog/base.html' %}
 
+{% block title %}{{ post.title }} | NORTEN PRODUCTION{% endblock %}
+
 {% block content %}
-<div class="post" style="max-width: 800px; margin: 0 auto;">
-    <h1>{{ post.title }}</h1>
-    <p><em>Publicado el {{ post.fecha_publicacion|date:"d M Y" }}</em></p>
+<style>
+    /* Estilo basado en el logo - Negro/Marrón/Dorado */
+    :root {
+        --color-fondo: #121212;
+        --color-accento: #3a2e1e;
+        --color-destacado: #d4af37;
+        --color-texto: #e0e0e0;
+    }
+    
+    .post-detail {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 30px 20px;
+        color: var(--color-texto);
+    }
+    
+    .post-header {
+        margin-bottom: 30px;
+        border-bottom: 2px solid var(--color-destacado);
+        padding-bottom: 20px;
+    }
+    body{
+        background-color: var(--color-fondo);
+    }
+    
+    .post-title {
+        font-size: 2.5rem;
+        margin: 0 0 10px;
+        color: var(--color-destacado);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-weight: 600;
+    }
+    
+    .post-meta {
+        color: var(--color-texto);
+        font-size: 0.9rem;
+        opacity: 0.8;
+    }
+    
+    .post-image {
+        width: 100%;
+        max-height: 600px;
+        object-fit: cover;
+        border-radius: 8px;
+        margin: 25px 0;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    }
+    
+    .post-content {
+        line-height: 1.8;
+        font-size: 1.1rem;
+    }
+    
+    .post-content p {
+        margin-bottom: 1.5em;
+    }
+    
+    .post-video {
+        width: 100%;
+        border-radius: 8px;
+        margin: 30px 0;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    }
+    
+    /* Galería de imágenes */
+    .gallery-section {
+        margin: 50px 0;
+    }
+    
+    .gallery-title {
+        font-size: 1.8rem;
+        color: var(--color-destacado);
+        margin-bottom: 20px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        position: relative;
+        padding-bottom: 10px;
+    }
+    
+    .gallery-title:after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 60px;
+        height: 2px;
+        background: var(--color-destacado);
+    }
+    
+    .gallery-carousel {
+        position: relative;
+        border-radius: 8px;
+        overflow: hidden;
+        margin: 20px 0;
+        background: var(--color-accento);
+    }
+    
+    .gallery-inner {
+        display: flex;
+        transition: transform 0.5s ease;
+    }
+    
+    .gallery-slide {
+        min-width: 100%;
+        position: relative;
+    }
+    
+    .gallery-image {
+        width: 100%;
+        height: 500px;
+        object-fit: contain;
+        background: #000;
+    }
+    
+    .gallery-caption {
+        padding: 15px;
+        text-align: center;
+        background: var(--color-accento);
+    }
+    
+    .gallery-nav {
+        position: absolute;
+        top: 50%;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        transform: translateY(-50%);
+        padding: 0 15px;
+        box-sizing: border-box;
+    }
+    
+    .gallery-btn {
+        background: rgba(58, 46, 30, 0.7);
+        color: var(--color-destacado);
+        border: none;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        font-size: 1.2rem;
+        cursor: pointer;
+        backdrop-filter: blur(5px);
+        transition: all 0.3s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .gallery-btn:hover {
+        background: var(--color-destacado);
+        color: var(--color-accento);
+    }
+    
+    /* Posts relacionados */
+    .related-posts {
+        margin: 60px 0 30px;
+    }
+    
+    .related-title {
+        font-size: 1.8rem;
+        color: var(--color-destacado);
+        margin-bottom: 30px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        position: relative;
+        padding-bottom: 10px;
+    }
+    
+    .related-title:after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 60px;
+        height: 2px;
+        background: var(--color-destacado);
+    }
+    
+    .related-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 25px;
+    }
+    
+    .related-item {
+        background: var(--color-accento);
+        border-radius: 8px;
+        overflow: hidden;
+        transition: all 0.3s;
+        border-top: 3px solid var(--color-destacado);
+    }
+    
+    .related-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(212, 175, 55, 0.2);
+    }
+    
+    .related-image {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+    }
+    
+    .related-content {
+        padding: 20px;
+    }
+    
+    .related-content h3 {
+        font-size: 1.2rem;
+        margin: 0 0 10px;
+        color: var(--color-texto);
+    }
+    
+    .related-content p {
+        margin-bottom: 15px;
+        color: #c2c2c2;
+        font-size: 0.9rem;
+    }
+    
+    .read-more {
+        color: var(--color-destacado);
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        display: inline-flex;
+        align-items: center;
+        transition: color 0.3s;
+    }
+    
+    .read-more:hover {
+        color: var(--color-texto);
+        text-decoration: underline;
+    }
+    
+    .read-more:after {
+        content: '→';
+        margin-left: 5px;
+        transition: transform 0.3s;
+    }
+    
+    .read-more:hover:after {
+        transform: translateX(3px);
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+        .post-title {
+            font-size: 2rem;
+        }
+        
+        .post-image, .post-video {
+            height: auto;
+        }
+        
+        .gallery-image {
+            height: 350px;
+        }
+        
+        .related-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+    
+    @media (max-width: 576px) {
+        .post-title {
+            font-size: 1.7rem;
+        }
+        
+        .gallery-image {
+            height: 250px;
+        }
+        
+        .gallery-btn {
+            width: 35px;
+            height: 35px;
+            font-size: 1rem;
+        }
+    }
+</style>
+
+<div class="post-detail">
+    <header class="post-header">
+        <h1 class="post-title">{{ post.title }}</h1>
+        <p class="post-meta">Publicado el {{ post.fecha_publicacion|date:"d M Y" }}</p>
+    </header>
     
     {% if post.imagen %}
-        <img src="{{ post.imagen.url }}" alt="Imagen del post">
+        <img src="{{ post.imagen.url }}" alt="Imagen del post" class="post-image">
     {% endif %}
     
-    <div class="content">
+    <div class="post-content">
         {{ post.content|linebreaks }}
     </div>
     
     {% if post.video %}
-        <video controls style="max-width: 100%; border-radius: 10px; margin-top: 15px;">
+        <video controls class="post-video">
             <source src="{{ post.video.url }}" type="video/mp4">
             Tu navegador no soporta el elemento de video.
         </video>
@@ -22,16 +308,16 @@
     
     <!-- Galería de imágenes -->
     {% if galeria %}
-    <div style="margin-top: 30px;">
-        <h2>Galería de imágenes</h2>
-        <div class="carrusel-principal" style="margin-top: 15px;">
-            <div class="carrusel" id="galleryCarrusel">
+    <section class="gallery-section">
+        <h2 class="gallery-title">Galería de imágenes</h2>
+        <div class="gallery-carousel">
+            <div class="gallery-inner" id="galleryCarousel">
                 {% for imagen in galeria %}
                 {% if imagen.imagen %}
-                <div class="carrusel-slide">
-                    <img src="{{ imagen.imagen.url }}" alt="{{ imagen.titulo }}" style="height: 500px; object-fit: contain;">
+                <div class="gallery-slide">
+                    <img src="{{ imagen.imagen.url }}" alt="{{ imagen.titulo }}" class="gallery-image">
                     {% if imagen.titulo %}
-                    <div class="carrusel-caption">
+                    <div class="gallery-caption">
                         <p>{{ imagen.titulo }}</p>
                     </div>
                     {% endif %}
@@ -40,64 +326,103 @@
                 {% endfor %}
             </div>
             
-            <div class="carrusel-nav">
-                <button id="galleryPrevBtn">❮</button>
-                <button id="galleryNextBtn">❯</button>
+            <div class="gallery-nav">
+                <button class="gallery-btn" id="galleryPrevBtn">❮</button>
+                <button class="gallery-btn" id="galleryNextBtn">❯</button>
             </div>
         </div>
-    </div>
+    </section>
+    {% endif %}
+    
+    <!-- Posts relacionados -->
+    {% if relacionados %}
+    <section class="related-posts">
+        <h2 class="related-title">Te puede interesar</h2>
+        <div class="related-grid">
+            {% for post in relacionados %}
+            <article class="related-item">
+                {% if post.imagen %}
+                <img src="{{ post.imagen.url }}" alt="{{ post.title }}" class="related-image">
+                {% endif %}
+                <div class="related-content">
+                    <h3>{{ post.title }}</h3>
+                    <p>{{ post.resumen|truncatechars:120 }}</p>
+                    <a href="{% url 'detalle_post' post.id %}" class="read-more">Ver detalles</a>
+                </div>
+            </article>
+            {% endfor %}
+        </div>
+    </section>
     {% endif %}
 </div>
-
-<!-- Posts relacionados -->
-{% if relacionados %}
-<div style="max-width: 800px; margin: 40px auto 0;">
-    <h2>Te puede interesar</h2>
-    <div class="destacados-grid">
-        {% for post in relacionados %}
-        <div class="destacado-item">
-            {% if post.imagen %}
-            <img src="{{ post.imagen.url }}" alt="{{ post.title }}">
-            {% endif %}
-            <div class="destacado-content">
-                <h3>{{ post.title }}</h3>
-                <p>{{ post.resumen|truncatechars:100 }}</p>
-                <a href="{% url 'detalle_post' post.id %}" style="color: #333; text-decoration: underline;">Leer más</a>
-            </div>
-        </div>
-        {% endfor %}
-    </div>
-</div>
-{% endif %}
 
 <script>
     // Script para el carrusel de la galería
     document.addEventListener('DOMContentLoaded', function() {
-        const galleryCarrusel = document.getElementById('galleryCarrusel');
-        const gallerySlides = document.querySelectorAll('#galleryCarrusel .carrusel-slide');
+        const galleryCarousel = document.getElementById('galleryCarousel');
+        const gallerySlides = document.querySelectorAll('.gallery-slide');
         const galleryPrevBtn = document.getElementById('galleryPrevBtn');
         const galleryNextBtn = document.getElementById('galleryNextBtn');
         
         let galleryIndex = 0;
+        let galleryInterval;
         
         function goToGallerySlide(index) {
             galleryIndex = (index + gallerySlides.length) % gallerySlides.length;
             const offset = -galleryIndex * 100;
-            galleryCarrusel.style.transform = `translateX(${offset}%)`;
+            galleryCarousel.style.transform = `translateX(${offset}%)`;
         }
         
         if (gallerySlides.length > 1) {
             galleryPrevBtn.addEventListener('click', () => {
+                clearInterval(galleryInterval);
                 goToGallerySlide(galleryIndex - 1);
+                startGalleryAutoSlide();
             });
             
             galleryNextBtn.addEventListener('click', () => {
+                clearInterval(galleryInterval);
                 goToGallerySlide(galleryIndex + 1);
+                startGalleryAutoSlide();
             });
             
-            setInterval(() => {
-                goToGallerySlide(galleryIndex + 1);
-            }, 5000);
+            // Touch events para móviles
+            let touchStartX = 0;
+            
+            galleryCarousel.addEventListener('touchstart', (e) => {
+                touchStartX = e.touches[0].clientX;
+                clearInterval(galleryInterval);
+            }, {passive: true});
+            
+            galleryCarousel.addEventListener('touchend', (e) => {
+                if (!touchStartX) return;
+                const touchEndX = e.changedTouches[0].clientX;
+                const diff = touchStartX - touchEndX;
+                
+                if (diff > 50) {
+                    goToGallerySlide(galleryIndex + 1);
+                } else if (diff < -50) {
+                    goToGallerySlide(galleryIndex - 1);
+                }
+                
+                touchStartX = 0;
+                startGalleryAutoSlide();
+            }, {passive: true});
+            
+            function startGalleryAutoSlide() {
+                galleryInterval = setInterval(() => {
+                    goToGallerySlide(galleryIndex + 1);
+                }, 5000);
+            }
+            
+            // Pausar al interactuar
+            galleryCarousel.parentElement.addEventListener('mouseenter', () => {
+                clearInterval(galleryInterval);
+            });
+            
+            galleryCarousel.parentElement.addEventListener('mouseleave', startGalleryAutoSlide);
+            
+            startGalleryAutoSlide();
         } else {
             galleryPrevBtn.style.display = 'none';
             galleryNextBtn.style.display = 'none';
