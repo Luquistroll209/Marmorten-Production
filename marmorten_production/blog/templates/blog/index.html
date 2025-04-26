@@ -1,127 +1,192 @@
 {% extends 'blog/base.html' %}
 
-{% block title %}Inicio - NORTEN PRODUCTION{% endblock %}
+{% block title %}Inicio - MARMOTEN PRODUCTION{% endblock %}
 
 {% block content %}
 <style>
 :root {
-  --color-fondo: #f5f0e6; /* Fondo marrón claro cálido */
-  --color-accento: #8B4513; /* Marrón tierra */
-  --color-destacado: #D4A017; /* Dorado oscuro */
-  --color-card: #f8f1e5; /* Fondo tarjetas marrón claro */
-  --color-borde: #d2b48c; /* Marrón claro para bordes */
-  --color-texto: #3E2723; /* Marrón muy oscuro */
-  --color-texto-claro: #5D4037; /* Marrón medio */
-  --sombra: 0 4px 12px rgba(139, 69, 19, 0.15);
-  --borde-redondeado: 10px;
-  --transicion: all 0.3s ease;
+  /* Paleta de colores */
+  --color-blanco: #ffffff;
+  --color-fondo: #f8f8f8;
+  --color-borde: #e0e0e0;
+  --color-texto: #333333;
+  --color-texto-claro: #666666;
+  --color-acento: #D4AF37; /* Dorado */
+  --color-acento-hover: #B8860B;
+  
+  /* Efectos */
+  --borde-redondeado: 12px;
+  --borde-redondeado-pequeno: 8px;
+  --sombra: 0 4px 20px rgba(0, 0, 0, 0.05);
+  --sombra-hover: 0 8px 30px rgba(0, 0, 0, 0.1);
+  --transicion: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
-/* Base Styles */
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   background-color: var(--color-fondo);
   color: var(--color-texto);
-  font-family: 'Montserrat', sans-serif;
   line-height: 1.6;
   margin: 0;
   padding: 0;
+  padding
+  -webkit-font-smoothing: antialiased;
 }
 
+/* Tipografía */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap');
+
+h1, h2, h3, h4 {
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--color-texto);
+}
+
+h2 {
+  font-size: 2.2rem;
+  margin-bottom: 1.5rem;
+}
+
+p {
+  margin-bottom: 1.5rem;
+  color: var(--color-texto-claro);
+}
+
+/* Layout principal */
 .main-container {
   max-width: 1400px;
   margin: 0 auto;
   padding: 0 20px;
 }
 
-/* Typography */
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+.section {
+  padding: 80px 0;
+}
 
-h1, h2, h3, h4 {
-  font-weight: 600;
-  line-height: 1.2;
-  margin-top: 0;
+.section-header {
+  text-align: center;
+  margin-bottom: 20px;
 }
 
 .section-title {
-  text-align: center;
-  font-size: 2.2rem;
-  margin: 50px 0 30px;
-  color: var(--color-accento);
   position: relative;
   display: inline-block;
-  padding-bottom: 10px;
-  width: auto;
-  left: 50%;
-  transform: translateX(-50%);
+  padding-bottom: 15px;
 }
 
 .section-title:after {
   content: '';
   display: block;
-  width: 100%;
+  width: 60px;
   height: 3px;
-  background: var(--color-destacado);
-  margin: 15px auto 0;
+  background: var(--color-acento);
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
-/* Hero Carousel */
-.hero-carousel {
+/* Carrusel Hero - Estilo mejorado */
+.hero-carousel-container {
   width: 100%;
-  height: 65vh;
-  max-height: 300px;
-  min-height: 100px;
   position: relative;
   overflow: hidden;
-  border-radius: var(--borde-redondeado);
-  box-shadow: var(--sombra);
+  margin: 0;
+  border-radius: 0px 0px 40px 40px;
+}
+
+.hero-carousel {
+  width: 100%;
+  height: 40vh;
+  max-height: 800px;
+  min-height: 500px;
+  position: relative;
+  border-radius: 0px 0px 40px 40px;
 }
 
 .carousel-inner {
   display: flex;
   height: 100%;
-  transition: transform 0.8s cubic-bezier(0.33, 1, 0.68, 1);
+  transition: transform 0.8s ease;
+  border-radius: 0px 0px 40px 40px;
 }
 
 .carousel-slide {
   min-width: 100%;
   position: relative;
+  border-radius: 0px 0px 40px 40px;
+}
+
+.carousel-image-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  border-radius: 0px 0px 40px 40px;
 }
 
 .carousel-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  filter: brightness(0.85);
-  border-radius: var(--borde-redondeado);
+  object-position: center;
+  border-radius: 0px 0px 40px 40px;
 }
 
-.carousel-caption {
+/* Efecto de difuminado para imágenes altas */
+.carousel-image-container::before,
+.carousel-image-container::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 200px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.carousel-image-container::before {
+  left: 0;
+  background: linear-gradient(to right, rgba(0,0,0,0.5), transparent);
+}
+
+.carousel-image-container::after {
+  right: 0;
+  background: linear-gradient(to left, rgba(0,0,0,0.5), transparent);
+}
+
+.carousel-content {
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
   padding: 40px;
-  background: linear-gradient(to top, rgba(139, 69, 19, 0.9), transparent);
-  border-bottom-left-radius: var(--borde-redondeado);
-  border-bottom-right-radius: var(--borde-redondeado);
+  background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+  color: white;
+  z-index: 3;
 }
 
-.carousel-caption h2 {
-  font-size: 2.4rem;
+.carousel-title {
+  font-size: 3rem;
   margin-bottom: 15px;
   color: white;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 }
 
-.carousel-caption p {
-  font-size: 1.1rem;
+.carousel-description {
+  color: white;
   max-width: 700px;
   margin-bottom: 25px;
-  color: rgba(255, 255, 255, 0.9);
+  font-size: 1.2rem;
+  opacity: 0.9;
 }
-.carousel-caption a {
-    color: #000000;
-  }
 
 .carousel-nav {
   position: absolute;
@@ -129,446 +194,547 @@ h1, h2, h3, h4 {
   width: 100%;
   display: flex;
   justify-content: space-between;
+  padding: 0 20px;
   transform: translateY(-50%);
-  padding: 0 25px;
-  z-index: 2;
+  z-index: 10;
 }
 
 .carousel-btn {
-  background: rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(8px);
-  color: white;
-  border: none;
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  font-size: 1.3rem;
+  background: rgba(255,255,255,0.2);
+  backdrop-filter: blur(5px);
+  border: none;
+  color: white;
+  font-size: 1.2rem;
   cursor: pointer;
   transition: var(--transicion);
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
 }
 
 .carousel-btn:hover {
-  background: var(--color-destacado);
+  background: var(--color-acento);
   transform: scale(1.1);
 }
 
-/* Producciones Destacadas - 3 columnas */
-.featured-posts {
-  padding: 40px 0;
-  text-align: center;
+.carousel-indicators {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 10px;
+  z-index: 10;
 }
 
-.featured-grid {
+.carousel-indicator {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.3);
+  border: 1px solid rgba(255,255,255,0.5);
+  cursor: pointer;
+  transition: var(--transicion);
+}
+
+.carousel-indicator.active {
+  background: var(--color-acento);
+  transform: scale(1.2);
+}
+
+/* Grid de producciones */
+.producciones-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 30px;
-  margin: 40px 0;
+  margin-top: 40px;
 }
 
-.featured-item {
-  background: var(--color-card);
-  border: 1px solid var(--color-borde);
+.produccion-card {
+  background: var(--color-blanco);
   border-radius: var(--borde-redondeado);
   overflow: hidden;
-  transition: var(--transicion);
   box-shadow: var(--sombra);
-  border-top: 3px solid var(--color-destacado);
+  transition: var(--transicion);
 }
 
-.featured-item:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 12px 25px rgba(139, 69, 19, 0.2);
-  border-color: var(--color-destacado);
+.produccion-card:hover {
+  transform: translateY(-10px);
+  box-shadow: var(--sombra-hover);
 }
 
-.featured-image {
+.produccion-image {
   width: 100%;
   height: 220px;
   object-fit: cover;
-  transition: var(--transicion);
 }
 
-.featured-item:hover .featured-image {
-  transform: scale(1.03);
-}
-
-.featured-content {
+.produccion-content {
   padding: 25px;
-  background: white;
 }
 
-.featured-content h3 {
+.produccion-title {
   font-size: 1.4rem;
-  margin: 0 0 12px;
-  color: var(--color-accento);
+  margin-bottom: 10px;
 }
 
-.featured-content p {
-  margin-bottom: 20px;
-  color: var(--color-texto-claro);
-  font-size: 0.95rem;
-}
-
-/* Últimas Producciones - 2 columnas */
-.latest-posts {
-  padding: 50px 0 70px;
-  text-align: center;
-}
-
-.post-list {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 40px;
-  margin: 40px 0;
-}
-
-.post-item {
-  background: var(--color-card);
-  border: 1px solid var(--color-borde);
-  border-radius: var(--borde-redondeado);
-  overflow: hidden;
-  transition: var(--transicion);
-  box-shadow: var(--sombra);
-  border-left: 3px solid var(--color-destacado);
-}
-
-.post-item:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 15px 30px rgba(139, 69, 19, 0.1);
-  border-color: var(--color-destacado);
-}
-
-.post-image {
-  width: 100%;
-  height: 250px;
-  object-fit: cover;
-  transition: var(--transicion);
-}
-
-.post-item:hover .post-image {
-  transform: scale(1.02);
-}
-
-.post-content {
-  padding: 30px;
-  background: white;
-}
-
-.post-title {
-  font-size: 1.6rem;
-  margin: 0 0 15px;
-  color: var(--color-accento);
-}
-
-.post-meta {
-  color: var(--color-accento);
-  margin-bottom: 15px;
-  font-size: 0.9rem;
+.produccion-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+  color: var(--color-acento);
   font-weight: 500;
 }
 
-.post-excerpt {
-  margin-bottom: 25px;
-  color: var(--color-texto-claro);
-  font-size: 1rem;
-  line-height: 1.7;
-}
-
-/* Buttons & Links */
-.read-more {
+/* Botones */
+.btn {
   display: inline-flex;
   align-items: center;
-  color: var(--color-accento);
-  text-decoration: none;
+  padding: 12px 24px;
+  border-radius: var(--borde-redondeado-pequeno);
   font-weight: 600;
-  font-size: 0.9rem;
+  text-decoration: none;
   transition: var(--transicion);
-  padding-bottom: 2px;
-  border-bottom: 2px solid var(--color-destacado);
+  border: none;
+  cursor: pointer;
 }
 
-.read-more:hover {
-  color: var(--color-destacado);
+.btn-primary {
+  background: var(--color-acento);
+  color: white;
 }
 
-.read-more:after {
-  content: '→';
-  margin-left: 8px;
-  transition: transform 0.3s;
+.btn-primary:hover {
+  background: var(--color-acento-hover);
+  transform: translateY(-2px);
 }
 
-.read-more:hover:after {
-  transform: translateX(5px);
+.btn-outline {
+  background: transparent;
+  border: 2px solid var(--color-acento);
+  color: var(--color-acento);
 }
 
-/* Responsive Design */
+.btn-outline:hover {
+  background: var(--color-acento);
+  color: white;
+}
+
+/* Newsletter */
+.newsletter-section {
+  background: var(--color-blanco);
+  border-radius: var(--borde-redondeado);
+  padding: 60px;
+  text-align: center;
+  box-shadow: var(--sombra);
+  margin: 80px 0;
+}
+
+.newsletter-form {
+  max-width: 600px;
+  margin: 0 auto;
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.newsletter-input {
+  flex: 1;
+  min-width: 300px;
+  padding: 15px 20px;
+  border: 1px solid var(--color-borde);
+  border-radius: var(--borde-redondeado-pequeno);
+  font-size: 1rem;
+  transition: var(--transicion);
+}
+
+.newsletter-input:focus {
+  outline: none;
+  border-color: var(--color-acento);
+  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.2);
+}
+
+/* Botón flotante */
+.floating-btn {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: var(--color-acento);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  transition: var(--transicion);
+  z-index: 100;
+  border: none;
+}
+
+.floating-btn.visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.floating-btn:hover {
+  transform: translateY(-3px) scale(1.1);
+  background: var(--color-acento-hover);
+}
+
+/* Responsive */
 @media (max-width: 1200px) {
   .hero-carousel {
-    height: 55vh;
+    height: 70vh;
   }
   
-  .carousel-caption {
-    padding: 30px;
-  }
-  
-  .carousel-caption h2 {
-    font-size: 2rem;
-  }
-  
-  .featured-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-  
-  .post-list {
-    grid-template-columns: repeat(2, 1fr);
+  .carousel-title {
+    font-size: 2.5rem;
   }
 }
 
 @media (max-width: 992px) {
-  .section-title {
-    font-size: 1.8rem;
-    margin: 40px 0 30px;
+  .section {
+    padding: 60px 0;
   }
   
-  .featured-grid {
-    grid-template-columns: repeat(2, 1fr);
+  .hero-carousel {
+    height: 60vh;
+    min-height: 450px;
   }
   
-  .post-list {
-    grid-template-columns: 1fr;
-    max-width: 800px;
-    margin-left: auto;
-    margin-right: auto;
+  .carousel-content {
+    padding: 30px;
+  }
+  
+  .carousel-title {
+    font-size: 2.2rem;
+  }
+  
+  .producciones-grid {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   }
 }
 
 @media (max-width: 768px) {
   .hero-carousel {
     height: 50vh;
-    min-height: 350px;
-    margin-bottom: 40px;
+    min-height: 400px;
   }
   
-  .carousel-caption {
+  .carousel-content {
     padding: 25px;
   }
   
-  .carousel-caption h2 {
-    font-size: 1.6rem;
-    margin-bottom: 10px;
+  .carousel-title {
+    font-size: 2rem;
   }
   
-  .carousel-caption p {
-    font-size: 0.95rem;
-    margin-bottom: 15px;
-  }
-  
-  .carousel-btn {
-    width: 40px;
-    height: 40px;
+  .carousel-description {
     font-size: 1.1rem;
   }
   
-  .featured-grid {
-    grid-template-columns: 1fr;
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
+  .carousel-btn {
+    width: 45px;
+    height: 45px;
+    font-size: 1.1rem;
+  }
+  
+  .newsletter-section {
+    padding: 40px 30px;
   }
 }
 
 @media (max-width: 576px) {
   .hero-carousel {
     height: 45vh;
-    min-height: 300px;
-    border-radius: 8px;
+    min-height: 350px;
   }
   
-  .carousel-image {
-    border-radius: 8px;
-  }
-  
-  .carousel-caption {
+  .carousel-content {
     padding: 20px;
-    border-radius: 0 0 8px 8px;
   }
   
-  .carousel-caption h2 {
-    font-size: 1.4rem;
+  .carousel-title {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
   }
   
   .section-title {
-    font-size: 1.5rem;
-    margin: 30px 0 25px;
+    font-size: 1.8rem;
   }
   
-  .section-title:after {
-    width: 80%;
-    height: 2px;
-    margin: 10px auto 0;
+  .producciones-grid {
+    grid-template-columns: 1fr;
   }
   
-  .featured-content, 
-  .post-content {
-    padding: 20px;
+  .newsletter-form {
+    flex-direction: column;
+    gap: 10px;
   }
   
-  .post-title {
-    font-size: 1.4rem;
+  .newsletter-input {
+    min-width: 100%;
+  }
+  
+  .floating-btn {
+    width: 45px;
+    height: 45px;
+    bottom: 20px;
+    right: 20px;
+    font-size: 1.1rem;
   }
 }
 </style>
 
-<div class="main-container">
-    <!-- Carrusel con bordes redondeados -->
-    <section class="hero-carousel">
-        <div class="carousel-inner" id="mainCarousel">
-            {% for item in carrusel_items %}
-            {% if item.post.imagen %}
-            <div class="carousel-slide">
-                <img src="{{ item.post.imagen.url }}" alt="{{ item.titulo }}" class="carousel-image">
-                <div class="carousel-caption">
-                    <h2>{{ item.titulo|default:item.post.title|upper }}</h2>
-                    <p>{{ item.descripcion|default:item.post.resumen }}</p>
-                    <a href="{% url 'detalle_post' item.post.id %}" class="read-more">Ver proyecto</a>
-                </div>
-            </div>
-            {% endif %}
-            {% endfor %}
+<!-- Hero Carrusel - Sin margen superior -->
+<div class="hero-carousel-container">
+  <div class="hero-carousel">
+    <div class="carousel-inner" id="mainCarousel">
+      {% for item in carrusel_items %}
+      {% if item.post.imagen %}
+      <div class="carousel-slide">
+        <div class="carousel-image-container">
+          <img src="{{ item.post.imagen.url }}" alt="{{ item.titulo }}" class="carousel-image">
         </div>
-        
-        <div class="carousel-nav">
-            <button class="carousel-btn" id="prevBtn">❮</button>
-            <button class="carousel-btn" id="nextBtn">❯</button>
+        <div class="carousel-content">
+          <h2 class="carousel-title">{{ item.titulo|default:item.post.title }}</h2>
+          <p class="carousel-description">{{ item.descripcion|default:item.post.resumen }}</p>
+          <a href="{% url 'detalle_post' item.post.id %}" class="btn btn-primary">Ver proyecto</a>
         </div>
-    </section>
-
-    <!-- Producciones Destacadas - 3 columnas -->
-    <section class="featured-posts">
-        <h2 class="section-title">PRODUCCIONES DESTACADAS</h2>
-        <div class="featured-grid">
-            {% for post in posts_destacados %}
-            <article class="featured-item">
-                {% if post.imagen %}
-                <img src="{{ post.imagen.url }}" alt="{{ post.title }}" class="featured-image">
-                {% endif %}
-                <div class="featured-content">
-                    <h3>{{ post.title|upper }}</h3>
-                    <p>{{ post.resumen|truncatechars:120 }}</p>
-                    <a href="{% url 'detalle_post' post.id %}" class="read-more">Ver detalles</a>
-                </div>
-            </article>
-            {% endfor %}
-        </div>
-    </section>
-
-    <!-- Últimas Producciones - 2 columnas -->
-    <section class="latest-posts">
-        <h2 class="section-title">ÚLTIMAS PRODUCCIONES</h2>
-        <div class="post-list">
-            {% for post in ultimos_posts %}
-            <article class="post-item">
-                {% if post.imagen %}
-                <img src="{{ post.imagen.url }}" alt="{{ post.title }}" class="post-image">
-                {% endif %}
-                <div class="post-content">
-                    <h3 class="post-title">{{ post.title|upper }}</h3>
-                    <p class="post-meta">{{ post.fecha_publicacion }}</p>
-                    <p class="post-excerpt">{{ post.resumen|default:post.content|truncatechars:200 }}</p>
-                    <a href="{% url 'detalle_post' post.id %}" class="read-more">Ver proyecto completo</a>
-                </div>
-            </article>
-            {% endfor %}
-        </div>
-    </section>
+      </div>
+      {% endif %}
+      {% endfor %}
+    </div>
+    
+    <div class="carousel-nav">
+      <button class="carousel-btn" id="prevBtn">❮</button>
+      <button class="carousel-btn" id="nextBtn">❯</button>
+    </div>
+    
+    <div class="carousel-indicators" id="carouselIndicators">
+      {% for item in carrusel_items %}
+      <div class="carousel-indicator {% if forloop.first %}active{% endif %}"></div>
+      {% endfor %}
+    </div>
+  </div>
 </div>
 
+<!-- Contenido Principal -->
+<div class="main-container">
+  <!-- Producciones Destacadas -->
+  <section class="section">
+    <div class="section-header">
+      <h2 class="section-title">Producciones Destacadas</h2>
+      <p>Nuestros trabajos más emblemáticos que representan nuestra calidad y estilo único</p>
+    </div>
+    
+    <div class="producciones-grid">
+      {% for post in posts_destacados %}
+      <div class="produccion-card">
+        {% if post.imagen %}
+        <img src="{{ post.imagen.url }}" alt="{{ post.title }}" class="produccion-image">
+        {% endif %}
+        <div class="produccion-content">
+          <h3 class="produccion-title">{{ post.title }}</h3>
+          <p>{{ post.resumen|truncatechars:120 }}</p>
+          <div class="produccion-meta">
+            <span>{{ post.fecha_publicacion|date:"M Y" }}</span>
+            <a href="{% url 'detalle_post' post.id %}" class="btn btn-outline">Ver más</a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+  
+  <!-- Últimas Producciones -->
+  <section class="section" style="background: var(--color-blanco); border-radius: var(--borde-redondeado);">
+    <div class="section-header">
+      <h2 class="section-title">Últimas Producciones</h2>
+      <p>Descubre nuestros trabajos más recientes</p>
+    </div>
+    
+    <div class="producciones-grid">
+      {% for post in ultimos_posts %}
+      <div class="produccion-card">
+        {% if post.imagen %}
+        <img src="{{ post.imagen.url }}" alt="{{ post.title }}" class="produccion-image">
+        {% endif %}
+        <div class="produccion-content">
+          <h3 class="produccion-title">{{ post.title }}</h3>
+          <p>{{ post.resumen|default:post.content|truncatechars:150 }}</p>
+          <div class="produccion-meta">
+            <span>{{ post.fecha_publicacion|date:"M Y" }}</span>
+            <a href="{% url 'detalle_post' post.id %}" class="btn btn-outline">Ver más</a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+  
+  <!-- Newsletter -->
+  <div class="newsletter-section">
+    <h2>Mantente Actualizado</h2>
+    <p>Suscríbete para recibir nuestras últimas producciones y noticias</p>
+    
+    <form class="newsletter-form">
+      <input type="email" class="newsletter-input" placeholder="Tu correo electrónico" required>
+      <button type="submit" class="btn btn-primary">Suscribirse</button>
+    </form>
+  </div>
+</div>
+
+<!-- Botón flotante -->
+<button class="floating-btn" id="backToTop">↑</button>
+
 <script>
-    // Carrusel optimizado
-    document.addEventListener('DOMContentLoaded', function() {
-        const carousel = document.getElementById('mainCarousel');
-        const slides = document.querySelectorAll('.carousel-slide');
-        const prevBtn = document.getElementById('prevBtn');
-        const nextBtn = document.getElementById('nextBtn');
-        
-        let currentIndex = 0;
-        const slideCount = slides.length;
-        let slideInterval;
-        let isAnimating = false;
-        
-        function goToSlide(index) {
-            if (isAnimating) return;
-            
-            isAnimating = true;
-            currentIndex = (index + slideCount) % slideCount;
-            const offset = -currentIndex * 100;
-            carousel.style.transform = `translateX(${offset}%)`;
-            
-            setTimeout(() => {
-                isAnimating = false;
-            }, 800);
-        }
-        
-        if (slideCount > 1) {
-            prevBtn.addEventListener('click', () => {
-                if (isAnimating) return;
-                clearInterval(slideInterval);
-                goToSlide(currentIndex - 1);
-                startAutoSlide();
-            });
-            
-            nextBtn.addEventListener('click', () => {
-                if (isAnimating) return;
-                clearInterval(slideInterval);
-                goToSlide(currentIndex + 1);
-                startAutoSlide();
-            });
-            
-            let touchStartX = 0;
-            
-            carousel.addEventListener('touchstart', (e) => {
-                touchStartX = e.touches[0].clientX;
-                clearInterval(slideInterval);
-            }, {passive: true});
-            
-            carousel.addEventListener('touchend', (e) => {
-                if (!touchStartX) return;
-                const touchEndX = e.changedTouches[0].clientX;
-                const diff = touchStartX - touchEndX;
-                
-                if (diff > 50 && !isAnimating) {
-                    goToSlide(currentIndex + 1);
-                } else if (diff < -50 && !isAnimating) {
-                    goToSlide(currentIndex - 1);
-                }
-                
-                touchStartX = 0;
-                startAutoSlide();
-            }, {passive: true});
-            
-            function startAutoSlide() {
-                slideInterval = setInterval(() => {
-                    if (!isAnimating) {
-                        goToSlide(currentIndex + 1);
-                    }
-                }, 7000);
-            }
-            
-            carousel.parentElement.addEventListener('mouseenter', () => {
-                clearInterval(slideInterval);
-            });
-            
-            carousel.parentElement.addEventListener('mouseleave', startAutoSlide);
-            
-            startAutoSlide();
-        } else {
-            prevBtn.style.display = 'none';
-            nextBtn.style.display = 'none';
-        }
+document.addEventListener('DOMContentLoaded', function() {
+  const carousel = document.getElementById('mainCarousel');
+  const slides = document.querySelectorAll('.carousel-slide');
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const indicators = document.querySelectorAll('.carousel-indicator');
+  
+  let currentIndex = 0;
+  let isAnimating = false;
+  let autoSlideInterval;
+  
+  function goToSlide(index) {
+    if (isAnimating) return;
+    
+    isAnimating = true;
+    currentIndex = (index + slides.length) % slides.length;
+    carousel.style.transform = `translateX(-${currentIndex * 100}%)`;
+    
+    // Actualizar indicadores
+    indicators.forEach((indicator, i) => {
+      indicator.classList.toggle('active', i === currentIndex);
     });
+    
+    setTimeout(() => {
+      isAnimating = false;
+    }, 800);
+  }
+  
+  function startAutoSlide() {
+    clearInterval(autoSlideInterval);
+    autoSlideInterval = setInterval(() => {
+      if (!isAnimating) {
+        goToSlide(currentIndex + 1);
+      }
+    }, 7000);
+  }
+  
+  // Event listeners
+  prevBtn.addEventListener('click', () => {
+    clearInterval(autoSlideInterval);
+    goToSlide(currentIndex - 1);
+    startAutoSlide();
+  });
+  
+  nextBtn.addEventListener('click', () => {
+    clearInterval(autoSlideInterval);
+    goToSlide(currentIndex + 1);
+    startAutoSlide();
+  });
+  
+  indicators.forEach((indicator, index) => {
+    indicator.addEventListener('click', () => {
+      if (currentIndex !== index) {
+        clearInterval(autoSlideInterval);
+        goToSlide(index);
+        startAutoSlide();
+      }
+    });
+  });
+  
+  // Touch events
+  let touchStartX = 0;
+  
+  carousel.addEventListener('touchstart', (e) => {
+    touchStartX = e.touches[0].clientX;
+    clearInterval(autoSlideInterval);
+  }, {passive: true});
+  
+  carousel.addEventListener('touchend', (e) => {
+    const touchEndX = e.changedTouches[0].clientX;
+    const diff = touchStartX - touchEndX;
+    
+    if (Math.abs(diff) > 50 && !isAnimating) {
+      clearInterval(autoSlideInterval);
+      goToSlide(diff > 0 ? currentIndex + 1 : currentIndex - 1);
+      startAutoSlide();
+    }
+  }, {passive: true});
+  
+  // Iniciar autoplay
+  if (slides.length > 1) {
+    startAutoSlide();
+  } else {
+    prevBtn.style.display = 'none';
+    nextBtn.style.display = 'none';
+    document.getElementById('carouselIndicators').style.display = 'none';
+  }
+  
+  // Botón flotante
+  const backToTopBtn = document.getElementById('backToTop');
+  
+  window.addEventListener('scroll', () => {
+    backToTopBtn.classList.toggle('visible', window.scrollY > 300);
+  });
+  
+  backToTopBtn.addEventListener('click', () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  });
+  
+  // Efecto de difuminado dinámico
+  function updateBlurEffect() {
+    document.querySelectorAll('.carousel-slide').forEach(slide => {
+      const img = slide.querySelector('.carousel-image');
+      if (img.naturalWidth && img.naturalHeight) {
+        const aspectRatio = img.naturalWidth / img.naturalHeight;
+        const container = slide.querySelector('.carousel-image-container');
+        if (aspectRatio < 1) {
+          // Imagen alta (portrait)
+          container.style.setProperty('--blur-amount', '200px');
+        } else {
+          // Imagen ancha (landscape)
+          container.style.setProperty('--blur-amount', '0px');
+        }
+      }
+    });
+  }
+
+  // Observar cambios en las imágenes
+  const observer = new MutationObserver(updateBlurEffect);
+  observer.observe(document.body, { 
+    childList: true,
+    subtree: true
+  });
+
+  // Ejecutar al cargar y cuando las imágenes se cargan
+  document.querySelectorAll('.carousel-image').forEach(img => {
+    if (img.complete) {
+      updateBlurEffect();
+    } else {
+      img.addEventListener('load', updateBlurEffect);
+    }
+  });
+});
 </script>
 {% endblock %}

@@ -1,242 +1,241 @@
-    <!DOCTYPE html>
-    <html lang="es">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>{% block title %}Marmorten Production{% endblock %}</title>
-        <link rel="stylesheet" href="nav.css">
-        <style>
-            /* Estilos básicos para el contenido principal */
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+    <style>
+        :root {
+            --color-fondo: #f8f8f8; /* Color de fondo claro */
+            --color-texto: #3a2e26; /* Marrón oscuro para texto */
+            --color-acento: #D4AF37; /* Dorado Marmoten */
+            --color-borde: rgba(212, 175, 55, 0.3); /* Borde dorado sutil */
+            --sombra: 0 4px 20px rgba(0, 0, 0, 0.1);
+            --borde-redondeado: 15px;
+            --transicion: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--color-fondo);
+            color: var(--color-texto);
+            line-height: 1.6;
+            padding-top: 90px; /* Espacio para el navbar flotante */
+        }
+
+        /* Navbar Flotante Mejorado */
+        .navbar {
+            background-color: white;
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            top: 20px; /* Margen superior */
+            left: 5%; /* Margen lateral */
+            right: 5%; /* Margen lateral */
+            z-index: 1000;
+            box-shadow: var(--sombra);
+            border-radius: var(--borde-redondeado);
+            border: 1px solid var(--color-borde);
+            transition: var(--transicion);
+            max-width: 90%;
+            margin: 0 auto;
+        }
+
+        .navbar-logo {
+            height: 50px;
+            transition: var(--transicion);
+        }
+
+        .navbar-logo:hover {
+            transform: scale(1.05);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .nav-link {
+            color: var(--color-texto);
+            text-decoration: none;
+            font-weight: 500;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            padding: 8px 15px;
+            border-radius: var(--borde-redondeado);
+            transition: var(--transicion);
+        }
+
+        .nav-link:hover {
+            color: var(--color-acento);
+            background-color: rgba(212, 175, 55, 0.1);
+        }
+
+        .nav-link.active {
+            color: var(--color-acento);
+            font-weight: 600;
+        }
+
+        .search-container {
+            display: flex;
+            align-items: center;
+            background: rgba(248, 248, 248, 0.8);
+            border-radius: var(--borde-redondeado);
+            padding: 8px 15px;
+            transition: var(--transicion);
+            width: 220px;
+            border: 1px solid var(--color-borde);
+        }
+
+        .search-container:focus-within {
+            box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.2);
+            background: white;
+        }
+
+        .search-input {
+            background: transparent;
+            border: none;
+            color: var(--color-texto);
+            padding: 5px 10px;
+            width: 100%;
+            outline: none;
+            font-size: 0.9rem;
+        }
+
+        .search-input::placeholder {
+            color: rgba(58, 46, 38, 0.5);
+        }
+
+        .search-icon {
+            width: 18px;
+            height: 18px;
+            filter: brightness(0) saturate(100%) invert(24%) sepia(9%) saturate(1721%) hue-rotate(346deg) brightness(91%) contrast(87%);
+            transition: var(--transicion);
+        }
+
+        .search-container:hover .search-icon {
+            filter: brightness(0) saturate(100%) invert(80%) sepia(12%) saturate(3760%) hue-rotate(353deg) brightness(99%) contrast(89%);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--color-texto);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .nav-links {
+                gap: 15px;
+            }
+            
+            .search-container {
+                width: 180px;
+            }
+        }
+
+        @media (max-width: 768px) {
             body {
-                font-family: Arial, sans-serif;
-                margin: 0;
-                padding: 0;
-                line-height: 1.6;
-                background-color: #f4f4f4;
-            }
-            .container {
-                width: 80%;
-                margin: auto;
-                padding: 20px;
-            }
-            h1 {
-                color: #333;
-            }
-            nav {
-
-                display: flex;
-            
-                justify-content: center;
-            
-                align-items: center;
-            
-                gap: 40px;
-            
-                margin: 0px;
-            
-                background-color: #252631;
-            
-                padding: 25px;
-            
-                flex-wrap: wrap;
-            
+                padding-top: 80px;
             }
             
-            
-            
-            nav img {
-            
-                width: 10%;
-            
-                margin-right: 40px;
-            
+            .navbar {
+                top: 10px;
+                left: 2.5%;
+                right: 2.5%;
+                max-width: 95%;
+                padding: 10px 15px !important;
             }
             
-            
-            
-            nav button {
-            
-                background-color: transparent;
-            
-                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            
-                text-transform: uppercase;
-            
-                color: white;
-            
-                border-color: transparent;
-            
-                transition: 0.5s;
-            
-            }
-            
-            
-            
-            nav button:hover {
-            
-                color: rgb(241, 205, 0);
-            
-                transition: 0.5s;
-            
-                cursor: pointer;
-            
-            }
-            
-            
-            
-            .search {
-            
-                display: flex;
-            
-                align-items: center;
-            
-                gap: 8px;
-            
-                border-radius: 50px;
-            
-                padding: 8px 16px;
-            
-                background-color: #12151e;
-            
-                width: 11%;
-            
-            }
-            
-            
-            
-            .search input {
-            
-                border: none;
-            
-                background: transparent;
-            
-                color: white;
-            
-                outline: none;
-            
-                font-size: 14px;
-            
-            }
-            
-            
-            
-            .search img {
-            
-                width: 20px;
-            
-                height: 20px;
-            
-                object-fit: contain;
-            
+            .mobile-menu-btn {
                 display: block;
-            
-                transition: 0.3s;
-            
             }
             
-            
-            
-            .search img:hover {
-            
-                cursor: pointer;
-            
-                filter: brightness(0.5) saturate(10%) sepia(1) hue-rotate(45deg);
-            
+            .navbar-logo {
+                height: 40px;
             }
             
-            
-            
-            .search input::-webkit-search-cancel-button {
-            
-                -webkit-appearance: none;
-            
-                appearance: none;
-            
+            .search-container {
                 display: none;
-            
             }
             
-            
-            
-            
-            
-            @media screen and (max-width: 768px) {
-            
-                nav {
-            
-                    flex-direction: column;
-            
-                    align-items: flex-start;
-            
-                    padding: 20px;
-            
-                    gap: 20px;
-            
-                }
-            
-            
-            
-                nav img {
-            
-                    width: 50%;
-            
-                    margin: 0 auto;
-            
-                }
-            
-            
-            
-                nav button {
-            
-                    font-size: 16px;
-            
-                    width: 100%;
-            
-                    text-align: left;
-            
-                    padding: 10px;
-            
-                }
-            
-            
-            
-                .search {
-            
-                    width: 100%;
-            
-                    justify-content: space-between;
-            
-                }
-            
-            
-            
-                .search input {
-            
-                    width: 100%;
-            
-                }
-            
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                padding: 15px 0;
             }
             
-        </style>
-    </head>
-    <body>
-        <nav>
-            <img src="logo.png" alt="Marmorten Production Logo">
-            <button onclick="location.href='{% url 'inicio' %}'">Inicio</button>
-            <button onclick="location.href='{% url 'sobre_nosotros' %}'">Sobre Nosotros</button>
-            <button onclick="location.href='{% url 'contacto' %}'">Contacto</button>
-            <button onclick="location.href='{% url 'nuestro_equipo' %}'">Nuestro Equipo</button>
-            <div class="search">
-                <input type="search" placeholder="Buscar...">
-                <img src="search-icon.png" alt="Buscar">
-            </div>
-        </nav>
-
-        <div class="container">
-            {% block content %}
-            <h1>Esto es home</h1>
-            {% endblock %}
+            .nav-links.active {
+                display: flex;
+            }
+            
+            .search-container.active {
+                display: flex;
+                width: 100%;
+                margin-top: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar" id="navbar">
+        <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+        <img src="{{ imagen.url }}" alt="Marmoten Production Logo" class="navbar-logo">
+        <div class="nav-links" id="navLinks">
+            <a href="{% url 'inicio' %}" class="nav-link active">Inicio</a>
+            <a href="{% url 'sobre_nosotros' %}" class="nav-link">Sobre Nosotros</a>
+            <a href="{% url 'contacto' %}" class="nav-link">Contacto</a>
+            <a href="{% url 'nuestro_equipo' %}" class="nav-link">Nuestro Equipo</a>
         </div>
-    </body>
-    </html>
+        <div class="search-container" id="searchContainer">
+            <input type="search" class="search-input" placeholder="Buscar...">
+            <img src="search-icon.png" alt="Buscar" class="search-icon">
+        </div>
+    </nav>
+
+    <div class="container">
+        {% block content %}
+        <!-- Tu contenido aquí -->
+        {% endblock %}
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const navLinks = document.getElementById('navLinks');
+            const searchContainer = document.getElementById('searchContainer');
+            
+            // Menú móvil
+            mobileMenuBtn.addEventListener('click', function() {
+                navLinks.classList.toggle('active');
+                searchContainer.classList.toggle('active');
+                this.textContent = navLinks.classList.contains('active') ? '✕' : '☰';
+            });
+            
+            // Marcar enlace activo
+            const currentUrl = window.location.pathname;
+            document.querySelectorAll('.nav-link').forEach(link => {
+                if (link.getAttribute('href') === currentUrl) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
