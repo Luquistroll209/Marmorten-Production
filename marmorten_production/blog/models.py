@@ -62,9 +62,17 @@ class Equipo(models.Model):
         return self.nombre
 
 class ConfiguracionSitio(models.Model):
-    titulo_sitio = models.CharField(max_length=200, default="Marmorten Production")
+    titulo_sitio = models.CharField(max_length=200, default="Marmoten Production")
     logo = models.ImageField(upload_to='config/', blank=True, null=True)
-    # ... otros campos ...
+    email_contacto = models.EmailField(default='contacto@marmoten.com')
+    telefono_contacto = models.CharField(max_length=20, blank=True)
+    direccion = models.TextField(blank=True)
+    sobre_nosotros = models.TextField(blank=True)
+    mision = models.TextField(blank=True)
+    vision = models.TextField(blank=True)
+    facebook_url = models.URLField(blank=True)
+    instagram_url = models.URLField(blank=True)
+    youtube_url = models.URLField(blank=True)
     
     class Meta:
         verbose_name_plural = "Configuraciones del Sitio"

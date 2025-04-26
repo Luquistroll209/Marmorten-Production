@@ -63,8 +63,22 @@ class ConfiguracionSitioAdmin(admin.ModelAdmin):
     def has_add_permission(self, request):
         return not ConfiguracionSitio.objects.exists()
     
+    fieldsets = (
+        ('Información Básica', {
+            'fields': ('titulo_sitio', 'logo', 'email_contacto', 'telefono_contacto', 'direccion')
+        }),
+        ('Contenido del Sitio', {
+            'fields': ('sobre_nosotros', 'mision', 'vision')
+        }),
+        ('Redes Sociales', {
+            'fields': ('facebook_url', 'instagram_url', 'youtube_url')
+        }),
+    )
+    
     def logo_preview(self, obj):
         if obj.logo:
             return format_html('<img src="{}" style="max-height: 50px;"/>', obj.logo.url)
         return "-"
     logo_preview.short_description = "Logo"
+    
+    list_display = ['titulo_sitio', 'email_contacto', 'logo_preview']

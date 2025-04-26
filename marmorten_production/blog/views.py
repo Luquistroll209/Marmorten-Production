@@ -6,12 +6,19 @@ from .forms import ContactoForm  # Crearás este formulario después
 
 # Vistas existentes (inicio, detalle_post) se mantienen igual
 def inicio(request):
-    # Tu código existente para la vista inicio
+    config = ConfiguracionSitio.objects.first()
     carrusel_items = CarruselPost.objects.filter(activo=True).select_related('post').order_by('orden')
     posts_destacados = Post.objects.filter(destacado=True).exclude(imagen='').order_by('-fecha_publicacion')[:4]
     ultimos_posts = Post.objects.all().order_by('-fecha_publicacion')[:6]
     
+    # Debug: Imprime los datos en la consola del servidor
+    print("Config:", config)
+    print("Carrusel items:", carrusel_items)
+    print("Posts destacados:", posts_destacados)
+    print("Últimos posts:", ultimos_posts)
+    
     context = {
+        'config': config,
         'carrusel_items': carrusel_items,
         'posts_destacados': posts_destacados,
         'ultimos_posts': ultimos_posts
@@ -84,7 +91,14 @@ def nuestro_equipo(request):
 #aceso a cada sitio
 
 def sobre_nosotros(request):
-    return render(request, 'blog/sobre_nosotros.html')
+    config = ConfiguracionSitio.objects.first()  #  Importante
+    equipo = Equipo.objects.all().order_by('orden')[:4]  # Solo muestra 4 miembros
+    
+    context = {
+        'config': config,  #  Pasa la configuración
+        'equipo': equipo,
+    }
+    return render(request, 'blog/sobre_nosotros.html', context)
 
 def contacto(request):
     return render(request, 'blog/contacto.html')

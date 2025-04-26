@@ -26,7 +26,7 @@
             background-color: var(--color-fondo);
             color: var(--color-texto);
             line-height: 1.6;
-            padding-top: 90px; /* Espacio para el navbar flotante */
+            padding-top: 70px; /* Espacio para el navbar flotante */
         }
 
         /* Navbar Flotante Mejorado */
@@ -37,7 +37,7 @@
             justify-content: space-between;
             align-items: center;
             position: fixed;
-            top: 20px; /* Margen superior */
+            top: 10px; /* Margen superior */
             left: 5%; /* Margen lateral */
             right: 5%; /* Margen lateral */
             z-index: 1000;
@@ -51,11 +51,12 @@
 
         .navbar-logo {
             height: 50px;
+            transform: scale(1.5);
             transition: var(--transicion);
         }
 
         .navbar-logo:hover {
-            transform: scale(1.05);
+            transform: scale(1.7);
         }
 
         .nav-links {
@@ -194,7 +195,7 @@
 <body>
     <nav class="navbar" id="navbar">
         <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
-        <img src="{{ imagen.url }}" alt="Marmoten Production Logo" class="navbar-logo">
+        <img src="{{ config.logo.url }}" alt="Marmoten Production Logo" class="navbar-logo">
         <div class="nav-links" id="navLinks">
             <a href="{% url 'inicio' %}" class="nav-link active">Inicio</a>
             <a href="{% url 'sobre_nosotros' %}" class="nav-link">Sobre Nosotros</a>
