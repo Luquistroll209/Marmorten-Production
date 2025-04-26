@@ -1,242 +1,242 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Marmorten Production{% endblock %}</title>
-    <link rel="stylesheet" href="nav.css">
-    <style>
-        /* Estilos básicos para el contenido principal */
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            line-height: 1.6;
-            background-color: #f4f4f4;
-        }
-        .container {
-            width: 80%;
-            margin: auto;
-            padding: 20px;
-        }
-        h1 {
-            color: #333;
-        }
-        nav {
-
-            display: flex;
-        
-            justify-content: center;
-        
-            align-items: center;
-        
-            gap: 40px;
-        
-            margin: 0px;
-        
-            background-color: #252631;
-        
-            padding: 25px;
-        
-            flex-wrap: wrap;
-        
-        }
-        
-        
-        
-        nav img {
-        
-            width: 10%;
-        
-            margin-right: 40px;
-        
-        }
-        
-        
-        
-        nav button {
-        
-            background-color: transparent;
-        
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        
-            text-transform: uppercase;
-        
-            color: white;
-        
-            border-color: transparent;
-        
-            transition: 0.5s;
-        
-        }
-        
-        
-        
-        nav button:hover {
-        
-            color: rgb(241, 205, 0);
-        
-            transition: 0.5s;
-        
-            cursor: pointer;
-        
-        }
-        
-        
-        
-        .search {
-        
-            display: flex;
-        
-            align-items: center;
-        
-            gap: 8px;
-        
-            border-radius: 50px;
-        
-            padding: 8px 16px;
-        
-            background-color: #12151e;
-        
-            width: 11%;
-        
-        }
-        
-        
-        
-        .search input {
-        
-            border: none;
-        
-            background: transparent;
-        
-            color: white;
-        
-            outline: none;
-        
-            font-size: 14px;
-        
-        }
-        
-        
-        
-        .search img {
-        
-            width: 20px;
-        
-            height: 20px;
-        
-            object-fit: contain;
-        
-            display: block;
-        
-            transition: 0.3s;
-        
-        }
-        
-        
-        
-        .search img:hover {
-        
-            cursor: pointer;
-        
-            filter: brightness(0.5) saturate(10%) sepia(1) hue-rotate(45deg);
-        
-        }
-        
-        
-        
-        .search input::-webkit-search-cancel-button {
-        
-            -webkit-appearance: none;
-        
-            appearance: none;
-        
-            display: none;
-        
-        }
-        
-        
-        
-        
-        
-        @media screen and (max-width: 768px) {
-        
-            nav {
-        
-                flex-direction: column;
-        
-                align-items: flex-start;
-        
+    <!DOCTYPE html>
+    <html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{% block title %}Marmorten Production{% endblock %}</title>
+        <link rel="stylesheet" href="nav.css">
+        <style>
+            /* Estilos básicos para el contenido principal */
+            body {
+                font-family: Arial, sans-serif;
+                margin: 0;
+                padding: 0;
+                line-height: 1.6;
+                background-color: #f4f4f4;
+            }
+            .container {
+                width: 80%;
+                margin: auto;
                 padding: 20px;
-        
-                gap: 20px;
-        
             }
-        
-        
-        
-            nav img {
-        
-                width: 50%;
-        
-                margin: 0 auto;
-        
+            h1 {
+                color: #333;
             }
-        
-        
-        
-            nav button {
-        
-                font-size: 16px;
-        
-                width: 100%;
-        
-                text-align: left;
-        
-                padding: 10px;
-        
-            }
-        
-        
-        
-            .search {
-        
-                width: 100%;
-        
-                justify-content: space-between;
-        
-            }
-        
-        
-        
-            .search input {
-        
-                width: 100%;
-        
-            }
-        
-        }
-        
-    </style>
-</head>
-<body>
-    <nav>
-        <img src="logo.png" alt="Marmorten Production Logo">
-        <button onclick="location.href='{% url 'inicio' %}'">Inicio</button>
-        <button onclick="location.href='{% url 'sobre_nosotros' %}'">Sobre Nosotros</button>
-        <button onclick="location.href='{% url 'contacto' %}'">Contacto</button>
-        <button onclick="location.href='{% url 'nuestro_equipo' %}'">Nuestro Equipo</button>
-        <div class="search">
-            <input type="search" placeholder="Buscar...">
-            <img src="search-icon.png" alt="Buscar">
-        </div>
-    </nav>
+            nav {
 
-    <div class="container">
-        {% block content %}
-        <h1>Esto es home</h1>
-        {% endblock %}
-    </div>
-</body>
-</html>
+                display: flex;
+            
+                justify-content: center;
+            
+                align-items: center;
+            
+                gap: 40px;
+            
+                margin: 0px;
+            
+                background-color: #252631;
+            
+                padding: 25px;
+            
+                flex-wrap: wrap;
+            
+            }
+            
+            
+            
+            nav img {
+            
+                width: 10%;
+            
+                margin-right: 40px;
+            
+            }
+            
+            
+            
+            nav button {
+            
+                background-color: transparent;
+            
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            
+                text-transform: uppercase;
+            
+                color: white;
+            
+                border-color: transparent;
+            
+                transition: 0.5s;
+            
+            }
+            
+            
+            
+            nav button:hover {
+            
+                color: rgb(241, 205, 0);
+            
+                transition: 0.5s;
+            
+                cursor: pointer;
+            
+            }
+            
+            
+            
+            .search {
+            
+                display: flex;
+            
+                align-items: center;
+            
+                gap: 8px;
+            
+                border-radius: 50px;
+            
+                padding: 8px 16px;
+            
+                background-color: #12151e;
+            
+                width: 11%;
+            
+            }
+            
+            
+            
+            .search input {
+            
+                border: none;
+            
+                background: transparent;
+            
+                color: white;
+            
+                outline: none;
+            
+                font-size: 14px;
+            
+            }
+            
+            
+            
+            .search img {
+            
+                width: 20px;
+            
+                height: 20px;
+            
+                object-fit: contain;
+            
+                display: block;
+            
+                transition: 0.3s;
+            
+            }
+            
+            
+            
+            .search img:hover {
+            
+                cursor: pointer;
+            
+                filter: brightness(0.5) saturate(10%) sepia(1) hue-rotate(45deg);
+            
+            }
+            
+            
+            
+            .search input::-webkit-search-cancel-button {
+            
+                -webkit-appearance: none;
+            
+                appearance: none;
+            
+                display: none;
+            
+            }
+            
+            
+            
+            
+            
+            @media screen and (max-width: 768px) {
+            
+                nav {
+            
+                    flex-direction: column;
+            
+                    align-items: flex-start;
+            
+                    padding: 20px;
+            
+                    gap: 20px;
+            
+                }
+            
+            
+            
+                nav img {
+            
+                    width: 50%;
+            
+                    margin: 0 auto;
+            
+                }
+            
+            
+            
+                nav button {
+            
+                    font-size: 16px;
+            
+                    width: 100%;
+            
+                    text-align: left;
+            
+                    padding: 10px;
+            
+                }
+            
+            
+            
+                .search {
+            
+                    width: 100%;
+            
+                    justify-content: space-between;
+            
+                }
+            
+            
+            
+                .search input {
+            
+                    width: 100%;
+            
+                }
+            
+            }
+            
+        </style>
+    </head>
+    <body>
+        <nav>
+            <img src="logo.png" alt="Marmorten Production Logo">
+            <button onclick="location.href='{% url 'inicio' %}'">Inicio</button>
+            <button onclick="location.href='{% url 'sobre_nosotros' %}'">Sobre Nosotros</button>
+            <button onclick="location.href='{% url 'contacto' %}'">Contacto</button>
+            <button onclick="location.href='{% url 'nuestro_equipo' %}'">Nuestro Equipo</button>
+            <div class="search">
+                <input type="search" placeholder="Buscar...">
+                <img src="search-icon.png" alt="Buscar">
+            </div>
+        </nav>
+
+        <div class="container">
+            {% block content %}
+            <h1>Esto es home</h1>
+            {% endblock %}
+        </div>
+    </body>
+    </html>

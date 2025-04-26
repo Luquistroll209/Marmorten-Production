@@ -4,351 +4,423 @@
 
 {% block content %}
 <style>
-    /* Estilo basado en el logo - Negro/Marrón/Blanco */
-    :root {
-        --color-fondo: #121212;  /* Negro profundo */
-        --color-accento: #3a2e1e;  /* Marrón oscuro */
-        --color-destacado: #d4af37;  /* Dorado similar al logo */
-        --color-texto: #e0e0e0;  /* Blanco roto */
-    }
-    
-    body {
-        background-color: var(--color-fondo);
-        color: var(--color-texto);
-        font-family: 'Montserrat', sans-serif;
-        margin: 0;
-        padding: 0;
-        line-height: 1.6;
-    }
+:root {
+  --color-fondo: #f5f0e6; /* Fondo marrón claro cálido */
+  --color-accento: #8B4513; /* Marrón tierra */
+  --color-destacado: #D4A017; /* Dorado oscuro */
+  --color-card: #f8f1e5; /* Fondo tarjetas marrón claro */
+  --color-borde: #d2b48c; /* Marrón claro para bordes */
+  --color-texto: #3E2723; /* Marrón muy oscuro */
+  --color-texto-claro: #5D4037; /* Marrón medio */
+  --sombra: 0 4px 12px rgba(139, 69, 19, 0.15);
+  --borde-redondeado: 10px;
+  --transicion: all 0.3s ease;
+}
 
-    .main-container {
-        max-width: 1800px;
-        margin: 0 auto;
-        padding: 0 20px;
-    }
+/* Base Styles */
+body {
+  background-color: var(--color-fondo);
+  color: var(--color-texto);
+  font-family: 'Montserrat', sans-serif;
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+}
 
-    /* Tipografía similar al logo */
-    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap');
+.main-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
 
-    .section-title {
-        text-align: center;
-        font-size: 2.2rem;
-        margin: 40px 0 30px;
-        text-transform: uppercase;
-        letter-spacing: 3px;
-        color: var(--color-texto);
-        font-weight: 600;
-        position: relative;
-    }
+/* Typography */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
 
-    .section-title:after {
-        content: '';
-        display: block;
-        width: 80px;
-        height: 2px;
-        background: var(--color-destacado);
-        margin: 15px auto;
-    }
+h1, h2, h3, h4 {
+  font-weight: 600;
+  line-height: 1.2;
+  margin-top: 0;
+}
 
-    /* Carrusel con bordes redondeados */
-    .hero-carousel {
-        width: 100%;
-        height: 60vh;
-        max-height: 600px;
-        min-height: 400px;
-        position: relative;
-        overflow: hidden;
-        margin-bottom: 40px;
-        border-radius: 12px;  /* Bordes redondeados */
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-    }
+.section-title {
+  text-align: center;
+  font-size: 2.2rem;
+  margin: 50px 0 30px;
+  color: var(--color-accento);
+  position: relative;
+  display: inline-block;
+  padding-bottom: 10px;
+  width: auto;
+  left: 50%;
+  transform: translateX(-50%);
+}
 
-    .carousel-inner {
-        display: flex;
-        height: 100%;
-        transition: transform 0.8s cubic-bezier(0.33, 1, 0.68, 1);
-    }
+.section-title:after {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 3px;
+  background: var(--color-destacado);
+  margin: 15px auto 0;
+}
 
-    .carousel-slide {
-        min-width: 100%;
-        position: relative;
-    }
+/* Hero Carousel */
+.hero-carousel {
+  width: 100%;
+  height: 65vh;
+  max-height: 300px;
+  min-height: 100px;
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--borde-redondeado);
+  box-shadow: var(--sombra);
+}
 
-    .carousel-image {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        filter: brightness(0.8);
-        border-radius: 12px;  /* Bordes redondeados para imágenes */
-    }
+.carousel-inner {
+  display: flex;
+  height: 100%;
+  transition: transform 0.8s cubic-bezier(0.33, 1, 0.68, 1);
+}
 
-    .carousel-caption {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        padding: 30px;
-        background: linear-gradient(to top, rgba(18, 18, 18, 0.9), transparent);
-        border-bottom-left-radius: 12px;
-        border-bottom-right-radius: 12px;
-    }
+.carousel-slide {
+  min-width: 100%;
+  position: relative;
+}
 
-    .carousel-caption h2 {
-        font-size: 2.2rem;
-        margin-bottom: 10px;
-        color: var(--color-destacado);
-        text-transform: uppercase;
-        letter-spacing: 2px;
-        font-weight: 600;
-    }
+.carousel-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.85);
+  border-radius: var(--borde-redondeado);
+}
 
-    .carousel-caption p {
-        font-size: 1rem;
-        max-width: 700px;
-        margin-bottom: 20px;
-        color: var(--color-texto);
-    }
+.carousel-caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 40px;
+  background: linear-gradient(to top, rgba(139, 69, 19, 0.9), transparent);
+  border-bottom-left-radius: var(--borde-redondeado);
+  border-bottom-right-radius: var(--borde-redondeado);
+}
 
-    .carousel-nav {
-        position: absolute;
-        top: 50%;
-        width: 100%;
-        display: flex;
-        justify-content: space-between;
-        transform: translateY(-50%);
-        padding: 0 20px;
-        box-sizing: border-box;
-    }
+.carousel-caption h2 {
+  font-size: 2.4rem;
+  margin-bottom: 15px;
+  color: white;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
 
-    .carousel-btn {
-        background: rgba(58, 46, 30, 0.7);  /* Marrón oscuro translúcido */
-        color: var(--color-destacado);
-        border: none;
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        font-size: 1.2rem;
-        cursor: pointer;
-        backdrop-filter: blur(5px);
-        transition: all 0.3s;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
+.carousel-caption p {
+  font-size: 1.1rem;
+  max-width: 700px;
+  margin-bottom: 25px;
+  color: rgba(255, 255, 255, 0.9);
+}
+.carousel-caption a {
+    color: #000000;
+  }
 
-    .carousel-btn:hover {
-        background: var(--color-destacado);
-        color: var(--color-accento);
-    }
+.carousel-nav {
+  position: absolute;
+  top: 50%;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  transform: translateY(-50%);
+  padding: 0 25px;
+  z-index: 2;
+}
 
-    /* Producciones Destacadas - Estilo marrón/negro */
-    .featured-posts {
-        padding: 30px 0;
-    }
+.carousel-btn {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(8px);
+  color: white;
+  border: none;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  font-size: 1.3rem;
+  cursor: pointer;
+  transition: var(--transicion);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
 
-    .featured-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-        gap: 25px;
-        margin: 30px 0;
-    }
+.carousel-btn:hover {
+  background: var(--color-destacado);
+  transform: scale(1.1);
+}
 
-    .featured-item {
-        background: var(--color-accento);
-        border-radius: 8px;
-        overflow: hidden;
-        transition: all 0.3s;
-        border-top: 3px solid var(--color-destacado);
-    }
+/* Producciones Destacadas - 3 columnas */
+.featured-posts {
+  padding: 40px 0;
+  text-align: center;
+}
 
-    .featured-item:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 10px 20px rgba(212, 175, 55, 0.2);
-    }
+.featured-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+  margin: 40px 0;
+}
 
-    .featured-image {
-        width: 100%;
-        height: 200px;
-        object-fit: cover;
-        border-top-left-radius: 8px;
-        border-top-right-radius: 8px;
-    }
+.featured-item {
+  background: var(--color-card);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--borde-redondeado);
+  overflow: hidden;
+  transition: var(--transicion);
+  box-shadow: var(--sombra);
+  border-top: 3px solid var(--color-destacado);
+}
 
-    .featured-content {
-        padding: 20px;
-    }
+.featured-item:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 25px rgba(139, 69, 19, 0.2);
+  border-color: var(--color-destacado);
+}
 
-    .featured-content h3 {
-        font-size: 1.3rem;
-        margin: 0 0 10px;
-        color: var(--color-texto);
-        text-transform: uppercase;
-        letter-spacing: 1px;
-    }
+.featured-image {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  transition: var(--transicion);
+}
 
-    .featured-content p {
-        margin-bottom: 15px;
-        color: #c2c2c2;
-        font-size: 0.9rem;
-    }
+.featured-item:hover .featured-image {
+  transform: scale(1.03);
+}
 
-    .read-more {
-        color: var(--color-destacado);
-        text-decoration: none;
-        font-weight: 600;
-        font-size: 0.8rem;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        display: inline-flex;
-        align-items: center;
-        transition: color 0.3s;
-    }
+.featured-content {
+  padding: 25px;
+  background: white;
+}
 
-    .read-more:hover {
-        color: var(--color-texto);
-    }
+.featured-content h3 {
+  font-size: 1.4rem;
+  margin: 0 0 12px;
+  color: var(--color-accento);
+}
 
-    .read-more:after {
-        content: '→';
-        margin-left: 5px;
-        transition: transform 0.3s;
-    }
+.featured-content p {
+  margin-bottom: 20px;
+  color: var(--color-texto-claro);
+  font-size: 0.95rem;
+}
 
-    .read-more:hover:after {
-        transform: translateX(3px);
-    }
+/* Últimas Producciones - 2 columnas */
+.latest-posts {
+  padding: 50px 0 70px;
+  text-align: center;
+}
 
-    /* Últimas Producciones */
-    .latest-posts {
-        padding: 30px 0 50px;
-    }
+.post-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 40px;
+  margin: 40px 0;
+}
 
-    .post-list {
-        display: grid;
-        gap: 30px;
-    }
+.post-item {
+  background: var(--color-card);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--borde-redondeado);
+  overflow: hidden;
+  transition: var(--transicion);
+  box-shadow: var(--sombra);
+  border-left: 3px solid var(--color-destacado);
+}
 
-    .post-item {
-        background: var(--color-accento);
-        border-radius: 8px;
-        overflow: hidden;
-        display: grid;
-        grid-template-columns: 1fr 2fr;
-        gap: 25px;
-        transition: all 0.3s;
-        border-left: 3px solid var(--color-destacado);
-    }
+.post-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(139, 69, 19, 0.1);
+  border-color: var(--color-destacado);
+}
 
-    .post-item:hover {
-        transform: scale(1.01);
-    }
+.post-image {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  transition: var(--transicion);
+}
 
-    .post-image {
-        width: 100%;
-        height: 100%;
-        min-height: 200px;
-        object-fit: cover;
-        border-top-left-radius: 8px;
-        border-bottom-left-radius: 8px;
-    }
+.post-item:hover .post-image {
+  transform: scale(1.02);
+}
 
-    .post-content {
-        padding: 25px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-    }
+.post-content {
+  padding: 30px;
+  background: white;
+}
 
-    .post-title {
-        font-size: 1.5rem;
-        margin: 0 0 10px;
-        color: var(--color-destacado);
-        text-transform: uppercase;
-        letter-spacing: 1px;
-    }
+.post-title {
+  font-size: 1.6rem;
+  margin: 0 0 15px;
+  color: var(--color-accento);
+}
 
-    .post-meta {
-        color: #aaaaaa;
-        margin-bottom: 15px;
-        font-size: 0.8rem;
-    }
+.post-meta {
+  color: var(--color-accento);
+  margin-bottom: 15px;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
 
-    .post-excerpt {
-        margin-bottom: 20px;
-        color: #d0d0d0;
-        font-size: 0.95rem;
-        line-height: 1.7;
-    }
+.post-excerpt {
+  margin-bottom: 25px;
+  color: var(--color-texto-claro);
+  font-size: 1rem;
+  line-height: 1.7;
+}
 
-    /* Responsive */
-    @media (max-width: 1200px) {
-        .hero-carousel {
-            height: 50vh;
-        }
-        
-        .carousel-caption h2 {
-            font-size: 1.8rem;
-        }
-    }
+/* Buttons & Links */
+.read-more {
+  display: inline-flex;
+  align-items: center;
+  color: var(--color-accento);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: var(--transicion);
+  padding-bottom: 2px;
+  border-bottom: 2px solid var(--color-destacado);
+}
 
-    @media (max-width: 992px) {
-        .post-item {
-            grid-template-columns: 1fr;
-        }
-        
-        .post-image {
-            height: 250px;
-            border-bottom-left-radius: 0;
-            border-top-right-radius: 8px;
-        }
-    }
+.read-more:hover {
+  color: var(--color-destacado);
+}
 
-    @media (max-width: 768px) {
-        .hero-carousel {
-            height: 45vh;
-            min-height: 350px;
-            border-radius: 8px;
-        }
-        
-        .carousel-image {
-            border-radius: 8px;
-        }
-        
-        .carousel-caption {
-            padding: 20px;
-            border-radius: 0 0 8px 8px;
-        }
-        
-        .carousel-caption h2 {
-            font-size: 1.5rem;
-        }
-        
-        .featured-grid {
-            grid-template-columns: 1fr;
-        }
-        
-        .section-title {
-            font-size: 1.8rem;
-        }
-    }
+.read-more:after {
+  content: '→';
+  margin-left: 8px;
+  transition: transform 0.3s;
+}
 
-    @media (max-width: 576px) {
-        .hero-carousel {
-            height: 40vh;
-            min-height: 300px;
-        }
-        
-        .carousel-btn {
-            width: 35px;
-            height: 35px;
-            font-size: 1rem;
-        }
-        
-        .section-title {
-            font-size: 1.5rem;
-            letter-spacing: 2px;
-        }
-    }
+.read-more:hover:after {
+  transform: translateX(5px);
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .hero-carousel {
+    height: 55vh;
+  }
+  
+  .carousel-caption {
+    padding: 30px;
+  }
+  
+  .carousel-caption h2 {
+    font-size: 2rem;
+  }
+  
+  .featured-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  .post-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 992px) {
+  .section-title {
+    font-size: 1.8rem;
+    margin: 40px 0 30px;
+  }
+  
+  .featured-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .post-list {
+    grid-template-columns: 1fr;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-carousel {
+    height: 50vh;
+    min-height: 350px;
+    margin-bottom: 40px;
+  }
+  
+  .carousel-caption {
+    padding: 25px;
+  }
+  
+  .carousel-caption h2 {
+    font-size: 1.6rem;
+    margin-bottom: 10px;
+  }
+  
+  .carousel-caption p {
+    font-size: 0.95rem;
+    margin-bottom: 15px;
+  }
+  
+  .carousel-btn {
+    width: 40px;
+    height: 40px;
+    font-size: 1.1rem;
+  }
+  
+  .featured-grid {
+    grid-template-columns: 1fr;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+@media (max-width: 576px) {
+  .hero-carousel {
+    height: 45vh;
+    min-height: 300px;
+    border-radius: 8px;
+  }
+  
+  .carousel-image {
+    border-radius: 8px;
+  }
+  
+  .carousel-caption {
+    padding: 20px;
+    border-radius: 0 0 8px 8px;
+  }
+  
+  .carousel-caption h2 {
+    font-size: 1.4rem;
+  }
+  
+  .section-title {
+    font-size: 1.5rem;
+    margin: 30px 0 25px;
+  }
+  
+  .section-title:after {
+    width: 80%;
+    height: 2px;
+    margin: 10px auto 0;
+  }
+  
+  .featured-content, 
+  .post-content {
+    padding: 20px;
+  }
+  
+  .post-title {
+    font-size: 1.4rem;
+  }
+}
 </style>
 
 <div class="main-container">
@@ -375,7 +447,7 @@
         </div>
     </section>
 
-    <!-- Producciones Destacadas -->
+    <!-- Producciones Destacadas - 3 columnas -->
     <section class="featured-posts">
         <h2 class="section-title">PRODUCCIONES DESTACADAS</h2>
         <div class="featured-grid">
@@ -394,7 +466,7 @@
         </div>
     </section>
 
-    <!-- Últimas Producciones -->
+    <!-- Últimas Producciones - 2 columnas -->
     <section class="latest-posts">
         <h2 class="section-title">ÚLTIMAS PRODUCCIONES</h2>
         <div class="post-list">
