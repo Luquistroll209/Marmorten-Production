@@ -8,10 +8,9 @@ from .forms import ContactoForm  # Crearás este formulario después
 def inicio(request):
     config = ConfiguracionSitio.objects.first()
     carrusel_items = CarruselPost.objects.filter(activo=True).select_related('post').order_by('orden')
-    posts_destacados = Post.objects.filter(destacado=True).exclude(imagen='').order_by('-fecha_publicacion')[:4]
-    ultimos_posts = Post.objects.all().order_by('-fecha_publicacion')[:6]
+    posts_destacados = Post.objects.filter(destacado=True).exclude(imagen='').order_by('-fecha_publicacion')#[:4]
+    ultimos_posts = Post.objects.all().order_by('-fecha_publicacion')#[:6]
     
-    # Debug: Imprime los datos en la consola del servidor
     print("Config:", config)
     print("Carrusel items:", carrusel_items)
     print("Posts destacados:", posts_destacados)
@@ -101,8 +100,19 @@ def sobre_nosotros(request):
     return render(request, 'blog/sobre_nosotros.html', context)
 
 def contacto(request):
-    return render(request, 'blog/contacto.html')
+    config = ConfiguracionSitio.objects.first()  #  Importante
+    context = {
+        'config': config,  #  Pasa la configuración
+    }
+    return render(request, 'blog/contacto.html', context)
 
 def nuestro_equipo(request):
+    config = ConfiguracionSitio.objects.first()  #  Importante
     equipo = Equipo.objects.all()
-    return render(request, 'blog/nuestro_equipo.html', {'equipo': equipo})
+
+    config = ConfiguracionSitio.objects.first()  #  Importante
+    context = {
+        'config': config,  #  Pasa la configuración
+        'equipo': equipo,
+    }
+    return render(request,  'blog/nuestro_equipo.html', context)

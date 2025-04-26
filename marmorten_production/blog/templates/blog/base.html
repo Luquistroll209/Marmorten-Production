@@ -6,10 +6,10 @@
     <title>{% block title %}{% endblock %}</title>
     <style>
         :root {
-            --color-fondo: #f8f8f8; /* Color de fondo claro */
-            --color-texto: #3a2e26; /* Marrón oscuro para texto */
-            --color-acento: #D4AF37; /* Dorado Marmoten */
-            --color-borde: rgba(212, 175, 55, 0.3); /* Borde dorado sutil */
+            --color-fondo: #f8f8f8;
+            --color-texto: #3a2e26;
+            --color-acento: #D4AF37;
+            --color-borde: rgba(212, 175, 55, 0.3);
             --sombra: 0 4px 20px rgba(0, 0, 0, 0.1);
             --borde-redondeado: 15px;
             --transicion: all 0.3s ease;
@@ -24,9 +24,10 @@
         body {
             font-family: 'Inter', sans-serif;
             background-color: var(--color-fondo);
+
             color: var(--color-texto);
             line-height: 1.6;
-            padding-top: 70px; /* Espacio para el navbar flotante */
+            padding-top: 70px; 
         }
 
         /* Navbar Flotante Mejorado */
@@ -37,9 +38,9 @@
             justify-content: space-between;
             align-items: center;
             position: fixed;
-            top: 10px; /* Margen superior */
-            left: 5%; /* Margen lateral */
-            right: 5%; /* Margen lateral */
+            top: 10px;
+            left: 5%;
+            right: 5%;
             z-index: 1000;
             box-shadow: var(--sombra);
             border-radius: var(--borde-redondeado);
@@ -47,6 +48,8 @@
             transition: var(--transicion);
             max-width: 90%;
             margin: 0 auto;
+            background-color:rgba(165, 165, 165, 0.6);
+            backdrop-filter: blur(7px);
         }
 
         .navbar-logo {
@@ -204,13 +207,14 @@
         </div>
         <div class="search-container" id="searchContainer">
             <input type="search" class="search-input" placeholder="Buscar...">
-            <img src="search-icon.png" alt="Buscar" class="search-icon">
+            <img src="/static/blog/img/search.png" alt="Buscar" class="search-icon">
+            <!--Esta pagina web fue hecha por Luquistroll209, por si casualidad quieres modificar el codigo hazlo bajo tu responsabilidad, si se rompe no es mi culpa-->
         </div>
     </nav>
 
     <div class="container">
         {% block content %}
-        <!-- Tu contenido aquí -->
+        <!-- El contenido a poner -->
         {% endblock %}
     </div>
 
