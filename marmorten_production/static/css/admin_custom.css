@@ -1,0 +1,31 @@
+/* Estilo para campos organizados */
+fieldset.extrapretty {
+    background: #f9f9f9;
+    border-radius: 5px;
+    padding: 20px !important;
+    margin-top: 20px;
+}
+
+/* Estilo para descripciones */
+fieldset .description {
+    font-size: 13px !important;
+    color: #666 !important;
+    margin-bottom: 15px !important;
+}
+
+/* Estilo para inlines */
+.inline-group .tabular {
+    background: #fff;
+    border: 1px solid #eee;
+}
+
+/* Mejor visualización de campos */
+.form-row {
+    padding: 10px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+/* Botones más visibles */
+.submit-row input {
+    font-weight: bold;
+}

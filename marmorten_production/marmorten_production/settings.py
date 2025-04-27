@@ -27,7 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
-
+CKEDITOR_BASEPATH = "/static/ckeditor/ckeditor/"
 # Application definition
 
 INSTALLED_APPS = [
@@ -70,6 +70,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'marmorten_production.wsgi.application'
 
+STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'static'
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases

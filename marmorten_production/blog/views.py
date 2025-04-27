@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.core.mail import send_mail
 from django.conf import settings
-from .models import Post, CarruselPost, Equipo, ConfiguracionSitio
+from .models import Post, CarruselPost, Equipo, ConfiguracionSitio, SeccionPersonalizable
 from .forms import ContactoForm  # Crearás este formulario después
 
 # Vistas existentes (inicio, detalle_post) se mantienen igual
@@ -87,15 +87,15 @@ def nuestro_equipo(request):
     return render(request, 'blog/nuestro_equipo.html', context)
 
 
-#aceso a cada sitio
-
 def sobre_nosotros(request):
-    config = ConfiguracionSitio.objects.first()  #  Importante
-    equipo = Equipo.objects.all().order_by('orden')[:4]  # Solo muestra 4 miembros
+    config = ConfiguracionSitio.objects.first()
+    secciones = SeccionPersonalizable.objects.all().order_by('orden')
+    banner = secciones.filter(tipo='IMAGEN').first()
     
     context = {
-        'config': config,  #  Pasa la configuración
-        'equipo': equipo,
+        'config': config,
+        'secciones': secciones,
+        'banner': banner 
     }
     return render(request, 'blog/sobre_nosotros.html', context)
 

@@ -3,56 +3,227 @@
 {% block title %}Sobre Nosotros - {{ config.titulo_sitio }}{% endblock %}
 
 {% block content %}
-<div class="about-container" style="max-width: 1200px; margin: 0 auto; padding: 40px 20px;">
-    <!-- Sección "Sobre Nosotros" -->
-    <section class="about-section" style="margin-bottom: 60px;">
-        <h1 style="text-align: center; margin-bottom: 30px; color: var(--color-acento);">Sobre {{ config.titulo_sitio }}</h1>
-        
-        {% if config.sobre_nosotros %}
-            <div class="about-content" style="background: white; padding: 30px; border-radius: var(--borde-redondeado); box-shadow: var(--sombra);">
-                {{ config.sobre_nosotros|linebreaks }}
-            </div>
-        {% else %}
-            <p style="text-align: center; color: #666;">⚠️ Aún no hay información configurada. Edítala en el <a href="/admin/blog/configuracionsitio/">Admin</a>.</p>
-        {% endif %}
+<div class="sobre-nosotros-container">
+    <!-- Banner Principal -->
+    {% if banner %}
+    <section class="banner-principal">
+        <img src="{{ banner.imagen.url }}" alt="{{ banner.titulo }}" class="banner-img">
+        <div class="banner-texto">
+            <h1>{{ banner.titulo }}</h1>
+            {% if banner.contenido_texto %}
+            <p>{{ banner.contenido_texto }}</p>
+            {% endif %}
+        </div>
     </section>
-
-    <!-- Sección Misión y Visión -->
-    {% if config.mision or config.vision %}
-    <div class="mission-vision" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-bottom: 60px;">
-        {% if config.mision %}
-        <div class="card" style="background: white; padding: 25px; border-radius: var(--borde-redondeado); box-shadow: var(--sombra);">
-            <h2 style="color: var(--color-acento); margin-bottom: 15px;">Nuestra Misión</h2>
-            <p>{{ config.mision }}</p>
-        </div>
-        {% endif %}
-        
-        {% if config.vision %}
-        <div class="card" style="background: white; padding: 25px; border-radius: var(--borde-redondeado); box-shadow: var(--sombra);">
-            <h2 style="color: var(--color-acento); margin-bottom: 15px;">Nuestra Visión</h2>
-            <p>{{ config.vision }}</p>
-        </div>
-        {% endif %}
-    </div>
     {% endif %}
 
-    <!-- Sección Equipo (opcional) -->
-    <section class="team-section">
-        <h2 style="text-align: center; margin-bottom: 40px;">Conoce a nuestro equipo</h2>
-        <div class="equipo-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 30px;">
-            {% for miembro in equipo %}
-            <div class="equipo-card" style="background: white; border-radius: var(--borde-redondeado); overflow: hidden; box-shadow: var(--sombra); transition: var(--transicion);">
-                <div style="height: 320px; overflow: hidden;">
-                    <img src="{{ miembro.foto.url }}" alt="{{ miembro.nombre }}" style="width: 100%; height: 100%; object-fit: cover;">
+    <!-- Contenido Principal -->
+    <div class="contenido-principal">
+        {% for seccion in secciones %}
+            {% if seccion.tipo == 'TEXTO' and seccion != banner %}
+            <section class="seccion-texto {{ seccion.formato_texto|lower }}">
+                <h2>{{ seccion.titulo }}</h2>
+                <div class="texto-contenido">
+                    {{ seccion.contenido_texto|linebreaks }}
                 </div>
-                <div style="padding: 25px;">
-                    <h3 style="margin: 0 0 5px; color: var(--color-texto);">{{ miembro.nombre }}</h3>
-                    <p style="color: var(--color-acento); margin: 0 0 15px; font-weight: 600;">{{ miembro.puesto }}</p>
-                    <p style="color: var(--color-texto-claro); margin-bottom: 20px;">{{ miembro.biografia|truncatechars:150 }}</p>
+            </section>
+
+            {% elif seccion.tipo == 'IMAGEN' and seccion != banner %}
+            <section class="seccion-imagen">
+                <div class="imagen-contenedor">
+                    <img src="{{ seccion.imagen.url }}" alt="{{ seccion.titulo }}">
+                    {% if seccion.contenido_texto %}
+                    <div class="pie-imagen">
+                        {{ seccion.contenido_texto }}
+                    </div>
+                    {% endif %}
                 </div>
-            </div>
-            {% endfor %}
-        </div>
-    </section>
+            </section>
+
+            {% elif seccion.tipo == 'CAROUSEL' %}
+            <section class="seccion-carrusel">
+                <h2>{{ seccion.titulo }}</h2>
+                <div class="carrusel">
+                    {% for imagen in seccion.imagenes_carrusel.all %}
+                    <div class="carrusel-item">
+                        <img src="{{ imagen.imagen.url }}" alt="{{ imagen.titulo }}">
+                        {% if imagen.titulo %}
+                        <div class="carrusel-caption">
+                            {{ imagen.titulo }}
+                        </div>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+            </section>
+
+            {% elif seccion.tipo == 'ENLACE' %}
+            <section class="seccion-enlace">
+                <a href="{{ seccion.enlace_url }}" target="_blank" class="boton-enlace">
+                    {{ seccion.titulo }}
+                    {% if seccion.contenido_texto %}
+                    <span class="descripcion-enlace">{{ seccion.contenido_texto }}</span>
+                    {% endif %}
+                </a>
+            </section>
+            {% endif %}
+        {% endfor %}
+    </div>
 </div>
+
+
+<style>
+    /* Estilos básicos */
+    .sobre-nosotros-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+    
+    .banner-principal {
+        position: relative;
+        margin-bottom: 40px;
+    }
+    
+    .banner-img {
+        width: 100%;
+        max-height: 500px;
+        object-fit: cover;
+        border-radius: 8px;
+    }
+    
+    .banner-texto {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: rgba(0,0,0,0.6);
+        color: white;
+        padding: 20px;
+        border-bottom-left-radius: 8px;
+        border-bottom-right-radius: 8px;
+    }
+    
+    .banner-texto h1 {
+        margin: 0;
+        font-size: 2.5em;
+    }
+    
+    .seccion-texto {
+        margin: 40px 0;
+        padding: 20px;
+        background: #f9f9f9;
+        border-radius: 8px;
+    }
+    
+    .seccion-texto.negrita {
+        font-weight: bold;
+    }
+    
+    .seccion-texto.cursiva {
+        font-style: italic;
+    }
+    
+    .seccion-imagen {
+        margin: 40px 0;
+        text-align: center;
+    }
+    
+    .imagen-contenedor img {
+        max-width: 100%;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    
+    .pie-imagen {
+        margin-top: 10px;
+        font-style: italic;
+        color: #666;
+    }
+    
+    .carrusel {
+        display: flex;
+        overflow-x: auto;
+        gap: 15px;
+        padding: 10px 0;
+    }
+    
+    .carrusel-item {
+        min-width: 300px;
+        position: relative;
+    }
+    
+    .carrusel-item img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        border-radius: 8px;
+    }
+    
+    .carrusel-caption {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: rgba(0,0,0,0.7);
+        color: white;
+        padding: 8px;
+        border-bottom-left-radius: 8px;
+        border-bottom-right-radius: 8px;
+    }
+    
+    .boton-enlace {
+        display: inline-block;
+        padding: 12px 24px;
+        background: #007bff;
+        color: white;
+        text-decoration: none;
+        border-radius: 4px;
+        transition: background 0.3s;
+    }
+    
+    .boton-enlace:hover {
+        background: #0056b3;
+    }
+    
+    .descripcion-enlace {
+        display: block;
+        font-size: 0.9em;
+        margin-top: 5px;
+    }
+</style>
+
+<script>
+    // Script básico para el carrusel
+    document.addEventListener('DOMContentLoaded', function() {
+        const carruseles = document.querySelectorAll('.carrusel');
+        carruseles.forEach(carrusel => {
+            let isDown = false;
+            let startX;
+            let scrollLeft;
+            
+            carrusel.addEventListener('mousedown', (e) => {
+                isDown = true;
+                startX = e.pageX - carrusel.offsetLeft;
+                scrollLeft = carrusel.scrollLeft;
+            });
+            
+            carrusel.addEventListener('mouseleave', () => {
+                isDown = false;
+            });
+            
+            carrusel.addEventListener('mouseup', () => {
+                isDown = false;
+            });
+            
+            carrusel.addEventListener('mousemove', (e) => {
+                if(!isDown) return;
+                e.preventDefault();
+                const x = e.pageX - carrusel.offsetLeft;
+                const walk = (x - startX) * 2;
+                carrusel.scrollLeft = scrollLeft - walk;
+            });
+        });
+    });
+</script>
 {% endblock %}
