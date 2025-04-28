@@ -157,15 +157,53 @@ class SeccionPersonalizable(models.Model):
     def __str__(self):
         return f"{self.titulo} ({self.tipo})"
 
+
+
+class SeccionSobreNosotros(models.Model):
+    TIPO_SECCION = [
+        ('TEXTO', 'Texto'),
+        ('IMAGEN', 'Imagen'),
+        ('CAROUSEL', 'Carrusel de imágenes'),
+    ]
+    
+    titulo = models.CharField(max_length=100)
+    tipo = models.CharField(max_length=10, choices=TIPO_SECCION)
+    contenido_texto = models.TextField(blank=True, null=True)
+    imagen = models.ImageField(upload_to='sobre_nosotros/secciones/', blank=True, null=True)
+    orden = models.PositiveIntegerField(default=0)
+    
+    class Meta:
+        ordering = ['orden']
+        verbose_name_plural = "Secciones Sobre Nosotros"
+
+    def __str__(self):
+        return f"{self.titulo} ({self.get_tipo_display()})"
+
 class ImagenCarrusel(models.Model):
     seccion = models.ForeignKey(
-        SeccionPersonalizable, 
-        on_delete=models.CASCADE, 
-        related_name='imagenes_carrusel'  # ¡Este nombre debe coincidir con el usado en el template!
+        SeccionSobreNosotros, 
+        related_name='imagenes_del_carrusel',  # Nombre único
+        on_delete=models.CASCADE
     )
-    imagen = models.ImageField(upload_to='carrusel/')
+    imagen = models.ImageField(upload_to='sobre_nosotros/carrusel/')
     titulo = models.CharField(max_length=100, blank=True)
     orden = models.PositiveIntegerField(default=0)
     
     class Meta:
         ordering = ['orden']
+        verbose_name_plural = "Imágenes para Carruseles"
+
+class ImagenCarruselSobreNosotros(models.Model):
+    seccion = models.ForeignKey(
+        SeccionSobreNosotros, 
+        related_name='imagenes_carrusel',
+        on_delete=models.CASCADE
+    )
+    imagen = models.ImageField(upload_to='sobre_nosotros/carrusel/')
+    titulo = models.CharField(max_length=100, blank=True)
+    orden = models.PositiveIntegerField(default=0)
+    
+    class Meta:
+        ordering = ['orden']
+        verbose_name = "Imagen de Carrusel"
+        verbose_name_plural = "Imágenes de Carrusel"
