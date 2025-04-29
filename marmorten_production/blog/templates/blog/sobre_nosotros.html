@@ -4,244 +4,236 @@
 
 {% block content %}
 <style>
-    :root {
-        --color-primary: #2c3e50;
-        --color-secondary: #D4AF37;
-        --color-text: #4a4a4a;
-        --color-light: #f8f9fa;
-        --color-border: #e0e0e0;
-        --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.05);
-        --shadow-md: 0 4px 10px rgba(0, 0, 0, 0.08);
-        --shadow-lg: 0 6px 18px rgba(0, 0, 0, 0.12);
-        --transition: all 0.25s ease;
+
+    .hero-carousel-container {
+      width: 100%;
+      position: relative;
+      overflow: hidden;
+      margin: 0;
+      border-radius: 0px 0px 40px 40px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
     }
 
-    /* Estructura general */
-    .documento-sobrenosotros {
-        margin: 30px;
-        padding: 2.5rem;
-        color: var(--color-text);
-        font-family: 'Inter', 'Segoe UI', Roboto, sans-serif;
-        background-color: #fff;
-        border-radius: 12px;
-        box-shadow: var(--shadow-md);
-        line-height: 1.6;
+    .hero-carousel {
+      width: 100%;
+      height: 40vh;
+      max-height: 800px;
+      min-height: 500px;
+      position: relative;
     }
 
-    /* Estilos para la portada */
-    .seccion-portada {
-        position: relative;
-        margin-bottom: 3rem;
-        border-radius: 12px;
-        overflow: hidden;
-        box-shadow: var(--shadow-lg);
+    .carousel-image-container {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      overflow: hidden;
     }
 
-    .imagen-portada {
-        width: 100%;
-        max-height: 500px;
-        object-fit: cover;
+    .carousel-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
     }
 
-    .contenido-portada {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
-        padding: 2rem;
-        color: white;
+    .carousel-content {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 40px;
+      background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+      color: white;
+      z-index: 3;
     }
 
-    .titulo-portada {
-        font-size: 2.5rem;
-        font-weight: 700;
-        margin-bottom: 1rem;
-        text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+    .carousel-title {
+      font-size: 3rem;
+      margin-bottom: 15px;
+      color: white;
+      font-family: 'Playfair Display', serif;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.3);
     }
 
-    .texto-portada {
-        font-size: 1.2rem;
-        max-width: 800px;
-        text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+    .carousel-description {
+      color: white;
+      max-width: 700px;
+      margin-bottom: 25px;
+      font-size: 1.2rem;
+      opacity: 0.9;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.3);
     }
 
-    /* Encabezados */
-    .titulo-seccion {
-        font-size: 1.8rem;
-        font-weight: 700;
-        color: var(--color-primary);
-        margin: 2rem 0 1.2rem;
-        position: relative;
-        padding-bottom: 0.6rem;
+    /* ESTILOS PARA CARRUSELES INTERNOS */
+    .seccion-galeria {
+      margin: 4rem 0;
     }
 
-    .titulo-seccion:after {
-        content: '';
-        position: absolute;
-        left: 0;
-        bottom: 0;
-        width: 50px;
-        height: 3px;
-        background: var(--color-secondary);
+    .glide__track {
+      overflow: visible;
     }
 
-    /* Texto */
-    .texto-formatado {
-        font-size: 1.1rem;
-        line-height: 1.7;
-        color: var(--color-text);
-        margin-bottom: 1.8rem;
-    }
-
-    /* Imágenes */
-    .seccion-imagen {
-        margin: 2.5rem 0;
-        text-align: center;
-    }
-
-    .imagen-destacada {
-        max-width: 100%;
-        height: auto;
-        border-radius: 8px;
-        box-shadow: var(--shadow-md);
-        transition: var(--transition);
-    }
-
-    .leyenda-imagen {
-        margin-top: 1rem;
-        font-size: 0.95rem;
-        color: #666;
-        font-style: italic;
-        max-width: 80%;
-        margin-left: auto;
-        margin-right: auto;
-    }
-
-    /* Galería */
-    .galeria-contemporanea {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-        gap: 1.8rem;
-        margin: 2.5rem 0;
-    }
-
-    .tarjeta-galeria {
-        background: #fff;
-        border-radius: 8px;
-        overflow: hidden;
-        box-shadow: var(--shadow-sm);
-        transition: var(--transition);
-    }
-
-    .imagen-galeria {
-        width: 100%;
-        height: 220px;
-        object-fit: cover;
-    }
-
-    .meta-galeria {
-        padding: 1rem;
-        font-size: 0.95rem;
-        color: var(--color-primary);
-        background-color: var(--color-light);
-        text-align: center;
-        border-top: 1px solid var(--color-border);
-    }
-
-    /* Carrusel */
     .glide__slides {
-        padding: 0;
-        list-style: none;
+      padding: 20px 0;
+      list-style: none;
     }
 
     .glide__slide {
-        padding: 0 10px;
+      padding: 0 15px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .glide__slide:hover {
+      transform: translateY(-5px);
     }
 
     .imagen-carrusel {
-        width: 100%;
-        height: 300px;
-        object-fit: cover;
-        border-radius: 8px;
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+      border: 1px solid rgba(0,0,0,0.05);
+    }
+
+    .glide__slide:hover .imagen-carrusel {
+      box-shadow: 0 12px 25px rgba(0,0,0,0.15);
     }
 
     .leyenda-carrusel {
-        text-align: center;
-        margin-top: 0.5rem;
-        font-size: 0.9rem;
-        color: var(--color-text);
+      text-align: center;
+      margin-top: 15px;
+      font-size: 1rem;
+      color: #333;
+      padding: 0 10px;
     }
 
     .glide__arrows {
-        display: flex;
-        justify-content: space-between;
-        margin-top: 1rem;
+      display: flex;
+      justify-content: space-between;
+      margin-top: 25px;
     }
 
     .glide__arrow {
-        background: var(--color-primary);
-        color: white;
-        border: none;
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        cursor: pointer;
-        transition: var(--transition);
+      background: #D4AF37;
+      color: white;
+      border: none;
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     }
 
     .glide__arrow:hover {
-        background: var(--color-secondary);
+      background: #B8860B;
+      transform: scale(1.1);
     }
 
-    /* Responsive */
+    /* ESTILOS GENERALES */
+    .documento-sobrenosotros {
+      max-width: 1400px;
+      margin: 3rem auto;
+      padding: 0 20px;
+    }
+
+    .titulo-seccion {
+      font-size: 2.2rem;
+      margin-bottom: 2rem;
+      color: #2c3e50;
+      font-family: 'Playfair Display', serif;
+      position: relative;
+      padding-bottom: 10px;
+    }
+
+    .titulo-seccion:after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 60px;
+      height: 3px;
+      background: #D4AF37;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 992px) {
+      .carousel-title {
+        font-size: 2.5rem;
+      }
+      
+      .imagen-carrusel {
+        height: 250px;
+      }
+    }
+
     @media (max-width: 768px) {
-        .documento-sobrenosotros {
-            padding: 1.8rem;
-            margin: 1.5rem auto;
-            border-radius: 8px;
-        }
+      .hero-carousel {
+        min-height: 400px;
+      }
+      
+      .carousel-title {
+        font-size: 2rem;
+      }
+      
+      .carousel-description {
+        font-size: 1rem;
+      }
+      
+      .imagen-carrusel {
+        height: 200px;
+      }
+      
+      .glide__arrow {
+        width: 40px;
+        height: 40px;
+      }
+    }
 
-        .titulo-portada {
-            font-size: 1.8rem;
-        }
-
-        .texto-portada {
-            font-size: 1rem;
-        }
-
-        .titulo-seccion {
-            font-size: 1.6rem;
-            margin: 1.8rem 0 1rem;
-        }
-
-        .galeria-contemporanea {
-            gap: 1.2rem;
-        }
-
-        .imagen-carrusel {
-            height: 200px;
-        }
+    @media (max-width: 576px) {
+      .hero-carousel {
+        min-height: 350px;
+      }
+      
+      .carousel-content {
+        padding: 25px;
+      }
+      
+      .carousel-title {
+        font-size: 1.8rem;
+      }
+      
+      .titulo-seccion {
+        font-size: 1.8rem;
+      }
     }
 </style>
 
-<article class="documento-sobrenosotros">
-    <!-- PORTADA -->
-    {% if portada %}
-    <section class="seccion-portada">
-        {% if portada.imagen and portada.imagen.url %}
-            <img src="{{ portada.imagen.url }}" alt="{{ portada.titulo }}" class="imagen-portada">
+<!-- PORTADA -->
+<div class="hero-carousel-container">
+  <div class="hero-carousel">
+    {% if portada and portada.imagen %}
+    <div class="carousel-image-container">
+      <img src="{{ portada.imagen.url }}" alt="{{ portada.titulo }}" class="carousel-image">
+      <div class="carousel-content">
+        <h2 class="carousel-title">{{ portada.titulo }}</h2>
+        {% if portada.contenido_texto %}
+        <p class="carousel-description">{{ portada.contenido_texto }}</p>
         {% endif %}
-        <div class="contenido-portada">
-            <h1 class="titulo-portada">{{ portada.titulo }}</h1>
-            {% if portada.contenido_texto %}
-                <div class="texto-portada">{{ portada.contenido_texto }}</div>
-            {% endif %}
-        </div>
-    </section>
+      </div>
+    </div>
     {% endif %}
+  </div>
+</div>
 
-    <!-- SECCIONES -->
+<!-- CONTENIDO PRINCIPAL -->
+<article class="documento-sobrenosotros">
     {% for seccion in secciones %}
         <div class="seccion-contenido">
             {% if seccion.tipo == 'TEXTO' %}
@@ -293,6 +285,7 @@
             {% endif %}
         </div>
     {% endfor %}
+    
 </article>
 
 <!-- Glide JS -->
@@ -300,13 +293,20 @@
 <script src="https://cdn.jsdelivr.net/npm/@glidejs/glide"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Inicializa todos los carruseles
+        // Inicializa todos los carruseles internos
         document.querySelectorAll('.glide').forEach(function(element) {
             new Glide(element, {
                 type: 'carousel',
                 perView: 3,
-                gap: 20,
+                gap: 30,
+                autoplay: 5000,
+                hoverpause: true,
+                animationDuration: 600,
                 breakpoints: {
+                    1200: {
+                        gap: 20,
+                        perView: 3
+                    },
                     992: {
                         perView: 2
                     },
