@@ -4,8 +4,15 @@ from django.core.mail import send_mail
 from django.conf import settings
 from .models import Post, CarruselPost, Equipo, ConfiguracionSitio, SeccionSobreNosotros
 from .forms import ContactoForm
+from django.http import Http404
 
-# Vistas existentes (inicio, detalle_post) se mantienen igual
+def custom_404(request, exception):
+    config = ConfiguracionSitio.objects.first()
+    context = {
+        'config': config,
+    }
+    return render(request, 'blog/404.html', context, status=404)
+
 def inicio(request):
     config = ConfiguracionSitio.objects.first()
     carrusel_items = CarruselPost.objects.filter(activo=True).select_related('post').order_by('orden')

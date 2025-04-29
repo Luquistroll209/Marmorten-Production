@@ -1,0 +1,112 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}Página no encontrada - MARMOTEN PRODUCTION{% endblock %}
+
+{% block content %}
+<style>
+/* Heredamos los estilos de index.html */
+:root {
+  --color-blanco: #ffffff;
+  --color-fondo: #f8f8f8;
+  --color-borde: #e0e0e0;
+  --color-texto: #333333;
+  --color-texto-claro: #666666;
+  --color-acento: #D4AF37;
+  --color-acento-hover: #B8860B;
+  --borde-redondeado: 12px;
+  --borde-redondeado-pequeno: 8px;
+  --sombra: 0 4px 20px rgba(0, 0, 0, 0.05);
+  --sombra-hover: 0 8px 30px rgba(0, 0, 0, 0.1);
+  --transicion: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* Estilos específicos para la página 404 */
+.error-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 70vh;
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.error-code {
+  font-size: 8rem;
+  font-weight: 700;
+  color: var(--color-acento);
+  margin-bottom: 20px;
+  line-height: 1;
+}
+
+.error-title {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  color: var(--color-texto);
+}
+
+.error-message {
+  font-size: 1.2rem;
+  color: var(--color-texto-claro);
+  max-width: 600px;
+  margin-bottom: 40px;
+}
+
+.error-image {
+  max-width: 400px;
+  width: 100%;
+  height: auto;
+  margin-bottom: 40px;
+  border-radius: var(--borde-redondeado);
+}
+
+.error-actions {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+@media (max-width: 768px) {
+  .error-code {
+    font-size: 6rem;
+  }
+  
+  .error-title {
+    font-size: 2rem;
+  }
+  
+  .error-message {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .error-code {
+    font-size: 4rem;
+  }
+  
+  .error-title {
+    font-size: 1.5rem;
+  }
+  
+  .error-actions {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+</style>
+
+<div class="main-container">
+  <div class="error-container">
+    <div class="error-code">404</div>
+    <h1 class="error-title">Página no encontrada</h1>
+    <p class="error-message">Lo sentimos, la página que estás buscando no existe o ha sido movida.</p>
+    
+    <div class="error-actions">
+      <a href="{% url 'inicio' %}" class="btn btn-primary">Volver al inicio</a>
+      <a href="{% url 'contacto' %}" class="btn btn-outline">Contactar soporte</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

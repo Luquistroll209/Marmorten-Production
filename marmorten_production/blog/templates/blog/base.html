@@ -207,6 +207,7 @@
             <a href="{% url 'contacto' %}" class="nav-link">Contacto</a>
             <a href="{% url 'nuestro_equipo' %}" class="nav-link">Nuestro Equipo</a>
         </div>
+        
         <div class="search-container" id="searchContainer">
             <form action="{% url 'buscar_posts' %}" method="get">
                 <input type="search" name="q" class="search-input" placeholder="Buscar producciones..." value="{{ request.GET.q }}">

@@ -24,6 +24,7 @@ SECRET_KEY = 'django-insecure-bh4c+q0w8r7gp%&f!l4+-l6ggf6led$sm3%jwz56i@ned@q!-6
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+handler404 = 'blog.views.custom_404'
 
 ALLOWED_HOSTS = ['*']
 

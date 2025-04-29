@@ -2,6 +2,9 @@ from django.urls import path
 from . import views
 from django.conf import settings
 from django.conf.urls.static import static
+from django.conf.urls import handler404
+
+handler404 = 'blog.views.custom_404'
 
 urlpatterns = [
     path('', views.inicio, name='inicio'),
@@ -11,6 +14,7 @@ urlpatterns = [
     path('nuestro-equipo/', views.nuestro_equipo, name='nuestro_equipo'),
     path('buscar/', views.buscar_posts, name='buscar_posts'),
 ]
+
 
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
