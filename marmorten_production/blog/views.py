@@ -4,6 +4,7 @@ from django.core.mail import send_mail
 from django.conf import settings
 from .models import Post, CarruselPost, Equipo, ConfiguracionSitio, SeccionSobreNosotros
 from django.http import Http404
+from django.contrib import messages
 
 def custom_404(request, exception):
     config = ConfiguracionSitio.objects.first()
@@ -116,3 +117,55 @@ def buscar_posts(request):
         'config': config
     }
     return render(request, 'blog/resultados_busqueda.html', context)
+def contacto(request):
+    config = ConfiguracionSitio.objects.first()
+    
+    if request.method == 'POST':
+        nombre = request.POST.get('nombre', '').strip()
+        email = request.POST.get('email', '').strip()
+        asunto = request.POST.get('asunto', '').strip()
+        mensaje = request.POST.get('mensaje', '').strip()
+        
+        # Validación básica
+        errores = []
+        if not nombre:
+            errores.append('El nombre es obligatorio')
+        if not email:
+            errores.append('El email es obligatorio')
+        elif '@' not in email:
+            errores.append('El email no es válido')
+        if not mensaje:
+            errores.append('El mensaje es obligatorio')
+        
+        if not errores:
+            # Construir el mensaje de correo
+            email_subject = f"Nuevo mensaje de contacto: {asunto or 'Sin asunto'}"
+            email_body = f"""
+            Nombre: {nombre}
+            Email: {email}
+            Asunto: {asunto or 'No especificado'}
+            
+            Mensaje:
+            {mensaje}
+            """
+            
+            try:
+                send_mail(
+                    email_subject,
+                    email_body,
+                    settings.DEFAULT_FROM_EMAIL,
+                    [config.email_contacto],  # Envía al email configurado en el admin
+                    fail_silently=False,
+                )
+                messages.success(request, '¡Gracias por tu mensaje! Nos pondremos en contacto contigo pronto.')
+                return redirect('contacto')
+            except Exception as e:
+                messages.error(request, f'Ocurrió un error al enviar el mensaje: {str(e)}')
+        else:
+            for error in errores:
+                messages.error(request, error)
+    
+    context = {
+        'config': config,
+    }
+    return render(request, 'blog/contacto.html', context)
