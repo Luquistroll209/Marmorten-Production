@@ -1,8 +1,9 @@
-from django.shortcuts import render, get_object_or_404, redirect
+from django.db.models import Q  # Añade esta línea
+from django.shortcuts import render, get_object_or_404
 from django.core.mail import send_mail
 from django.conf import settings
 from .models import Post, CarruselPost, Equipo, ConfiguracionSitio, SeccionSobreNosotros
-from .forms import ContactoForm  # Crearás este formulario después
+from .forms import ContactoForm
 
 # Vistas existentes (inicio, detalle_post) se mantienen igual
 def inicio(request):
@@ -116,3 +117,23 @@ def nuestro_equipo(request):
         'secciones': secciones
     }
     return render(request,  'blog/nuestro_equipo.html', context)
+
+def buscar_posts(request):
+    query = request.GET.get('q', '')
+    config = ConfiguracionSitio.objects.first()
+    
+    if query:
+        resultados = Post.objects.filter(
+            Q(title__icontains=query) | 
+            Q(content__icontains=query) |
+            Q(resumen__icontains=query)
+        ).order_by('-fecha_publicacion')
+    else:
+        resultados = Post.objects.none()
+    
+    context = {
+        'resultados': resultados,
+        'query': query,
+        'config': config
+    }
+    return render(request, 'blog/resultados_busqueda.html', context)

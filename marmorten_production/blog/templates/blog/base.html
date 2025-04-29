@@ -197,6 +197,7 @@
     </style>
 </head>
 <body>
+     <!--Esta pagina web fue hecha por Luquistroll209, por si casualidad quieres modificar el codigo hazlo bajo tu responsabilidad, si se rompe no es mi culpa-->
     <nav class="navbar" id="navbar">
         <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
         <img src="{{ config.logo.url }}" alt="Marmoten Production Logo" class="navbar-logo">
@@ -207,9 +208,12 @@
             <a href="{% url 'nuestro_equipo' %}" class="nav-link">Nuestro Equipo</a>
         </div>
         <div class="search-container" id="searchContainer">
-            <input type="search" class="search-input" placeholder="Buscar...">
-            <img src="/static/blog/img/search.png" alt="Buscar" class="search-icon">
-            <!--Esta pagina web fue hecha por Luquistroll209, por si casualidad quieres modificar el codigo hazlo bajo tu responsabilidad, si se rompe no es mi culpa-->
+            <form action="{% url 'buscar_posts' %}" method="get">
+                <input type="search" name="q" class="search-input" placeholder="Buscar producciones..." value="{{ request.GET.q }}">
+                <button type="submit" style="background: none; border: none; cursor: pointer;">
+                    <img src="/static/blog/img/search.png" alt="Buscar" class="search-icon">
+                </button>
+            </form>
         </div>
     </nav>
 
@@ -224,6 +228,8 @@
             const mobileMenuBtn = document.getElementById('mobileMenuBtn');
             const navLinks = document.getElementById('navLinks');
             const searchContainer = document.getElementById('searchContainer');
+            const searchForm = document.querySelector('#searchContainer form');
+            const searchInput = document.querySelector('#searchContainer .search-input');
             
             // Menú móvil
             mobileMenuBtn.addEventListener('click', function() {
@@ -241,6 +247,22 @@
                     link.classList.remove('active');
                 }
             });
+
+            
+            if (searchForm) {
+                searchForm.addEventListener('submit', function(e) {
+                    if (searchInput.value.trim() === '') {
+                        e.preventDefault();
+                        searchInput.focus();
+                    }
+                });
+            }
+            
+            if (searchInput) {
+                searchInput.addEventListener('input', function() {
+                    // Para futuro uso de AJAX
+                });
+            }
         });
     </script>
 </body>

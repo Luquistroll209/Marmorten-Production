@@ -1,0 +1,171 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}Resultados de búsqueda - MARMOTEN PRODUCTION{% endblock %}
+
+{% block content %}
+<style>
+    /* Reutiliza los estilos de index.html para mantener consistencia */
+    :root {
+        --color-blanco: #ffffff;
+        --color-fondo: #f8f8f8;
+        --color-borde: #e0e0e0;
+        --color-texto: #333333;
+        --color-texto-claro: #666666;
+        --color-acento: #D4AF37;
+        --color-acento-hover: #B8860B;
+        --borde-redondeado: 12px;
+        --borde-redondeado-pequeno: 8px;
+        --sombra: 0 4px 20px rgba(0, 0, 0, 0.05);
+        --sombra-hover: 0 8px 30px rgba(0, 0, 0, 0.1);
+        --transicion: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+
+    .main-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+
+    .section {
+        padding: 80px 0;
+    }
+
+    .section-header {
+        text-align: center;
+        margin-bottom: 40px;
+    }
+
+    .section-title {
+        position: relative;
+        display: inline-block;
+        padding-bottom: 15px;
+    }
+
+    .section-title:after {
+        content: '';
+        display: block;
+        width: 60px;
+        height: 3px;
+        background: var(--color-acento);
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .producciones-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 30px;
+        margin-top: 40px;
+    }
+
+    .produccion-card {
+        background: var(--color-blanco);
+        border-radius: var(--borde-redondeado);
+        overflow: hidden;
+        box-shadow: var(--sombra);
+        transition: var(--transicion);
+    }
+
+    .produccion-card:hover {
+        transform: translateY(-10px);
+        box-shadow: var(--sombra-hover);
+    }
+
+    .produccion-image {
+        width: 100%;
+        height: 220px;
+        object-fit: cover;
+    }
+
+    .produccion-content {
+        padding: 25px;
+    }
+
+    .produccion-title {
+        font-size: 1.4rem;
+        margin-bottom: 10px;
+    }
+
+    .produccion-meta {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 20px;
+        color: var(--color-acento);
+        font-weight: 500;
+    }
+
+    .resultados-count {
+        text-align: center;
+        margin-bottom: 30px;
+        font-size: 1.1rem;
+        color: var(--color-texto-claro);
+    }
+
+    .no-resultados {
+        text-align: center;
+        padding: 50px 0;
+        font-size: 1.2rem;
+        color: var(--color-texto-claro);
+    }
+
+    .search-query {
+        font-weight: bold;
+        color: var(--color-acento);
+    }
+
+    @media (max-width: 768px) {
+        .section {
+            padding: 60px 0;
+        }
+    }
+</style>
+
+<div class="main-container">
+    <section class="section">
+        <div class="section-header">
+            <h2 class="section-title">Resultados de Búsqueda</h2>
+            {% if query %}
+                <p class="resultados-count">
+                    {% if resultados.count > 0 %}
+                        {{ resultados.count }} resultado{{ resultados.count|pluralize }} encontrado{{ resultados.count|pluralize }} para <span class="search-query">"{{ query }}"</span>
+                    {% else %}
+                        No se encontraron resultados para <span class="search-query">"{{ query }}"</span>
+                    {% endif %}
+                </p>
+            {% endif %}
+        </div>
+
+        {% if resultados %}
+            <div class="producciones-grid">
+                {% for post in resultados %}
+                <div class="produccion-card">
+                    {% if post.imagen %}
+                    <img src="{{ post.imagen.url }}" alt="{{ post.title }}" class="produccion-image">
+                    {% endif %}
+                    <div class="produccion-content">
+                        <h3 class="produccion-title">{{ post.title }}</h3>
+                        <p>{{ post.resumen|default:post.content|truncatechars:150 }}</p>
+                        <div class="produccion-meta">
+                            <span>{{ post.fecha_publicacion|date:"M Y" }}</span>
+                            <a href="{% url 'detalle_post' post.id %}" class="btn btn-outline">Ver más</a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        {% elif query %}
+            <div class="no-resultados">
+                <p>No encontramos producciones que coincidan con tu búsqueda.</p>
+                <p>Intenta con diferentes términos o revisa nuestra <a href="{% url 'inicio' %}">página de inicio</a>.</p>
+            </div>
+        {% else %}
+            <div class="no-resultados">
+                <p>Ingresa un término de búsqueda para encontrar producciones.</p>
+            </div>
+        {% endif %}
+    </section>
+</div>
+{% endblock %}

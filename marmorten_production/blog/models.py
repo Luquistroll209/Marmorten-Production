@@ -1,6 +1,8 @@
 from django.db import models
 from django.utils import timezone
 from django.core.exceptions import ValidationError
+from django.db.models import Q
+from django.shortcuts import render, get_object_or_404
 
 class Post(models.Model):
     title = models.CharField(max_length=200)
@@ -208,3 +210,23 @@ class ImagenCarruselSobreNosotros(models.Model):
         ordering = ['orden']
         verbose_name = "Imagen de Carrusel"
         verbose_name_plural = "Imágenes de Carrusel"
+
+def buscar_posts(request):
+    query = request.GET.get('q', '')
+    config = ConfiguracionSitio.objects.first()
+    
+    if query:
+        resultados = Post.objects.filter(
+            Q(title__icontains=query) | 
+            Q(content__icontains=query) |
+            Q(resumen__icontains=query)
+        ).order_by('-fecha_publicacion')
+    else:
+        resultados = Post.objects.none()
+    
+    context = {
+        'resultados': resultados,
+        'query': query,
+        'config': config
+    }
+    return render(request, 'blog/resultados_busqueda.html', context)
