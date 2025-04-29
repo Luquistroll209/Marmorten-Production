@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.core.mail import send_mail
 from django.conf import settings
-from .models import Post, CarruselPost, Equipo, ConfiguracionSitio, SeccionPersonalizable, SeccionSobreNosotros
+from .models import Post, CarruselPost, Equipo, ConfiguracionSitio, SeccionSobreNosotros
 from .forms import ContactoForm  # Crearás este formulario después
 
 # Vistas existentes (inicio, detalle_post) se mantienen igual
@@ -37,14 +37,14 @@ def detalle_post(request, post_id):
     return render(request, 'blog/detalle_post.html', context)
 
 def sobre_nosotros(request):
+    portada = SeccionSobreNosotros.objects.filter(tipo='PORTADA').first()
+    secciones = SeccionSobreNosotros.objects.exclude(tipo='PORTADA').order_by('orden')
     config = ConfiguracionSitio.objects.first()
-    equipo = Equipo.objects.all().order_by('orden')
     
     context = {
-        'config': config,
-        'equipo': equipo,
-        'carrusel_items': CarruselPost.objects.filter(activo=True).select_related('post').order_by('orden')[:3],
-        'posts_destacados': Post.objects.filter(destacado=True).exclude(imagen='').order_by('-fecha_publicacion')[:2]
+        'portada': portada,
+        'secciones': secciones,
+        'config': config
     }
     return render(request, 'blog/sobre_nosotros.html', context)
 
@@ -88,12 +88,14 @@ def nuestro_equipo(request):
 
 
 def sobre_nosotros(request):
-    secciones = SeccionSobreNosotros.objects.all().order_by('orden')
-    config = ConfiguracionSitio.objects.first()  # Si necesitas configuración
+    portada = SeccionSobreNosotros.objects.filter(tipo='PORTADA').first()
+    secciones = SeccionSobreNosotros.objects.exclude(tipo='PORTADA').order_by('orden')
+    config = ConfiguracionSitio.objects.first()
     
     context = {
+        'portada': portada,
         'secciones': secciones,
-        'config': config  # Opcional, si usas configuración del sitio
+        'config': config
     }
     return render(request, 'blog/sobre_nosotros.html', context)
 

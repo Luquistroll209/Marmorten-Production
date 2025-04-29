@@ -16,7 +16,7 @@
         --transition: all 0.25s ease;
     }
 
-    /* Estructura general más compacta */
+    /* Estructura general */
     .documento-sobrenosotros {
         margin: 30px;
         padding: 2.5rem;
@@ -28,7 +28,45 @@
         line-height: 1.6;
     }
 
-    /* Encabezados más ajustados */
+    /* Estilos para la portada */
+    .seccion-portada {
+        position: relative;
+        margin-bottom: 3rem;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: var(--shadow-lg);
+    }
+
+    .imagen-portada {
+        width: 100%;
+        max-height: 500px;
+        object-fit: cover;
+    }
+
+    .contenido-portada {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+        padding: 2rem;
+        color: white;
+    }
+
+    .titulo-portada {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+    }
+
+    .texto-portada {
+        font-size: 1.2rem;
+        max-width: 800px;
+        text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+    }
+
+    /* Encabezados */
     .titulo-seccion {
         font-size: 1.8rem;
         font-weight: 700;
@@ -48,7 +86,7 @@
         background: var(--color-secondary);
     }
 
-    /* Texto más compacto */
+    /* Texto */
     .texto-formatado {
         font-size: 1.1rem;
         line-height: 1.7;
@@ -56,11 +94,7 @@
         margin-bottom: 1.8rem;
     }
 
-    .texto-formatado p {
-        margin-bottom: 1.2rem;
-    }
-
-    /* Imágenes con menos margen */
+    /* Imágenes */
     .seccion-imagen {
         margin: 2.5rem 0;
         text-align: center;
@@ -84,7 +118,7 @@
         margin-right: auto;
     }
 
-    /* Galería más compacta */
+    /* Galería */
     .galeria-contemporanea {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -115,18 +149,65 @@
         border-top: 1px solid var(--color-border);
     }
 
-    /* Efectos más sutiles */
-    .tarjeta-galeria:hover {
-        transform: translateY(-5px);
-        box-shadow: var(--shadow-lg);
+    /* Carrusel */
+    .glide__slides {
+        padding: 0;
+        list-style: none;
     }
 
-    /* Responsive ajustado */
+    .glide__slide {
+        padding: 0 10px;
+    }
+
+    .imagen-carrusel {
+        width: 100%;
+        height: 300px;
+        object-fit: cover;
+        border-radius: 8px;
+    }
+
+    .leyenda-carrusel {
+        text-align: center;
+        margin-top: 0.5rem;
+        font-size: 0.9rem;
+        color: var(--color-text);
+    }
+
+    .glide__arrows {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 1rem;
+    }
+
+    .glide__arrow {
+        background: var(--color-primary);
+        color: white;
+        border: none;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: var(--transition);
+    }
+
+    .glide__arrow:hover {
+        background: var(--color-secondary);
+    }
+
+    /* Responsive */
     @media (max-width: 768px) {
         .documento-sobrenosotros {
             padding: 1.8rem;
             margin: 1.5rem auto;
             border-radius: 8px;
+        }
+
+        .titulo-portada {
+            font-size: 1.8rem;
+        }
+
+        .texto-portada {
+            font-size: 1rem;
         }
 
         .titulo-seccion {
@@ -137,10 +218,30 @@
         .galeria-contemporanea {
             gap: 1.2rem;
         }
+
+        .imagen-carrusel {
+            height: 200px;
+        }
     }
 </style>
 
 <article class="documento-sobrenosotros">
+    <!-- PORTADA -->
+    {% if portada %}
+    <section class="seccion-portada">
+        {% if portada.imagen and portada.imagen.url %}
+            <img src="{{ portada.imagen.url }}" alt="{{ portada.titulo }}" class="imagen-portada">
+        {% endif %}
+        <div class="contenido-portada">
+            <h1 class="titulo-portada">{{ portada.titulo }}</h1>
+            {% if portada.contenido_texto %}
+                <div class="texto-portada">{{ portada.contenido_texto }}</div>
+            {% endif %}
+        </div>
+    </section>
+    {% endif %}
+
+    <!-- SECCIONES -->
     {% for seccion in secciones %}
         <div class="seccion-contenido">
             {% if seccion.tipo == 'TEXTO' %}
@@ -152,6 +253,7 @@
                 </section>
 
             {% elif seccion.tipo == 'IMAGEN' %}
+                {% if seccion.imagen and seccion.imagen.url %}
                 <figure class="seccion-imagen">
                     <img src="{{ seccion.imagen.url }}" 
                          alt="{{ seccion.titulo }}" 
@@ -160,25 +262,60 @@
                         <figcaption class="leyenda-imagen">{{ seccion.titulo }}</figcaption>
                     {% endif %}
                 </figure>
+                {% endif %}
 
             {% elif seccion.tipo == 'CAROUSEL' %}
                 <section class="seccion-galeria">
                     <h2 class="titulo-seccion">{{ seccion.titulo }}</h2>
-                    <div class="galeria-contemporanea">
-                        {% for imagen in seccion.imagenes_carrusel.all %}
-                            <div class="tarjeta-galeria">
-                                <img src="{{ imagen.imagen.url }}" 
-                                     alt="{{ imagen.titulo }}" 
-                                     class="imagen-galeria">
-                                {% if imagen.titulo %}
-                                    <div class="meta-galeria">{{ imagen.titulo }}</div>
+                    <div class="glide">
+                        <div class="glide__track" data-glide-el="track">
+                            <ul class="glide__slides">
+                                {% for imagen in seccion.imagenes_del_carrusel.all %}
+                                {% if imagen.imagen and imagen.imagen.url %}
+                                <li class="glide__slide">
+                                    <img src="{{ imagen.imagen.url }}" 
+                                         alt="{{ imagen.titulo }}" 
+                                         class="imagen-carrusel">
+                                    {% if imagen.titulo %}
+                                        <div class="leyenda-carrusel">{{ imagen.titulo }}</div>
+                                    {% endif %}
+                                </li>
                                 {% endif %}
-                            </div>
-                        {% endfor %}
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        <div class="glide__arrows" data-glide-el="controls">
+                            <button class="glide__arrow glide__arrow--left" data-glide-dir="<">‹</button>
+                            <button class="glide__arrow glide__arrow--right" data-glide-dir=">">›</button>
+                        </div>
                     </div>
                 </section>
             {% endif %}
         </div>
     {% endfor %}
 </article>
+
+<!-- Glide JS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@glidejs/glide/dist/css/glide.core.min.css">
+<script src="https://cdn.jsdelivr.net/npm/@glidejs/glide"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Inicializa todos los carruseles
+        document.querySelectorAll('.glide').forEach(function(element) {
+            new Glide(element, {
+                type: 'carousel',
+                perView: 3,
+                gap: 20,
+                breakpoints: {
+                    992: {
+                        perView: 2
+                    },
+                    768: {
+                        perView: 1
+                    }
+                }
+            }).mount();
+        });
+    });
+</script>
 {% endblock %}

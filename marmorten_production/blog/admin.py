@@ -12,6 +12,8 @@ from .models import (
     ImagenCarrusel,
 
 )
+admin.site.site_header = 'Marmorten Productión'
+admin.site.index_title = 'Panel de Administración'
 
 class BaseAdmin(admin.ModelAdmin):
     class Media:
@@ -60,9 +62,6 @@ class ConfiguracionSitioAdmin(BaseAdmin):
     fieldsets = (
         ('Información Básica', {
             'fields': ('titulo_sitio', 'logo', 'email_contacto', 'telefono_contacto', 'direccion')
-        }),
-        ('Sobre Nosotros', {
-            'fields': ('sobre_nosotros', 'banner_sobre_nosotros', 'imagen_sobre_nosotros')
         }),
         ('Redes Sociales', {
             'fields': ('facebook_url', 'instagram_url', 'youtube_url')
@@ -161,22 +160,13 @@ class ImagenCarruselInline(admin.StackedInline):
         return "-"
     preview.short_description = "Vista previa"
 
+
 @admin.register(SeccionSobreNosotros)
 class SeccionSobreNosotrosAdmin(admin.ModelAdmin):
     list_display = ('titulo', 'tipo', 'orden', 'preview_content')
     list_editable = ('orden',)
     list_filter = ('tipo',)
-    inlines = [ImagenCarruselInline]  # Solo se mostrará para secciones de tipo carrusel
-    
-    fieldsets = (
-        (None, {
-            'fields': ('titulo', 'tipo', 'orden')
-        }),
-        ('Contenido', {
-            'fields': ('contenido_texto', 'imagen'),
-            'classes': ('collapse',)
-        })
-    )
+    inlines = [ImagenCarruselInline]  # Solo para secciones de tipo carrusel
     
     def preview_content(self, obj):
         if obj.tipo == 'TEXTO':
@@ -184,16 +174,8 @@ class SeccionSobreNosotrosAdmin(admin.ModelAdmin):
         elif obj.tipo == 'IMAGEN' and obj.imagen:
             return format_html('<img src="{}" style="max-height:50px;"/>', obj.imagen.url)
         elif obj.tipo == 'CAROUSEL':
-            return f"{obj.imagenes_del_carrusel.count()} imágenes"  # Usa el nuevo related_name
-        return "-"
-    preview_content.short_description = "Contenido"
-    
-    def preview_content(self, obj):
-        if obj.tipo == 'TEXTO':
-            return obj.contenido_texto[:100] + "..." if obj.contenido_texto else "-"
-        elif obj.tipo == 'IMAGEN' and obj.imagen:
-            return format_html('<img src="{}" style="max-height:50px;"/>', obj.imagen.url)
-        elif obj.tipo == 'CAROUSEL':
-            return f"{obj.imagenes_carrusel.count()} imágenes"
+            return f"{obj.imagenes_del_carrusel.count()} imágenes"
+        elif obj.tipo == 'PORTADA':
+            return "Portada principal"
         return "-"
     preview_content.short_description = "Contenido"

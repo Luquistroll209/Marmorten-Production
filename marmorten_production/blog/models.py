@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+from django.core.exceptions import ValidationError
 
 class Post(models.Model):
     title = models.CharField(max_length=200)
@@ -130,37 +131,37 @@ class ImagenGaleriaSobreNosotros(models.Model):
     
 from django.db import models
 
-class SeccionPersonalizable(models.Model):
-    TIPO_CONTENIDO = [
+class SeccionSobreNosotros(models.Model):
+    TIPO_SECCION = [
+        ('PORTADA', 'Portada (solo una)'),
         ('TEXTO', 'Texto'),
         ('IMAGEN', 'Imagen'),
-        ('CAROUSEL', 'Carrusel'),
-        ('ENLACE', 'Enlace'),
+        ('CAROUSEL', 'Carrusel de imágenes'),
     ]
     
     titulo = models.CharField(max_length=100)
-    tipo = models.CharField(max_length=10, choices=TIPO_CONTENIDO)
+    tipo = models.CharField(max_length=10, choices=TIPO_SECCION)
     contenido_texto = models.TextField(blank=True, null=True)
-    imagen = models.ImageField(upload_to='secciones/', blank=True, null=True)
-    enlace_url = models.URLField(blank=True, null=True)
+    imagen = models.ImageField(upload_to='sobre_nosotros/secciones/', blank=True, null=True)
     orden = models.PositiveIntegerField(default=0)
-    formato_texto = models.CharField(max_length=20, choices=[
-        ('NORMAL', 'Normal'), 
-        ('NEGRITA', 'Negrita'),
-        ('CURSIVA', 'Cursiva')
-    ], default='NORMAL')
     
     class Meta:
         ordering = ['orden']
-        verbose_name_plural = "Secciones editables"
+        verbose_name_plural = "Secciones Sobre Nosotros"
+
+    def clean(self):
+        from django.core.exceptions import ValidationError
+        if self.tipo == 'PORTADA' and SeccionSobreNosotros.objects.filter(tipo='PORTADA').exclude(id=self.id).exists():
+            raise ValidationError('Solo puede haber una sección de tipo Portada')
 
     def __str__(self):
-        return f"{self.titulo} ({self.tipo})"
+        return f"{self.titulo} ({self.get_tipo_display()})"
 
 
 
 class SeccionSobreNosotros(models.Model):
     TIPO_SECCION = [
+        ('PORTADA', 'Portada (solo una)'),  # Asegúrate de que esta opción existe
         ('TEXTO', 'Texto'),
         ('IMAGEN', 'Imagen'),
         ('CAROUSEL', 'Carrusel de imágenes'),
