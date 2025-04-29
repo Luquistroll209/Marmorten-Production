@@ -3,7 +3,6 @@ from django.shortcuts import render, get_object_or_404
 from django.core.mail import send_mail
 from django.conf import settings
 from .models import Post, CarruselPost, Equipo, ConfiguracionSitio, SeccionSobreNosotros
-from .forms import ContactoForm
 from django.http import Http404
 
 def custom_404(request, exception):
@@ -55,33 +54,6 @@ def sobre_nosotros(request):
         'config': config
     }
     return render(request, 'blog/sobre_nosotros.html', context)
-
-def contacto(request):
-    config = ConfiguracionSitio.objects.first()
-    mensaje_enviado = False
-    
-    if request.method == 'POST':
-        form = ContactoForm(request.POST)
-        if form.is_valid():
-            # Enviar correo
-            send_mail(
-                f"Mensaje de contacto de {form.cleaned_data['nombre']}",
-                form.cleaned_data['mensaje'],
-                form.cleaned_data['email'],
-                [config.email_contacto],
-                fail_silently=False,
-            )
-            mensaje_enviado = True
-    else:
-        form = ContactoForm()
-    
-    context = {
-        'config': config,
-        'form': form,
-        'mensaje_enviado': mensaje_enviado,
-        'carrusel_items': CarruselPost.objects.filter(activo=True).select_related('post').order_by('orden')[:3]
-    }
-    return render(request, 'blog/contacto.html', context)
 
 def nuestro_equipo(request):
     equipo = Equipo.objects.all().order_by('orden')
