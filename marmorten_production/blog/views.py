@@ -1,5 +1,5 @@
-from django.db.models import Q  # Añade esta línea
-from django.shortcuts import render, get_object_or_404
+from django.db.models import Q  
+from django.shortcuts import render, get_object_or_404, redirect 
 from django.core.mail import send_mail
 from django.conf import settings
 from .models import Post, CarruselPost, Equipo, ConfiguracionSitio, SeccionSobreNosotros
@@ -117,6 +117,7 @@ def buscar_posts(request):
         'config': config
     }
     return render(request, 'blog/resultados_busqueda.html', context)
+
 def contacto(request):
     config = ConfiguracionSitio.objects.first()
     
@@ -126,8 +127,10 @@ def contacto(request):
         asunto = request.POST.get('asunto', '').strip()
         mensaje = request.POST.get('mensaje', '').strip()
         
-        # Validación básica
+        # Inicializa la lista de errores
         errores = []
+        
+        # Validación básica
         if not nombre:
             errores.append('El nombre es obligatorio')
         if not email:
@@ -137,30 +140,18 @@ def contacto(request):
         if not mensaje:
             errores.append('El mensaje es obligatorio')
         
-        if not errores:
-            # Construir el mensaje de correo
-            email_subject = f"Nuevo mensaje de contacto: {asunto or 'Sin asunto'}"
-            email_body = f"""
-            Nombre: {nombre}
-            Email: {email}
-            Asunto: {asunto or 'No especificado'}
+        if not errores:  # Si no hay errores
+            # Guardar en base de datos (opcional)
+            from .models import MensajeContacto  # Asegúrate de tener este modelo
+            MensajeContacto.objects.create(
+                nombre=nombre,
+                email=email,
+                asunto=asunto,
+                mensaje=mensaje
+            )
             
-            Mensaje:
-            {mensaje}
-            """
-            
-            try:
-                send_mail(
-                    email_subject,
-                    email_body,
-                    settings.DEFAULT_FROM_EMAIL,
-                    [config.email_contacto],  # Envía al email configurado en el admin
-                    fail_silently=False,
-                )
-                messages.success(request, '¡Gracias por tu mensaje! Nos pondremos en contacto contigo pronto.')
-                return redirect('contacto')
-            except Exception as e:
-                messages.error(request, f'Ocurrió un error al enviar el mensaje: {str(e)}')
+            messages.success(request, '¡Mensaje recibido! Nos pondremos en contacto contigo pronto.')
+            return redirect('contacto')
         else:
             for error in errores:
                 messages.error(request, error)

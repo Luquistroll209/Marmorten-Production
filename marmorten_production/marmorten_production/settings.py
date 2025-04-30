@@ -42,6 +42,13 @@ INSTALLED_APPS = [
     'blog',
 ]
 
+
+# settings.py
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'localhost' 
+EMAIL_PORT = 25
+DEFAULT_FROM_EMAIL = 'no-reply@tudominio.com'
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',

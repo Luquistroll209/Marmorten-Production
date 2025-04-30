@@ -10,6 +10,7 @@ from .models import (
     ImagenCarruselSobreNosotros,
     SeccionSobreNosotros,
     ImagenCarrusel,
+    MensajeContacto,
 
 )
 admin.site.site_header = 'Marmorten Productión'
@@ -179,3 +180,11 @@ class SeccionSobreNosotrosAdmin(admin.ModelAdmin):
             return "Portada principal"
         return "-"
     preview_content.short_description = "Contenido"
+
+
+@admin.register(MensajeContacto)
+class MensajeContactoAdmin(admin.ModelAdmin):
+    list_display = ('nombre', 'email', 'asunto', 'fecha', 'leido')
+    list_filter = ('leido', 'fecha')
+    search_fields = ('nombre', 'email', 'asunto')
+    readonly_fields = ('fecha',)
