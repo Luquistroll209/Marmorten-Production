@@ -5,24 +5,21 @@
 {% block content %}
 <style>
 :root {
-  /* Paleta de colores */
+  /* Colores y Efectos para toda la web, cambio de color por si no le gusta los colores a la señora */
   --color-blanco: #ffffff;
   --color-fondo: #f8f8f8;
   --color-borde: #e0e0e0;
   --color-texto: #333333;
   --color-texto-claro: #666666;
-  --color-acento: #D4AF37; /* Dorado */
+  --color-acento: #D4AF37;
   --color-acento-hover: #B8860B;
   
-  /* Efectos */
   --borde-redondeado: 12px;
   --borde-redondeado-pequeno: 8px;
   --sombra: 0 4px 20px rgba(0, 0, 0, 0.05);
   --sombra-hover: 0 8px 30px rgba(0, 0, 0, 0.1);
   --transicion: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
-
-/* Reset */
 * {
   margin: 0;
   padding: 0;
@@ -40,7 +37,7 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* Tipografía */
+/* Tipografía de Google fonts */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap');
 
 h1, h2, h3, h4 {
@@ -60,7 +57,7 @@ p {
   color: var(--color-texto-claro);
 }
 
-/* Layout principal */
+  /* Objetos principales del html */
 .main-container {
   max-width: 1400px;
   margin: 0 auto;
@@ -94,7 +91,7 @@ p {
   transform: translateX(-50%);
 }
 
-/* Carrusel Hero - Estilo mejorado */
+/* Carrusel */
 .hero-carousel-container {
   width: 100%;
   position: relative;
@@ -140,8 +137,6 @@ p {
   object-position: center;
   border-radius: 0px 0px 40px 40px;
 }
-
-/* Efecto de difuminado para imágenes altas */
 .carousel-image-container::before,
 .carousel-image-container::after {
   content: '';
@@ -245,7 +240,7 @@ p {
   transform: scale(1.2);
 }
 
-/* Grid de producciones */
+
 .producciones-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -290,7 +285,7 @@ p {
   font-weight: 500;
 }
 
-/* Botones */
+
 .btn {
   display: inline-flex;
   align-items: center;
@@ -392,7 +387,7 @@ p {
   background: var(--color-acento-hover);
 }
 
-/* Responsive */
+/* Adaptación a movil */
 @media (max-width: 1200px) {
   .hero-carousel {
     height: 70vh;
@@ -497,7 +492,7 @@ p {
 }
 </style>
 
-<!-- Hero Carrusel - Sin margen superior -->
+<!-- Carrusel y portada -->
 <div class="hero-carousel-container">
   <div class="hero-carousel">
     <div class="carousel-inner" id="mainCarousel">
@@ -530,9 +525,9 @@ p {
   </div>
 </div>
 
-<!-- Contenido Principal -->
+<!-- Contenidos de los post -->
 <div class="main-container">
-  <!-- Producciones Destacadas -->
+  <!-- Post Destacados -->
   <section class="section">
     <div class="section-header">
       <h2 class="section-title">Producciones Destacadas</h2>
@@ -558,7 +553,7 @@ p {
     </div>
   </section>
   
-  <!-- Últimas Producciones -->
+  <!-- Ultimos post, por fecha de creación -->
   <section class="section" style="background: var(--color-blanco); border-radius: var(--borde-redondeado);">
     <div class="section-header">
       <h2 class="section-title">Últimas Producciones</h2>
@@ -583,18 +578,7 @@ p {
       {% endfor %}
     </div>
   </section>
-  
-  <!-- Newsletter -->
-  <div class="newsletter-section">
-    <h2>Mantente Actualizado</h2>
-    <p>Suscríbete para recibir nuestras últimas producciones y noticias</p>
-    
-    <form class="newsletter-form">
-      <input type="email" class="newsletter-input" placeholder="Tu correo electrónico" required>
-      <button type="submit" class="btn btn-primary">Suscribirse</button>
-    </form>
-  </div>
-</div>
+
 
 <!-- Botón flotante -->
 <button class="floating-btn" id="backToTop">↑</button>
