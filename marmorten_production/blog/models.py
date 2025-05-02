@@ -249,29 +249,19 @@ class SeccionSobreNosotros(models.Model):
     def __str__(self):
         return f"{self.titulo} ({self.get_tipo_display()})"
 
-
-
-class SeccionSobreNosotros(models.Model):
-    TIPO_SECCION = [
-        ('PORTADA', 'Portada (solo una)'),  # Asegúrate de que esta opción existe
-        ('TEXTO', 'Texto'),
-        ('IMAGEN', 'Imagen'),
-        ('CAROUSEL', 'Carrusel de imágenes'),
-    ]
-    
-    titulo = models.CharField(max_length=100)
-    tipo = models.CharField(max_length=10, choices=TIPO_SECCION)
-    contenido_texto = models.TextField(blank=True, null=True)
-    imagen = models.ImageField(upload_to='sobre_nosotros/secciones/', blank=True, null=True)
+class ImagenCarrusel(models.Model):
+    seccion = models.ForeignKey(
+        SeccionSobreNosotros, 
+        related_name='imagenes_del_carrusel',
+        on_delete=models.CASCADE
+    )
+    imagen = models.ImageField(upload_to='sobre_nosotros/carrusel/')
+    titulo = models.CharField(max_length=100, blank=True)
     orden = models.PositiveIntegerField(default=0)
     
     class Meta:
         ordering = ['orden']
-        verbose_name_plural = "Secciones Sobre Nosotros"
-
-    def __str__(self):
-        return f"{self.titulo} ({self.get_tipo_display()})"
-
+        verbose_name_plural = "Imágenes para Carruseles"
 class ImagenCarrusel(models.Model):
     seccion = models.ForeignKey(
         SeccionSobreNosotros, 
