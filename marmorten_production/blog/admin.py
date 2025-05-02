@@ -129,11 +129,18 @@ class PostAdmin(admin.ModelAdmin):
     preview.short_description = "Miniatura"
 
 # ===== ADMINISTRACIÓN DEL EQUIPO =====
+class EnlaceExternoEquipoInline(admin.StackedInline):
+    model = EnlaceExterno
+    extra = 1
+    fields = ('url', 'tipo', 'titulo', 'mostrar', 'orden')
+    fk_name = 'equipo'  
+
 @admin.register(Equipo)
 class EquipoAdmin(BaseAdmin):
     list_display = ('nombre', 'puesto', 'orden', 'foto_preview')
     list_editable = ('orden',)
     search_fields = ('nombre', 'puesto')
+    inlines = [EnlaceExternoEquipoInline]  
     
     fieldsets = (
         ('Información', {

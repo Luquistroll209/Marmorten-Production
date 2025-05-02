@@ -45,12 +45,49 @@ class EnlaceExterno(models.Model):
         ('OTRO', 'Otro'),
     ]
     
-    post = models.ForeignKey(Post, related_name='enlaces_externos', on_delete=models.CASCADE)
+    post = models.ForeignKey(
+        Post, 
+        related_name='enlaces_externos', 
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True
+    )
+    
+    equipo = models.ForeignKey(
+        'Equipo',  
+        related_name='enlaces_externos',
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True
+    )
+    
     url = models.URLField()
     tipo = models.CharField(max_length=10, choices=TIPO_ENLACE_CHOICES)
     mostrar = models.BooleanField(default=True)
     titulo = models.CharField(max_length=200, blank=True)
     orden = models.PositiveIntegerField(default=0)
+    
+    class Meta:
+        ordering = ['orden']
+    
+    def __str__(self):
+        return f"{self.get_tipo_display()}: {self.titulo or self.url}"
+    
+    def get_icon_class(self):
+        iconos = {
+            'YOUTUBE': 'fab fa-youtube',
+            'INSTAGRAM': 'fab fa-instagram',
+            'FACEBOOK': 'fab fa-facebook-f',
+            'TWITTER': 'fab fa-twitter',
+            'OTRO': 'fas fa-external-link-alt',
+        }
+        return iconos.get(self.tipo, 'fas fa-link')
+
+    def clean(self):
+        if not self.post and not self.equipo:
+            raise ValidationError("El enlace debe estar asociado a un Post o a un Miembro del Equipo")
+        if self.post and self.equipo:
+            raise ValidationError("El enlace solo puede estar asociado a un Post o a un Miembro del Equipo, no a ambos")
     
     class Meta:
         ordering = ['orden']
@@ -111,6 +148,11 @@ class Equipo(models.Model):
 
     def __str__(self):
         return f"{self.nombre} - {self.puesto}"
+
+    # Añade esta propiedad para acceder a los enlaces fácilmente
+    @property
+    def enlaces_externos(self):
+        return self.enlaces_externos_equipo.all()
 
 class ConfiguracionSitio(models.Model):
     # Información Básica

@@ -260,29 +260,32 @@
         <p class="team-member-position">{{ miembro.puesto }}</p>
         <p class="team-member-bio">{{ miembro.biografia|truncatewords:30 }}</p>
         
-        <!-- Redes sociales -->
-        {% if miembro.redes_sociales %}
+        <!-- Redes sociales y enlaces externos -->
         <div class="team-social-links">
           {% for red, url in miembro.redes_sociales.items %}
             {% if url %}
-            <a href="{{ url }}" target="_blank" class="team-social-link">
+            <a href="{{ url }}" target="_blank" class="team-social-link" title="{{ red }}">
               <i class="fab fa-{{ red|lower }}"></i>
             </a>
             {% endif %}
           {% endfor %}
+          
+          {% for enlace in miembro.enlaces_externos.all %}
+            {% if enlace.mostrar %}
+            <a href="{{ enlace.url }}" target="_blank" class="team-social-link" title="{{ enlace.titulo|default:enlace.get_tipo_display }}">
+              <i class="{{ enlace.get_icon_class }}"></i>
+            </a>
+            {% endif %}
+          {% endfor %}
         </div>
-        {% endif %}
       </div>
     </div>
     {% empty %}
     <div class="empty-team-message">
       <h3>Conoce a nuestro equipo</h3>
-      <p>Al parecer no se han cargado bien o no existen trabajadores</p>
+      <p>Actualmente no hay miembros del equipo para mostrar</p>
     </div>
     {% endfor %}
   </div>
 
-  <!-- Posts destacados del equipo (opcional) -->
-
-</div>
 {% endblock %}
