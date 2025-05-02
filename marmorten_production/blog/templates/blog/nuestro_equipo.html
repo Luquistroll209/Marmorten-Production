@@ -277,37 +277,12 @@
     {% empty %}
     <div class="empty-team-message">
       <h3>Conoce a nuestro equipo</h3>
-      <p>Actualmente estamos preparando la información sobre los talentosos profesionales que hacen posible nuestro trabajo. Vuelve pronto para conocerlos.</p>
+      <p>Al parecer no se han cargado bien o no existen trabajadores</p>
     </div>
     {% endfor %}
   </div>
 
   <!-- Posts destacados del equipo (opcional) -->
-  {% if posts_destacados %}
-  <div class="team-projects">
-    <div class="section-header">
-      <h2 class="section-title">Trabajos Destacados</h2>
-      <p>Proyectos realizados por nuestro talentoso equipo</p>
-    </div>
-    
-    <div class="producciones-grid">
-      {% for post in posts_destacados %}
-      <div class="produccion-card">
-        {% if post.imagen %}
-        <img src="{{ post.imagen.url }}" class="produccion-image" alt="{{ post.title }}">
-        {% endif %}
-        <div class="produccion-content">
-          <h3 class="produccion-title">{{ post.title }}</h3>
-          <p>{{ post.resumen|default:""|truncatechars:100 }}</p>
-          <div class="produccion-meta">
-            <span>{{ post.fecha_publicacion|date:"M Y" }}</span>
-            <a href="{% url 'detalle_post' post.id %}" class="btn btn-outline">Ver proyecto</a>
-          </div>
-        </div>
-      </div>
-      {% endfor %}
-    </div>
-  </div>
-  {% endif %}
+
 </div>
 {% endblock %}
