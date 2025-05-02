@@ -33,11 +33,13 @@ def inicio(request):
     return render(request, 'blog/index.html', context)
 
 def detalle_post(request, post_id):
+    config = ConfiguracionSitio.objects.first()
     post = get_object_or_404(Post, pk=post_id)
     galeria = post.galeria.all().order_by('orden')
     relacionados = Post.objects.exclude(pk=post_id).exclude(imagen='').order_by('-fecha_publicacion')[:3]
     
     context = {
+        'config': config,
         'post': post,
         'galeria': galeria,
         'relacionados': relacionados
