@@ -109,7 +109,7 @@ class PostAdmin(BaseAdmin):
 # ===== ADMINISTRACIÓN DEL EQUIPO =====
 @admin.register(Equipo)
 class EquipoAdmin(BaseAdmin):
-    list_display = ('nombre', 'puesto', 'orden', 'preview')
+    list_display = ('nombre', 'puesto', 'orden', 'foto_preview')
     list_editable = ('orden',)
     search_fields = ('nombre', 'puesto')
     
@@ -118,7 +118,7 @@ class EquipoAdmin(BaseAdmin):
             'fields': ('nombre', 'puesto', 'biografia', 'redes_sociales')
         }),
         ('Imagen', {
-            'fields': ('foto', 'preview')
+            'fields': ('foto',)
         }),
         ('Configuración', {
             'fields': ('orden',),
@@ -126,14 +126,14 @@ class EquipoAdmin(BaseAdmin):
         })
     )
     
-    def preview(self, obj):
+    def foto_preview(self, obj):
         if obj.foto:
             return format_html(
                 '<img src="{}" style="max-height:50px; border-radius:50%;"/>',
                 obj.foto.url
             )
         return "-"
-    preview.short_description = "Foto"
+    foto_preview.short_description = "Foto"
 
 # ===== CARRUSEL PRINCIPAL =====
 @admin.register(CarruselPost)

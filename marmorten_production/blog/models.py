@@ -3,6 +3,7 @@ from django.utils import timezone
 from django.core.exceptions import ValidationError
 from django.db.models import Q
 from django.shortcuts import render, get_object_or_404
+from django.utils.text import slugify
 
 class Post(models.Model):
     title = models.CharField(max_length=200)
@@ -49,6 +50,10 @@ class GaleriaImagenes(models.Model):
     def __str__(self):
         return self.titulo or f"Imagen {self.id}"
 
+from django.db import models
+
+from django.db import models
+
 class Equipo(models.Model):
     nombre = models.CharField(max_length=100)
     puesto = models.CharField(max_length=100)
@@ -62,7 +67,7 @@ class Equipo(models.Model):
         verbose_name_plural = "Miembros del equipo"
 
     def __str__(self):
-        return self.nombre
+        return f"{self.nombre} - {self.puesto}"
 
 class ConfiguracionSitio(models.Model):
     # Información Básica

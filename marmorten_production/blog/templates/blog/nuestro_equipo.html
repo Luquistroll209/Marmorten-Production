@@ -1,36 +1,78 @@
 {% extends 'blog/base.html' %}
 
+{% block title %}Nuestro Equipo | {{ config.titulo_sitio }}{% endblock %}
+
 {% block content %}
-<div class="post" style="max-width: 800px; margin: 0 auto;">
-    <h1>Nuestro Equipo</h1>
-    
-    <div class="equipo-detallado" style="display: grid; gap: 30px;">
+<div class="container py-5">
+    <!-- Cabecera -->
+    <div class="text-center mb-5">
+        <h1 class="display-4">Nuestro Equipo</h1>
+        <p class="lead">El talento humano detrás de {{ config.titulo_sitio }}</p>
+    </div>
+
+    <!-- Miembros del equipo -->
+    <div class="row">
         {% for miembro in equipo %}
-        <div style="background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-            <div style="display: flex; flex-direction: column; gap: 20px; padding: 20px;">
-                <div style="display: flex; gap: 20px; align-items: center;">
-                    <img src="{{ miembro.foto.url }}" alt="{{ miembro.nombre }}" style="width: 150px; height: 150px; object-fit: cover; border-radius: 50%;">
-                    <div>
-                        <h2 style="margin: 0; color: #333;">{{ miembro.nombre }}</h2>
-                        <p style="color: #666; margin: 5px 0; font-weight: bold;">{{ miembro.puesto }}</p>
-                        {% if miembro.redes_sociales %}
-                        <div style="display: flex; gap: 10px; margin-top: 10px;">
-                            {% for red, url in miembro.redes_sociales.items %}
-                                {% if url %}
-                                <a href="{{ url }}" target="_blank" style="color: #333; text-decoration: none; font-size: 1.2rem;">{{ red|title }}</a>
-                                {% endif %}
-                            {% endfor %}
-                        </div>
-                        {% endif %}
-                    </div>
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="card h-100 border-0 shadow">
+                <div class="card-img-top text-center pt-4">
+                    <img src="{{ miembro.foto.url }}" 
+                         alt="{{ miembro.nombre }}"
+                         class="rounded-circle img-thumbnail"
+                         style="width: 180px; height: 180px; object-fit: cover;">
                 </div>
-                <div>
-                    <h3 style="color: #333; margin-bottom: 10px;">Biografía</h3>
-                    <p style="color: #666; line-height: 1.6;">{{ miembro.biografia|linebreaks }}</p>
+                <div class="card-body text-center">
+                    <h3 class="h5">{{ miembro.nombre }}</h3>
+                    <p class="text-primary">{{ miembro.puesto }}</p>
+                    <p class="card-text">{{ miembro.biografia|truncatewords:25 }}</p>
+                    
+                    <!-- Redes sociales -->
+                    {% if miembro.redes_sociales %}
+                    <div class="mt-3">
+                        {% for red, url in miembro.redes_sociales.items %}
+                            {% if url %}
+                            <a href="{{ url }}" target="_blank" class="mx-2 text-decoration-none">
+                                <i class="fab fa-{{ red|lower }} fa-lg"></i>
+                            </a>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12 text-center py-5">
+            <div class="alert alert-info">
+                Próximamente información sobre nuestro equipo.
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Posts destacados (opcional) -->
+    {% if posts_destacados %}
+    <div class="row mt-5">
+        <div class="col-12 text-center mb-4">
+            <h2 class="h4">Nuestros Trabajos Destacados</h2>
+        </div>
+        {% for post in posts_destacados %}
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                {% if post.imagen %}
+                <img src="{{ post.imagen.url }}" class="card-img-top" alt="{{ post.title }}" style="height: 180px; object-fit: cover;">
+                {% endif %}
+                <div class="card-body">
+                    <h3 class="h5">{{ post.title }}</h3>
+                    <p>{{ post.resumen|default:""|truncatechars:100 }}</p>
+                </div>
+                <div class="card-footer bg-white">
+                    <a href="{% url 'detalle_post' post.id %}" class="btn btn-sm btn-outline-primary">Ver proyecto</a>
                 </div>
             </div>
         </div>
         {% endfor %}
     </div>
+    {% endif %}
 </div>
 {% endblock %}

@@ -57,14 +57,22 @@ def sobre_nosotros(request):
     return render(request, 'blog/sobre_nosotros.html', context)
 
 def nuestro_equipo(request):
-    equipo = Equipo.objects.all().order_by('orden')
     config = ConfiguracionSitio.objects.first()
+    equipo = Equipo.objects.all().order_by('orden')
+    posts_destacados = Post.objects.filter(
+        destacado=True
+    ).exclude(
+        imagen=''
+    ).order_by(
+        '-fecha_publicacion'
+    )#[:3] 
     
     context = {
-        'equipo': equipo,
         'config': config,
-        'posts_destacados': Post.objects.filter(destacado=True).exclude(imagen='').order_by('-fecha_publicacion')[:3]
+        'equipo': equipo,
+        'posts_destacados': posts_destacados,
     }
+    
     return render(request, 'blog/nuestro_equipo.html', context)
 
 
@@ -81,22 +89,12 @@ def sobre_nosotros(request):
     return render(request, 'blog/sobre_nosotros.html', context)
 
 def contacto(request):
-    config = ConfiguracionSitio.objects.first()  #  Importante
+    config = ConfiguracionSitio.objects.first() 
     context = {
-        'config': config,  #  Pasa la configuración
+        'config': config,  
     }
     return render(request, 'blog/contacto.html', context)
 
-def nuestro_equipo(request):
-    config = ConfiguracionSitio.objects.first()  #  Importante
-    secciones = SeccionSobreNosotros.objects.all().order_by('orden')
-
-    config = ConfiguracionSitio.objects.first()  #  Importante
-    context = {
-        'config': config,  #  Pasa la configuración
-        'secciones': secciones
-    }
-    return render(request,  'blog/nuestro_equipo.html', context)
 
 def buscar_posts(request):
     query = request.GET.get('q', '')
