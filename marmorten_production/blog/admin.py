@@ -178,28 +178,26 @@ class PostAdminForm(forms.ModelForm):
         except json.JSONDecodeError:
             raise forms.ValidationError("Formato JSON inválido")
 @admin.register(CarruselPost)
-class PostAdmin(BaseAdmin):
-    form = PostAdminForm
-    
-    # Mantén tus list_display y otros atributos existentes
-    
+class CarruselPostAdmin(BaseAdmin):
+    list_display = ('titulo', 'post', 'orden', 'activo')
+    list_editable = ('orden', 'activo')
     fieldsets = (
-        ('Contenido', {
-            'fields': ('title', 'resumen', 'content')
-        }),
-        ('Multimedia', {
-            'fields': ('imagen', 'video', 'enlaces_externos')
+        ('Información Básica', {
+            'fields': ('post', 'titulo')
         }),
         ('Configuración', {
-            'fields': ('destacado', 'mostrar_en_carrusel', 'orden'),
-            'classes': ('collapse',)
+            'fields': ('orden', 'activo'),
         })
     )
     
-    def save_model(self, request, obj, form, change):
-        if 'enlaces_externos' in form.cleaned_data:
-            obj.enlaces_externos = form.cleaned_data['enlaces_externos']
-        super().save_model(request, obj, form, change)
+    def preview(self, obj):
+        if obj.post and obj.post.imagen:
+            return format_html(
+                '<img src="{}" style="max-height:50px; border-radius:4px;"/>',
+                obj.post.imagen.url
+            )
+        return "-"
+    preview.short_description = "Miniatura del Post"
 
 class ImagenCarruselSobreNosotrosInline(admin.StackedInline, PreviewImageMixin):
     model = ImagenCarruselSobreNosotros

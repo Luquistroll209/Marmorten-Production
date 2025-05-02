@@ -585,7 +585,6 @@
                     {% elif enlace.tipo == 'TWITTER' %}Tweet
                     {% else %}Enlace externo{% endif %}
                 </span>
-                <span class="link-url">{{ enlace.url }}</span>
             </div>
             <a href="{{ enlace.url }}" target="_blank" rel="noopener noreferrer" class="btn-visitar">
                 Visitar <i class="fas fa-external-link-alt"></i>
@@ -608,22 +607,6 @@
     </div>
     {% endif %}
     
-    <!-- Compartir en redes sociales -->
-    <div class="share-buttons">
-        <span class="share-label">Compartir este contenido:</span>
-        <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}" target="_blank" class="facebook" title="Compartir en Facebook">
-            <i class="fab fa-facebook-f"></i>
-        </a>
-        <a href="https://twitter.com/intent/tweet?url={{ request.build_absolute_uri }}&text={{ post.title }}" target="_blank" class="twitter" title="Compartir en Twitter">
-            <i class="fab fa-twitter"></i>
-        </a>
-        <a href="https://www.linkedin.com/shareArticle?mini=true&url={{ request.build_absolute_uri }}" target="_blank" class="linkedin" title="Compartir en LinkedIn">
-            <i class="fab fa-linkedin-in"></i>
-        </a>
-        <a href="https://wa.me/?text={{ post.title|urlencode }}%20{{ request.build_absolute_uri|urlencode }}" target="_blank" class="whatsapp" title="Compartir por WhatsApp">
-            <i class="fab fa-whatsapp"></i>
-        </a>
-    </div>
     
     <!-- Posts relacionados -->
     {% if relacionados %}

@@ -505,7 +505,7 @@ p {
         <div class="carousel-content">
           <h2 class="carousel-title">{{ item.titulo|default:item.post.title }}</h2>
           <p class="carousel-description">{{ item.descripcion|default:item.post.resumen }}</p>
-          <a href="{% url 'detalle_post' item.post.id %}" class="btn btn-primary">Ver proyecto</a>
+          <a href="{% url 'detalle_post' item.post.id %}" class="btn btn-primary">Ver más</a>
         </div>
       </div>
       {% endif %}
