@@ -71,18 +71,22 @@
   }
 
   /* Estilos para enlaces externos */
+  .external-links-container {
+      margin: 2rem 0;
+  }
+
   .external-link {
-      display: inline-flex;
+      display: flex;
       align-items: center;
       background: var(--color-card);
-      padding: 0.8rem 1.2rem;
+      padding: 1rem;
       border-radius: var(--borde-redondeado);
       color: var(--color-texto);
       text-decoration: none;
-      margin: 1rem 0;
+      margin-bottom: 1rem;
       transition: var(--transicion);
       box-shadow: var(--sombra);
-      width: 100%;
+      flex-wrap: wrap;
   }
   
   .external-link:hover {
@@ -91,34 +95,43 @@
   }
   
   .external-link i {
-      font-size: 1.5rem;
-      margin-right: 0.8rem;
+      font-size: 1.8rem;
+      margin-right: 1rem;
+      color: var(--color-accento);
+      flex-shrink: 0;
+  }
+  
+  .link-content {
+      flex: 1;
+      min-width: 200px;
+  }
+  
+  .link-label {
+      font-weight: 600;
+      display: block;
+      margin-bottom: 0.3rem;
       color: var(--color-accento);
   }
   
-  .external-link .link-text {
-      flex: 1;
-  }
-  
-  .external-link .link-label {
-      font-weight: 600;
-      display: block;
-      margin-bottom: 0.2rem;
-  }
-  
-  .external-link .link-url {
-      font-size: 0.85rem;
+  .link-url {
+      font-size: 0.9rem;
       color: var(--color-texto-claro);
       word-break: break-all;
+      display: block;
+      margin-bottom: 0.5rem;
   }
   
   .btn-visitar {
       background: var(--color-accento);
       color: white;
-      padding: 0.5rem 1rem;
-      border-radius: 5px;
+      padding: 0.6rem 1.2rem;
+      border-radius: var(--borde-redondeado);
       text-decoration: none;
       transition: var(--transicion);
+      font-weight: 500;
+      border: none;
+      cursor: pointer;
+      margin-top: 0.5rem;
   }
   
   .btn-visitar:hover {
@@ -138,7 +151,7 @@
       padding-bottom: 56.25%; /* 16:9 */
       height: 0;
       overflow: hidden;
-      margin: 2rem 0;
+      margin: 1.5rem 0 2.5rem;
       border-radius: var(--borde-redondeado);
       box-shadow: var(--sombra);
   }
@@ -154,14 +167,14 @@
 
   /* Gallery Styles */
   .gallery-section {
-      margin: 4rem 0;
+      margin: 0 0 3rem 0;
   }
 
   .gallery-title {
       text-align: center;
       font-size: 1.8rem;
       color: var(--color-accento);
-      margin-bottom: 2rem;
+      margin: 2rem 0;
       position: relative;
   }
 
@@ -178,6 +191,7 @@
       position: relative;
       overflow: hidden;
       border-radius: var(--borde-redondeado);
+      margin-bottom: 2rem;
   }
 
   .gallery-inner {
@@ -193,8 +207,7 @@
   .gallery-image {
       width: 100%;
       max-height: 600px;
-      object-fit: contain;
-      background: #000;
+      object-fit: cover;
   }
 
   .gallery-caption {
@@ -229,15 +242,19 @@
       font-size: 1.2rem;
       cursor: pointer;
       transition: var(--transicion);
+      display: flex;
+      align-items: center;
+      justify-content: center;
   }
 
   .gallery-btn:hover {
       background: var(--color-destacado);
+      transform: scale(1.1);
   }
 
   /* Related Posts */
   .related-posts {
-      margin: 4rem 0;
+      margin: 4rem 0 2rem;
   }
 
   .related-title {
@@ -280,6 +297,11 @@
       width: 100%;
       height: 200px;
       object-fit: cover;
+      transition: transform 0.3s ease;
+  }
+
+  .related-item:hover .related-image {
+      transform: scale(1.03);
   }
 
   .related-content {
@@ -303,12 +325,22 @@
       font-weight: 600;
       text-decoration: none;
       transition: var(--transicion);
-      display: inline-block;
+      display: inline-flex;
+      align-items: center;
   }
 
   .read-more:hover {
       color: var(--color-destacado);
       transform: translateX(5px);
+  }
+
+  .read-more i {
+      margin-left: 0.3rem;
+      transition: var(--transicion);
+  }
+
+  .read-more:hover i {
+      transform: translateX(3px);
   }
 
   /* Post Highlights */
@@ -318,6 +350,7 @@
       border-radius: var(--borde-redondeado);
       margin: 2rem 0;
       box-shadow: var(--sombra);
+      border-left: 4px solid var(--color-accento);
   }
 
   .post-highlight h3 {
@@ -325,72 +358,83 @@
       margin-bottom: 1rem;
       display: flex;
       align-items: center;
+      font-size: 1.3rem;
   }
 
   .post-highlight h3 i {
-      margin-right: 0.5rem;
+      margin-right: 0.7rem;
+      font-size: 1.2rem;
+  }
+
+  .post-highlight-content {
+      line-height: 1.7;
   }
 
   /* Blockquote styles */
   .blockquote {
       border-left: 4px solid var(--color-accento);
-      padding: 1rem 1.5rem;
-      margin: 1.5rem 0;
+      padding: 1.5rem;
+      margin: 2rem 0;
       background: var(--color-card);
       font-style: italic;
       color: var(--color-texto);
+      border-radius: 0 var(--borde-redondeado) var(--borde-redondeado) 0;
   }
   
   .blockquote-footer {
       display: block;
-      margin-top: 0.5rem;
+      margin-top: 1rem;
       font-style: normal;
       font-weight: 600;
       color: var(--color-accento);
+      text-align: right;
   }
 
   /* Share buttons */
   .share-buttons {
       display: flex;
       align-items: center;
-      margin: 2rem 0;
-      padding: 1rem 0;
-      border-top: 1px solid #eee;
-      border-bottom: 1px solid #eee;
+      margin: 3rem 0;
+      padding: 1.5rem 0;
+      border-top: 1px solid rgba(139, 90, 43, 0.1);
+      border-bottom: 1px solid rgba(139, 90, 43, 0.1);
   }
 
-  .share-buttons span {
-      margin-right: 1rem;
+  .share-label {
+      margin-right: 1.2rem;
       font-weight: 600;
       color: var(--color-texto-claro);
+      font-size: 1.1rem;
   }
 
   .share-buttons a {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      width: 36px;
-      height: 36px;
+      width: 40px;
+      height: 40px;
       border-radius: 50%;
       background: var(--color-card);
       color: var(--color-texto);
-      margin-right: 0.5rem;
+      margin-right: 0.8rem;
       transition: var(--transicion);
+      font-size: 1.1rem;
   }
 
   .share-buttons a:hover {
-      transform: translateY(-3px);
+      transform: translateY(-3px) scale(1.1);
       color: white;
   }
 
   .share-buttons a.facebook:hover { background: #1877F2; }
   .share-buttons a.twitter:hover { background: #1DA1F2; }
   .share-buttons a.linkedin:hover { background: #0A66C2; }
+  .share-buttons a.whatsapp:hover { background: #25D366; }
 
   /* Responsive Design */
   @media (max-width: 992px) {
       .post-title {
-          font-size: 2rem;
+          font-size: 2.2rem;
       }
       
       .gallery-image {
@@ -404,7 +448,7 @@
       }
       
       .post-title {
-          font-size: 1.8rem;
+          font-size: 2rem;
       }
       
       .gallery-image {
@@ -412,13 +456,28 @@
       }
       
       .related-grid {
-          grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+          grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+          gap: 1.5rem;
+      }
+
+      .external-link {
+          flex-direction: column;
+          align-items: flex-start;
+      }
+
+      .external-link i {
+          margin-bottom: 0.8rem;
+      }
+
+      .btn-visitar {
+          width: 100%;
+          text-align: center;
       }
   }
 
   @media (max-width: 576px) {
       .post-title {
-          font-size: 1.5rem;
+          font-size: 1.7rem;
       }
       
       .post-content {
@@ -430,18 +489,25 @@
       }
       
       .gallery-btn {
-          width: 35px;
-          height: 35px;
+          width: 36px;
+          height: 36px;
           font-size: 1rem;
       }
 
       .share-buttons {
           flex-wrap: wrap;
+          justify-content: center;
       }
 
-      .share-buttons span {
+      .share-label {
           width: 100%;
-          margin-bottom: 0.5rem;
+          text-align: center;
+          margin-bottom: 1rem;
+          margin-right: 0;
+      }
+
+      .related-grid {
+          grid-template-columns: 1fr;
       }
   }
 </style>
@@ -452,64 +518,9 @@
         <p class="post-meta">Publicado el {{ post.fecha_publicacion|date:"d M Y" }}</p>
     </header>
     
-    {% if post.imagen %}
-        <img src="{{ post.imagen.url }}" alt="Imagen del post" class="post-image">
-    {% endif %}
-    
-    <!-- Puntos destacados -->
-    {% if post.resumen %}
-    <div class="post-highlight">
-        <h3><i class="fas fa-star"></i> Puntos clave</h3>
-        {{ post.resumen|linebreaks }}
-    </div>
-    {% endif %}
-    
-    <div class="post-content">
-        {{ post.content|linebreaks }}
-    </div>
-    
-    {% if post.video %}
-        <video controls class="post-video">
-            <source src="{{ post.video.url }}" type="video/mp4">
-            Tu navegador no soporta el elemento de video.
-        </video>
-    {% endif %}
-    
-    <!-- Enlaces externos -->
-    {% if post.enlace_externo and post.tipo_enlace %}
-    <div class="external-link {{ post.tipo_enlace|lower }}">
-        <i class="{{ post.get_icono_enlace }}"></i>
-        <div class="link-text">
-            <span class="link-label">
-                {% if post.tipo_enlace == 'YOUTUBE' %}Video de YouTube
-                {% elif post.tipo_enlace == 'INSTAGRAM' %}Publicación de Instagram
-                {% elif post.tipo_enlace == 'FACEBOOK' %}Publicación de Facebook
-                {% elif post.tipo_enlace == 'TWITTER' %}Tweet
-                {% else %}Enlace externo{% endif %}
-            </span>
-            <span class="link-url">{{ post.enlace_externo }}</span>
-        </div>
-        <a href="{{ post.enlace_externo }}" target="_blank" rel="noopener noreferrer" class="btn-visitar">Visitar</a>
-    </div>
-    {% endif %}
-    
-    <!-- Videos de YouTube embebidos -->
-    {% if post.enlace_externo and post.tipo_enlace == 'YOUTUBE' %}
-    <div class="video-container">
-        {% with youtube_id=post.enlace_externo|slice:"32:" %}
-        <iframe src="https://www.youtube.com/embed/{{ youtube_id }}" 
-                frameborder="0" 
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                allowfullscreen>
-        </iframe>
-        {% endwith %}
-    </div>
-    {% endif %}
-    
-    <!-- Galería de imágenes -->
+    <!-- Carrusel como portada principal -->
     {% if galeria %}
     <section class="gallery-section">
-        <h2 class="gallery-title">Galería de imágenes</h2>
         <div class="gallery-carousel">
             <div class="gallery-inner" id="galleryCarousel">
                 {% for imagen in galeria %}
@@ -532,19 +543,82 @@
             </div>
         </div>
     </section>
+    {% elif post.imagen %}
+        <img src="{{ post.imagen.url }}" alt="Imagen del post" class="post-image">
+    {% endif %}
+    
+    <!-- Puntos destacados -->
+    {% if post.resumen %}
+    <div class="post-highlight">
+        <h3><i class="fas fa-star"></i> Puntos clave</h3>
+        <div class="post-highlight-content">
+            {{ post.resumen|linebreaks }}
+        </div>
+    </div>
+    {% endif %}
+    
+    <div class="post-content">
+        {{ post.content|safe }}
+    </div>
+    
+    {% if post.video %}
+        <video controls class="post-video">
+            <source src="{{ post.video.url }}" type="video/mp4">
+            Tu navegador no soporta el elemento de video.
+        </video>
+    {% endif %}
+    
+    <!-- Enlaces externos -->
+    {% if post.enlaces_externos %}
+    <div class="external-links-container">
+        <h2 class="gallery-title">Enlaces relacionados</h2>
+        {% for enlace in post.enlaces_externos %}
+        <div class="external-link {{ enlace.tipo|lower }}">
+            <i class="{{ post.get_icono_enlace }}"></i>
+            <div class="link-content">
+                <span class="link-label">
+                    {% if enlace.tipo == 'YOUTUBE' %}Video de YouTube
+                    {% elif enlace.tipo == 'INSTAGRAM' %}Publicación de Instagram
+                    {% elif enlace.tipo == 'FACEBOOK' %}Publicación de Facebook
+                    {% elif enlace.tipo == 'TWITTER' %}Tweet
+                    {% else %}Enlace externo{% endif %}
+                </span>
+                <span class="link-url">{{ enlace.url }}</span>
+            </div>
+            <a href="{{ enlace.url }}" target="_blank" rel="noopener noreferrer" class="btn-visitar">
+                Visitar <i class="fas fa-external-link-alt"></i>
+            </a>
+        </div>
+        
+        {% if enlace.tipo == 'YOUTUBE' and enlace.mostrar_video %}
+        <div class="video-container">
+            {% with youtube_id=enlace.url|slice:"32:" %}
+            <iframe src="https://www.youtube.com/embed/{{ youtube_id }}" 
+                    frameborder="0" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                    allowfullscreen>
+            </iframe>
+            {% endwith %}
+        </div>
+        {% endif %}
+        {% endfor %}
+    </div>
     {% endif %}
     
     <!-- Compartir en redes sociales -->
     <div class="share-buttons">
-        <span>Compartir:</span>
-        <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}" target="_blank" class="facebook">
+        <span class="share-label">Compartir este contenido:</span>
+        <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}" target="_blank" class="facebook" title="Compartir en Facebook">
             <i class="fab fa-facebook-f"></i>
         </a>
-        <a href="https://twitter.com/intent/tweet?url={{ request.build_absolute_uri }}&text={{ post.title }}" target="_blank" class="twitter">
+        <a href="https://twitter.com/intent/tweet?url={{ request.build_absolute_uri }}&text={{ post.title }}" target="_blank" class="twitter" title="Compartir en Twitter">
             <i class="fab fa-twitter"></i>
         </a>
-        <a href="https://www.linkedin.com/shareArticle?mini=true&url={{ request.build_absolute_uri }}" target="_blank" class="linkedin">
+        <a href="https://www.linkedin.com/shareArticle?mini=true&url={{ request.build_absolute_uri }}" target="_blank" class="linkedin" title="Compartir en LinkedIn">
             <i class="fab fa-linkedin-in"></i>
+        </a>
+        <a href="https://wa.me/?text={{ post.title|urlencode }}%20{{ request.build_absolute_uri|urlencode }}" target="_blank" class="whatsapp" title="Compartir por WhatsApp">
+            <i class="fab fa-whatsapp"></i>
         </a>
     </div>
     
@@ -561,7 +635,9 @@
                 <div class="related-content">
                     <h3>{{ post.title }}</h3>
                     <p>{{ post.resumen|truncatechars:120 }}</p>
-                    <a href="{% url 'detalle_post' post.id %}" class="read-more">Ver detalles</a>
+                    <a href="{% url 'detalle_post' post.id %}" class="read-more">
+                        Ver detalles <i class="fas fa-arrow-right"></i>
+                    </a>
                 </div>
             </article>
             {% endfor %}
@@ -580,14 +656,20 @@
         
         let galleryIndex = 0;
         let galleryInterval;
+        let isDragging = false;
+        let startPos = 0;
+        let currentTranslate = 0;
+        let prevTranslate = 0;
         
         function goToGallerySlide(index) {
             galleryIndex = (index + gallerySlides.length) % gallerySlides.length;
             const offset = -galleryIndex * 100;
             galleryCarousel.style.transform = `translateX(${offset}%)`;
+            currentTranslate = offset;
         }
         
         if (gallerySlides.length > 1) {
+            // Navegación con botones
             galleryPrevBtn.addEventListener('click', () => {
                 clearInterval(galleryInterval);
                 goToGallerySlide(galleryIndex - 1);
@@ -601,40 +683,67 @@
             });
             
             // Touch events para móviles
-            let touchStartX = 0;
+            galleryCarousel.addEventListener('touchstart', touchStart, {passive: true});
+            galleryCarousel.addEventListener('touchend', touchEnd, {passive: true});
+            galleryCarousel.addEventListener('touchmove', touchMove, {passive: true});
             
-            galleryCarousel.addEventListener('touchstart', (e) => {
-                touchStartX = e.touches[0].clientX;
-                clearInterval(galleryInterval);
-            }, {passive: true});
+            // Mouse events para desktop
+            galleryCarousel.addEventListener('mousedown', touchStart);
+            galleryCarousel.addEventListener('mouseup', touchEnd);
+            galleryCarousel.addEventListener('mouseleave', touchEnd);
+            galleryCarousel.addEventListener('mousemove', touchMove);
             
-            galleryCarousel.addEventListener('touchend', (e) => {
-                if (!touchStartX) return;
-                const touchEndX = e.changedTouches[0].clientX;
-                const diff = touchStartX - touchEndX;
-                
-                if (diff > 50) {
-                    goToGallerySlide(galleryIndex + 1);
-                } else if (diff < -50) {
-                    goToGallerySlide(galleryIndex - 1);
+            function touchStart(e) {
+                if (e.type === 'touchstart') {
+                    startPos = e.touches[0].clientX;
+                } else {
+                    startPos = e.clientX;
+                    e.preventDefault();
                 }
-                
-                touchStartX = 0;
-                startGalleryAutoSlide();
-            }, {passive: true});
+                isDragging = true;
+                clearInterval(galleryInterval);
+                galleryCarousel.style.transition = 'none';
+            }
+            
+            function touchMove(e) {
+                if (isDragging) {
+                    const currentPosition = e.type === 'touchmove' ? e.touches[0].clientX : e.clientX;
+                    const diff = currentPosition - startPos;
+                    galleryCarousel.style.transform = `translateX(calc(${currentTranslate}% + ${diff}px))`;
+                }
+            }
+            
+            function touchEnd(e) {
+                if (isDragging) {
+                    isDragging = false;
+                    const endPos = e.type === 'touchend' ? e.changedTouches[0].clientX : e.clientX;
+                    const diff = endPos - startPos;
+                    
+                    if (diff > 50) {
+                        goToGallerySlide(galleryIndex - 1);
+                    } else if (diff < -50) {
+                        goToGallerySlide(galleryIndex + 1);
+                    } else {
+                        goToGallerySlide(galleryIndex);
+                    }
+                    
+                    galleryCarousel.style.transition = 'transform 0.5s ease';
+                    startGalleryAutoSlide();
+                }
+            }
             
             function startGalleryAutoSlide() {
                 galleryInterval = setInterval(() => {
                     goToGallerySlide(galleryIndex + 1);
-                }, 10000);
+                }, 5000);
             }
             
             // Pausar al interactuar
-            galleryCarousel.parentElement.addEventListener('mouseenter', () => {
+            galleryCarousel.addEventListener('mouseenter', () => {
                 clearInterval(galleryInterval);
             });
             
-            galleryCarousel.parentElement.addEventListener('mouseleave', startGalleryAutoSlide);
+            galleryCarousel.addEventListener('mouseleave', startGalleryAutoSlide);
             
             startGalleryAutoSlide();
         } else {

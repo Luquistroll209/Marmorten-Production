@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django.utils.html import format_html
+from django import forms
 from .models import (
     Post, 
     CarruselPost, 
@@ -13,6 +14,8 @@ from .models import (
     MensajeContacto,
 
 )
+import json
+
 admin.site.site_header = 'Marmorten Productión'
 admin.site.index_title = 'Panel de Administración'
 
@@ -76,21 +79,31 @@ class GaleriaPostInline(admin.StackedInline, PreviewImageMixin):
     fields = ('imagen', 'titulo', 'orden', 'preview')
     readonly_fields = ('preview',)
 
+
+class PostForm(forms.ModelForm):
+    class Meta:
+        model = Post
+        fields = '__all__'
+        
+    def clean_enlaces_externos(self):
+        data = self.cleaned_data.get('enlaces_externos', '[]')
+        try:
+            if isinstance(data, str):
+                return json.loads(data)
+            return data
+        except json.JSONDecodeError:
+            raise forms.ValidationError("Formato JSON inválido. Ejemplo: [{'url':'...','tipo':'YOUTUBE','mostrar_video':true}]")
+
 @admin.register(Post)
-class PostAdmin(BaseAdmin):
-    list_display = ('title', 'fecha_publicacion', 'destacado', 'mostrar_en_carrusel', 'preview')
-    list_editable = ('destacado', 'mostrar_en_carrusel')
-    list_filter = ('destacado', 'mostrar_en_carrusel')
-    search_fields = ('title', 'content')
-    inlines = [GaleriaPostInline]
-    readonly_fields = ('preview',)  # Add this line
-    
+class PostAdmin(admin.ModelAdmin):
+    form = PostForm
+    list_display = ('title', 'fecha_publicacion', 'destacado')
     fieldsets = (
         ('Contenido', {
             'fields': ('title', 'resumen', 'content')
         }),
         ('Multimedia', {
-            'fields': ('imagen', 'video', 'enlace_externo', 'tipo_enlace', 'preview')
+            'fields': ('imagen', 'video', 'enlaces_externos')
         }),
         ('Configuración', {
             'fields': ('destacado', 'mostrar_en_carrusel', 'orden'),
@@ -138,12 +151,48 @@ class EquipoAdmin(BaseAdmin):
     foto_preview.short_description = "Foto"
 
 # ===== CARRUSEL PRINCIPAL =====
+class PostAdminForm(forms.ModelForm):
+    enlaces_externos = forms.CharField(
+        widget=forms.Textarea(attrs={'rows': 5}),
+        required=False,
+        help_text="""Formato JSON: [{
+            "url": "https://ejemplo.com", 
+            "tipo": "YOUTUBE/INSTAGRAM/FACEBOOK/TWITTER/OTRO", 
+            "mostrar_video": true/false
+        }]"""
+    )
+    
+    def clean_enlaces_externos(self):
+        data = self.cleaned_data['enlaces_externos']
+        try:
+            if data:
+                return json.loads(data)
+            return []
+        except json.JSONDecodeError:
+            raise forms.ValidationError("Formato JSON inválido")
 @admin.register(CarruselPost)
-class CarruselPostAdmin(BaseAdmin):
-    list_display = ('post', 'titulo', 'orden', 'activo')
-    list_editable = ('orden', 'activo')
-    list_filter = ('activo',)
-    search_fields = ('post__title', 'titulo')
+class PostAdmin(BaseAdmin):
+    form = PostAdminForm
+    
+    # Mantén tus list_display y otros atributos existentes
+    
+    fieldsets = (
+        ('Contenido', {
+            'fields': ('title', 'resumen', 'content')
+        }),
+        ('Multimedia', {
+            'fields': ('imagen', 'video', 'enlaces_externos')
+        }),
+        ('Configuración', {
+            'fields': ('destacado', 'mostrar_en_carrusel', 'orden'),
+            'classes': ('collapse',)
+        })
+    )
+    
+    def save_model(self, request, obj, form, change):
+        if 'enlaces_externos' in form.cleaned_data:
+            obj.enlaces_externos = form.cleaned_data['enlaces_externos']
+        super().save_model(request, obj, form, change)
 
 class ImagenCarruselSobreNosotrosInline(admin.StackedInline, PreviewImageMixin):
     model = ImagenCarruselSobreNosotros
