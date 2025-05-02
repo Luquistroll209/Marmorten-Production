@@ -21,7 +21,7 @@
             --color-acento: #D4AF37;
             --color-borde: rgba(212, 175, 55, 0.3);
             --sombra: 0 4px 20px rgba(0, 0, 0, 0.1);
-            --borde-redondeado: 15px;
+            --borde-redondeado: 0px 0px 15px 15px;
             --transicion: all 0.3s ease;
         }
 
@@ -32,6 +32,7 @@
         }
 
         body {
+            background-image: url("/static/img/ucm_bg_shape.png");
             font-family: 'Inter', sans-serif;
             background-color: var(--color-fondo);
             color: var(--color-texto);
@@ -44,28 +45,30 @@
 
         /* Navbar Flotante Mejorado */
         .navbar {
+            margin-top: 20px;
             background-color: white;
-            padding: 15px 5%;
+            padding: 10px 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
             position: fixed;
-            top: 10px;
+            top: 0px;
             left: 5%;
             right: 5%;
             z-index: 1000;
             box-shadow: var(--sombra);
-            border-radius: var(--borde-redondeado);
+            border-radius: 0px 0px 15px 15px;
             border: 1px solid var(--color-borde);
             transition: var(--transicion);
             max-width: 90%;
             margin: 0 auto;
             background-color:rgba(165, 165, 165, 0.6);
+            
             backdrop-filter: blur(7px);
         }
 
         .navbar-logo {
-            height: 50px;
+            height: 35px;
             transform: scale(1.5);
             transition: var(--transicion);
         }
@@ -173,7 +176,7 @@
         footer {
             background-color: #2a2a2a;
             color: white;
-            padding: 40px 5%;
+            padding: 20px 5%;
             margin-top: auto;
         }
 
@@ -182,24 +185,25 @@
             flex-wrap: wrap;
             justify-content: space-between;
             gap: 30px;
-            max-width: 1200px;
+            max-width: 1000px;
             margin: 0 auto;
         }
 
         .footer-section {
             flex: 1;
-            min-width: 250px;
+            min-width: 100px;
         }
 
         .footer-section h3 {
             color: var(--color-acento);
-            margin-bottom: 20px;
+            margin-bottom: 10px;
             font-size: 1.2rem;
+            white-space: nowrap;
+            
         }
 
         .footer-section p, .footer-section a {
             color: #ddd;
-            margin-bottom: 10px;
             display: block;
             text-decoration: none;
             transition: var(--transicion);
@@ -228,11 +232,17 @@
 
         .copyright {
             text-align: center;
-            padding-top: 30px;
-            margin-top: 30px;
+            padding-top: 5px;
+            margin-top: 5px;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
             color: #aaa;
             font-size: 0.9rem;
+        }
+        .Enlaces_rapido{
+            display: flex;
+            flex-wrap: nowrap;
+            gap: 10px;
+
         }
 
         /* Responsive */
@@ -396,10 +406,13 @@
             
             <div class="footer-section">
                 <h3>Enlaces Rápidos</h3>
-                <a href="{% url 'inicio' %}">Inicio</a>
-                <a href="{% url 'sobre_nosotros' %}">Sobre Nosotros</a>
-                <a href="{% url 'nuestro_equipo' %}">Nuestro Equipo</a>
-                <a href="{% url 'contacto' %}">Contacto</a>
+                <div class="Enlaces_rapido"> 
+                    <a href="{% url 'inicio' %}">Inicio</a>
+                    <a href="{% url 'sobre_nosotros' %}">Sobre Nosotros</a>
+                    <a href="{% url 'nuestro_equipo' %}">Nuestro Equipo</a>
+                    <a href="{% url 'contacto' %}">Contacto</a>
+                </div>
+
             </div>
         </div>
         
