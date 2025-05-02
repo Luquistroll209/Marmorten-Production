@@ -12,8 +12,6 @@
     <meta property="og:url" content="{{ request.build_absolute_uri }}">
     <meta property="og:type" content="website">
 
-
-
     <title>{% block title %}{% endblock %}</title>
     <style>
         :root {
@@ -103,15 +101,16 @@
             font-weight: 600;
         }
 
+        /* BUSCADOR MEJORADO CON BOTÓN DETRÁS */
         .search-container {
+            position: relative;
             display: flex;
-            align-items: center;
-            background: rgba(248, 248, 248, 0.8);
+            width: 250px;
             border-radius: var(--borde-redondeado);
-            padding: 8px 15px;
-            transition: var(--transicion);
-            width: 220px;
+            overflow: hidden;
             border: 1px solid var(--color-borde);
+            background: rgba(248, 248, 248, 0.8);
+            transition: var(--transicion);
         }
 
         .search-container:focus-within {
@@ -123,25 +122,40 @@
             background: transparent;
             border: none;
             color: var(--color-texto);
-            padding: 5px 10px;
+            padding: 10px 45px 10px 15px;
             width: 100%;
             outline: none;
             font-size: 0.9rem;
+            z-index: 1;
         }
 
         .search-input::placeholder {
             color: rgba(58, 46, 38, 0.5);
         }
 
-        .search-icon {
-            width: 18px;
-            height: 18px;
-            filter: brightness(0) saturate(100%) invert(24%) sepia(9%) saturate(1721%) hue-rotate(346deg) brightness(91%) contrast(87%);
+        .search-button {
+            position: absolute;
+            right: 0;
+            top: 0;
+            height: 100%;
+            background-color: transparent;
+            color: var(--color-texto);
+            border: none;
+            padding: 0 15px;
+            cursor: pointer;
             transition: var(--transicion);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
         }
 
-        .search-container:hover .search-icon {
-            filter: brightness(0) saturate(100%) invert(80%) sepia(12%) saturate(3760%) hue-rotate(353deg) brightness(99%) contrast(89%);
+        .search-button:hover {
+            color: var(--color-acento);
+        }
+
+        .search-button i {
+            font-size: 1rem;
         }
 
         .mobile-menu-btn {
@@ -151,6 +165,7 @@
             color: var(--color-texto);
             font-size: 1.5rem;
             cursor: pointer;
+            z-index: 1001;
         }
 
         /* Footer */
@@ -226,7 +241,7 @@
             }
             
             .search-container {
-                width: 180px;
+                width: 200px;
             }
         }
 
@@ -241,18 +256,26 @@
                 right: 2.5%;
                 max-width: 95%;
                 padding: 10px 15px !important;
+                flex-wrap: wrap;
             }
             
             .mobile-menu-btn {
                 display: block;
+                order: 1;
             }
             
             .navbar-logo {
                 height: 40px;
+                order: 2;
+                margin-left: auto;
+                margin-right: auto;
             }
             
             .search-container {
                 display: none;
+                order: 4;
+                width: 100%;
+                margin-top: 10px;
             }
             
             .nav-links {
@@ -260,6 +283,11 @@
                 flex-direction: column;
                 width: 100%;
                 padding: 15px 0;
+                order: 3;
+                background-color: rgba(255, 255, 255, 0.9);
+                border-radius: var(--borde-redondeado);
+                margin-top: 10px;
+                border: 1px solid var(--color-borde);
             }
             
             .nav-links.active {
@@ -268,12 +296,40 @@
             
             .search-container.active {
                 display: flex;
-                width: 100%;
-                margin-top: 10px;
             }
 
             .footer-section {
                 min-width: 100%;
+            }
+            
+            /* Asegurar que el menú móvil no haga scroll */
+            .navbar.active-mobile-menu {
+                overflow-y: auto;
+                max-height: 100vh;
+            }
+            
+            .nav-link {
+                width: 100%;
+                text-align: center;
+                padding: 12px 15px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .navbar {
+                padding: 8px 10px !important;
+            }
+            
+            .navbar-logo {
+                height: 35px;
+            }
+            
+            .mobile-menu-btn {
+                font-size: 1.3rem;
+            }
+            
+            body {
+                padding-top: 70px;
             }
         }
     </style>
@@ -291,10 +347,10 @@
         </div>
         
         <div class="search-container" id="searchContainer">
-            <form action="{% url 'buscar_posts' %}" method="get">
+            <form action="{% url 'buscar_posts' %}" method="get" class="search-form">
                 <input type="search" name="q" class="search-input" placeholder="Buscar producciones..." value="{{ request.GET.q }}">
-                <button type="submit" style="background: none; border: none; cursor: pointer;">
-                    <img src="/static/blog/img/search.png" alt="Buscar" class="search-icon">
+                <button type="submit" class="search-button">
+                    <i class="fas fa-search"></i>
                 </button>
             </form>
         </div>
@@ -356,14 +412,31 @@
             const mobileMenuBtn = document.getElementById('mobileMenuBtn');
             const navLinks = document.getElementById('navLinks');
             const searchContainer = document.getElementById('searchContainer');
-            const searchForm = document.querySelector('#searchContainer form');
-            const searchInput = document.querySelector('#searchContainer .search-input');
+            const navbar = document.getElementById('navbar');
+            const searchForm = document.querySelector('.search-form');
+            const searchInput = document.querySelector('.search-input');
             
             // Menú móvil
             mobileMenuBtn.addEventListener('click', function() {
+                const isActive = navLinks.classList.contains('active');
+                
                 navLinks.classList.toggle('active');
                 searchContainer.classList.toggle('active');
-                this.textContent = navLinks.classList.contains('active') ? '✕' : '☰';
+                navbar.classList.toggle('active-mobile-menu');
+                
+                this.textContent = isActive ? '☰' : '✕';
+                
+                // Desplazamiento suave a los enlaces
+                if (!isActive) {
+                    document.querySelectorAll('.nav-link').forEach(link => {
+                        link.addEventListener('click', function() {
+                            navLinks.classList.remove('active');
+                            searchContainer.classList.remove('active');
+                            navbar.classList.remove('active-mobile-menu');
+                            mobileMenuBtn.textContent = '☰';
+                        });
+                    });
+                }
             });
             
             // Marcar enlace activo
@@ -376,6 +449,15 @@
                 }
             });
 
+            // Cerrar menú al hacer clic fuera
+            document.addEventListener('click', function(e) {
+                if (!navbar.contains(e.target) && !e.target.classList.contains('mobile-menu-btn')) {
+                    navLinks.classList.remove('active');
+                    searchContainer.classList.remove('active');
+                    navbar.classList.remove('active-mobile-menu');
+                    mobileMenuBtn.textContent = '☰';
+                }
+            });
             
             if (searchForm) {
                 searchForm.addEventListener('submit', function(e) {
@@ -387,10 +469,26 @@
             }
             
             if (searchInput) {
-                searchInput.addEventListener('input', function() {
-                    // Para futuro uso de AJAX
+                searchInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        searchForm.submit();
+                    }
                 });
             }
+            
+            // Prevenir scroll cuando el menú está abierto
+            function preventScroll(e) {
+                if (navLinks.classList.contains('active')) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    return false;
+                }
+            }
+            
+            // Agregar listeners para prevenir scroll
+            document.addEventListener('scroll', preventScroll, { passive: false });
+            document.addEventListener('wheel', preventScroll, { passive: false });
+            document.addEventListener('touchmove', preventScroll, { passive: false });
         });
     </script>
 </body>

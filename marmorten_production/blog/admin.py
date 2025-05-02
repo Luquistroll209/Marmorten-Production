@@ -83,6 +83,7 @@ class PostAdmin(BaseAdmin):
     list_filter = ('destacado', 'mostrar_en_carrusel')
     search_fields = ('title', 'content')
     inlines = [GaleriaPostInline]
+    readonly_fields = ('preview',)  # Add this line
     
     fieldsets = (
         ('Contenido', {
