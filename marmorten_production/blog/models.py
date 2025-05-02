@@ -15,6 +15,32 @@ class Post(models.Model):
     destacado = models.BooleanField(default=False)
     mostrar_en_carrusel = models.BooleanField(default=False)
     orden = models.PositiveIntegerField(default=0)
+    enlace_externo = models.URLField(blank=True, null=True, help_text="Enlace a contenido externo")
+    TIPO_ENLACE = [
+        ('YOUTUBE', 'YouTube'),
+        ('INSTAGRAM', 'Instagram'),
+        ('FACEBOOK', 'Facebook'),
+        ('TWITTER', 'Twitter/X'),
+        ('OTRO', 'Otro'),
+    ]
+    tipo_enlace = models.CharField(
+        max_length=10, 
+        choices=TIPO_ENLACE, 
+        blank=True, 
+        null=True,
+        help_text="Tipo de enlace externo"
+    )
+    
+    # Método para obtener el ícono según el tipo de enlace
+    def get_icono_enlace(self):
+        iconos = {
+            'YOUTUBE': 'fab fa-youtube',
+            'INSTAGRAM': 'fab fa-instagram',
+            'FACEBOOK': 'fab fa-facebook-f',
+            'TWITTER': 'fab fa-twitter',
+            'OTRO': 'fas fa-external-link-alt',
+        }
+        return iconos.get(self.tipo_enlace, 'fas fa-link')
     
     class Meta:
         ordering = ['-fecha_publicacion']

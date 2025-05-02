@@ -3,6 +3,8 @@
 {% block title %}{{ post.title }} | NORTEN PRODUCTION{% endblock %}
 
 {% block content %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
 <style>
   :root {
       --color-fondo: #f8f5f0;
@@ -66,6 +68,88 @@
       border-radius: var(--borde-redondeado);
       margin: 2rem 0;
       box-shadow: var(--sombra);
+  }
+
+  /* Estilos para enlaces externos */
+  .external-link {
+      display: inline-flex;
+      align-items: center;
+      background: var(--color-card);
+      padding: 0.8rem 1.2rem;
+      border-radius: var(--borde-redondeado);
+      color: var(--color-texto);
+      text-decoration: none;
+      margin: 1rem 0;
+      transition: var(--transicion);
+      box-shadow: var(--sombra);
+      width: 100%;
+  }
+  
+  .external-link:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 15px rgba(139, 90, 43, 0.15);
+  }
+  
+  .external-link i {
+      font-size: 1.5rem;
+      margin-right: 0.8rem;
+      color: var(--color-accento);
+  }
+  
+  .external-link .link-text {
+      flex: 1;
+  }
+  
+  .external-link .link-label {
+      font-weight: 600;
+      display: block;
+      margin-bottom: 0.2rem;
+  }
+  
+  .external-link .link-url {
+      font-size: 0.85rem;
+      color: var(--color-texto-claro);
+      word-break: break-all;
+  }
+  
+  .btn-visitar {
+      background: var(--color-accento);
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      text-decoration: none;
+      transition: var(--transicion);
+  }
+  
+  .btn-visitar:hover {
+      background: var(--color-destacado);
+  }
+  
+  /* Estilos específicos para cada tipo de enlace */
+  .external-link.youtube { border-left: 4px solid #FF0000; }
+  .external-link.instagram { border-left: 4px solid #E1306C; }
+  .external-link.facebook { border-left: 4px solid #1877F2; }
+  .external-link.twitter { border-left: 4px solid #1DA1F2; }
+  .external-link.otro { border-left: 4px solid var(--color-accento); }
+  
+  /* Estilos para videos embebidos */
+  .video-container {
+      position: relative;
+      padding-bottom: 56.25%; /* 16:9 */
+      height: 0;
+      overflow: hidden;
+      margin: 2rem 0;
+      border-radius: var(--borde-redondeado);
+      box-shadow: var(--sombra);
+  }
+  
+  .video-container iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
   }
 
   /* Gallery Styles */
@@ -227,6 +311,82 @@
       transform: translateX(5px);
   }
 
+  /* Post Highlights */
+  .post-highlight {
+      background: var(--color-card);
+      padding: 1.5rem;
+      border-radius: var(--borde-redondeado);
+      margin: 2rem 0;
+      box-shadow: var(--sombra);
+  }
+
+  .post-highlight h3 {
+      color: var(--color-accento);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+  }
+
+  .post-highlight h3 i {
+      margin-right: 0.5rem;
+  }
+
+  /* Blockquote styles */
+  .blockquote {
+      border-left: 4px solid var(--color-accento);
+      padding: 1rem 1.5rem;
+      margin: 1.5rem 0;
+      background: var(--color-card);
+      font-style: italic;
+      color: var(--color-texto);
+  }
+  
+  .blockquote-footer {
+      display: block;
+      margin-top: 0.5rem;
+      font-style: normal;
+      font-weight: 600;
+      color: var(--color-accento);
+  }
+
+  /* Share buttons */
+  .share-buttons {
+      display: flex;
+      align-items: center;
+      margin: 2rem 0;
+      padding: 1rem 0;
+      border-top: 1px solid #eee;
+      border-bottom: 1px solid #eee;
+  }
+
+  .share-buttons span {
+      margin-right: 1rem;
+      font-weight: 600;
+      color: var(--color-texto-claro);
+  }
+
+  .share-buttons a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--color-card);
+      color: var(--color-texto);
+      margin-right: 0.5rem;
+      transition: var(--transicion);
+  }
+
+  .share-buttons a:hover {
+      transform: translateY(-3px);
+      color: white;
+  }
+
+  .share-buttons a.facebook:hover { background: #1877F2; }
+  .share-buttons a.twitter:hover { background: #1DA1F2; }
+  .share-buttons a.linkedin:hover { background: #0A66C2; }
+
   /* Responsive Design */
   @media (max-width: 992px) {
       .post-title {
@@ -274,6 +434,15 @@
           height: 35px;
           font-size: 1rem;
       }
+
+      .share-buttons {
+          flex-wrap: wrap;
+      }
+
+      .share-buttons span {
+          width: 100%;
+          margin-bottom: 0.5rem;
+      }
   }
 </style>
 
@@ -287,6 +456,14 @@
         <img src="{{ post.imagen.url }}" alt="Imagen del post" class="post-image">
     {% endif %}
     
+    <!-- Puntos destacados -->
+    {% if post.resumen %}
+    <div class="post-highlight">
+        <h3><i class="fas fa-star"></i> Puntos clave</h3>
+        {{ post.resumen|linebreaks }}
+    </div>
+    {% endif %}
+    
     <div class="post-content">
         {{ post.content|linebreaks }}
     </div>
@@ -298,6 +475,37 @@
         </video>
     {% endif %}
     
+    <!-- Enlaces externos -->
+    {% if post.enlace_externo and post.tipo_enlace %}
+    <div class="external-link {{ post.tipo_enlace|lower }}">
+        <i class="{{ post.get_icono_enlace }}"></i>
+        <div class="link-text">
+            <span class="link-label">
+                {% if post.tipo_enlace == 'YOUTUBE' %}Video de YouTube
+                {% elif post.tipo_enlace == 'INSTAGRAM' %}Publicación de Instagram
+                {% elif post.tipo_enlace == 'FACEBOOK' %}Publicación de Facebook
+                {% elif post.tipo_enlace == 'TWITTER' %}Tweet
+                {% else %}Enlace externo{% endif %}
+            </span>
+            <span class="link-url">{{ post.enlace_externo }}</span>
+        </div>
+        <a href="{{ post.enlace_externo }}" target="_blank" rel="noopener noreferrer" class="btn-visitar">Visitar</a>
+    </div>
+    {% endif %}
+    
+    <!-- Videos de YouTube embebidos -->
+    {% if post.enlace_externo and post.tipo_enlace == 'YOUTUBE' %}
+    <div class="video-container">
+        {% with youtube_id=post.enlace_externo|slice:"32:" %}
+        <iframe src="https://www.youtube.com/embed/{{ youtube_id }}" 
+                frameborder="0" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                allowfullscreen>
+        </iframe>
+        {% endwith %}
+    </div>
+    {% endif %}
+    
     <!-- Galería de imágenes -->
     {% if galeria %}
     <section class="gallery-section">
@@ -307,7 +515,6 @@
                 {% for imagen in galeria %}
                 {% if imagen.imagen %}
                 <div class="gallery-slide">
-                    
                     <img src="{{ imagen.imagen.url }}" alt="{{ imagen.titulo }}" class="gallery-image">
                     {% if imagen.titulo %}
                     <div class="gallery-caption">
@@ -326,6 +533,20 @@
         </div>
     </section>
     {% endif %}
+    
+    <!-- Compartir en redes sociales -->
+    <div class="share-buttons">
+        <span>Compartir:</span>
+        <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}" target="_blank" class="facebook">
+            <i class="fab fa-facebook-f"></i>
+        </a>
+        <a href="https://twitter.com/intent/tweet?url={{ request.build_absolute_uri }}&text={{ post.title }}" target="_blank" class="twitter">
+            <i class="fab fa-twitter"></i>
+        </a>
+        <a href="https://www.linkedin.com/shareArticle?mini=true&url={{ request.build_absolute_uri }}" target="_blank" class="linkedin">
+            <i class="fab fa-linkedin-in"></i>
+        </a>
+    </div>
     
     <!-- Posts relacionados -->
     {% if relacionados %}

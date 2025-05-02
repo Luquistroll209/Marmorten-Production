@@ -90,13 +90,14 @@ class PostAdmin(BaseAdmin):
             'fields': ('title', 'resumen', 'content')
         }),
         ('Multimedia', {
-            'fields': ('imagen', 'video', 'preview')
+            'fields': ('imagen', 'video', 'enlace_externo', 'tipo_enlace', 'preview')
         }),
         ('Configuración', {
             'fields': ('destacado', 'mostrar_en_carrusel', 'orden'),
             'classes': ('collapse',)
         })
     )
+    
     
     def preview(self, obj):
         if obj.imagen:
