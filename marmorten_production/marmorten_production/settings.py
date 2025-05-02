@@ -132,3 +132,21 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://0af3-46-6-18-218.ngrok-free.app',
+    # Add other trusted domains if needed
+]
+
+# Also make sure these settings are correct:
+ALLOWED_HOSTS = [
+    '0af3-46-6-18-218.ngrok-free.app', 
+    'localhost',
+    '127.0.0.1'
+]
+
+CORS_ALLOWED_ORIGINS = [
+    "https://0af3-46-6-18-218.ngrok-free.app",
+]
