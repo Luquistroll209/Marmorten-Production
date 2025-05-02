@@ -16,6 +16,8 @@ class Post(models.Model):
     destacado = models.BooleanField(default=False)
     mostrar_en_carrusel = models.BooleanField(default=False)
     orden = models.PositiveIntegerField(default=0)
+
+
     class Meta:
         ordering = ['-fecha_publicacion']
     
@@ -34,17 +36,29 @@ class Post(models.Model):
         ('OTRO', 'Otro'),
     ]
     
-    enlaces_externos = models.JSONField(
-        default=list,
-        blank=True,
-        help_text="""Formato JSON: [{
-            "url": "https://ejemplo.com", 
-            "tipo": "YOUTUBE", 
-            "mostrar_video": true
-        }]"""
-    )
+class EnlaceExterno(models.Model):
+    TIPO_ENLACE_CHOICES = [
+        ('YOUTUBE', 'YouTube'),
+        ('INSTAGRAM', 'Instagram'),
+        ('FACEBOOK', 'Facebook'),
+        ('TWITTER', 'Twitter/X'),
+        ('OTRO', 'Otro'),
+    ]
     
-    def get_icono_enlace(self, tipo_enlace):
+    post = models.ForeignKey(Post, related_name='enlaces_externos', on_delete=models.CASCADE)
+    url = models.URLField()
+    tipo = models.CharField(max_length=10, choices=TIPO_ENLACE_CHOICES)
+    mostrar = models.BooleanField(default=True)
+    titulo = models.CharField(max_length=200, blank=True)
+    orden = models.PositiveIntegerField(default=0)
+    
+    class Meta:
+        ordering = ['orden']
+    
+    def __str__(self):
+        return f"{self.get_tipo_display()}: {self.titulo or self.url}"
+    
+    def get_icon_class(self):
         iconos = {
             'YOUTUBE': 'fab fa-youtube',
             'INSTAGRAM': 'fab fa-instagram',
@@ -52,7 +66,7 @@ class Post(models.Model):
             'TWITTER': 'fab fa-twitter',
             'OTRO': 'fas fa-external-link-alt',
         }
-        return iconos.get(tipo_enlace, 'fas fa-link')
+        return iconos.get(self.tipo, 'fas fa-link')
 
 class CarruselPost(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)

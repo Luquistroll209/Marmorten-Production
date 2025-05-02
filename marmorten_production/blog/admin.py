@@ -12,6 +12,7 @@ from .models import (
     SeccionSobreNosotros,
     ImagenCarrusel,
     MensajeContacto,
+    EnlaceExterno,
 
 )
 import json
@@ -94,23 +95,29 @@ class PostForm(forms.ModelForm):
         except json.JSONDecodeError:
             raise forms.ValidationError("Formato JSON inválido. Ejemplo: [{'url':'...','tipo':'YOUTUBE','mostrar_video':true}]")
 
+class EnlaceExternoInline(admin.StackedInline):
+    model = EnlaceExterno
+    extra = 1
+    fields = ('url', 'tipo', 'titulo', 'mostrar', 'orden')
+
+
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
-    form = PostForm
+    inlines = [GaleriaPostInline, EnlaceExternoInline]
+    
     list_display = ('title', 'fecha_publicacion', 'destacado')
     fieldsets = (
         ('Contenido', {
             'fields': ('title', 'resumen', 'content')
         }),
         ('Multimedia', {
-            'fields': ('imagen', 'video', 'enlaces_externos')
+            'fields': ('imagen', 'video') 
         }),
         ('Configuración', {
             'fields': ('destacado', 'mostrar_en_carrusel', 'orden'),
             'classes': ('collapse',)
         })
     )
-    
     
     def preview(self, obj):
         if obj.imagen:

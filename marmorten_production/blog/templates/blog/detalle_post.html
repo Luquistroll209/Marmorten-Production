@@ -569,15 +569,17 @@
     {% endif %}
     
     <!-- Enlaces externos -->
-    {% if post.enlaces_externos %}
+    {% if post.enlaces_externos.all %}
     <div class="external-links-container">
         <h2 class="gallery-title">Enlaces relacionados</h2>
-        {% for enlace in post.enlaces_externos %}
+        {% for enlace in post.enlaces_externos.all %}
+        {% if enlace.mostrar %}
         <div class="external-link {{ enlace.tipo|lower }}">
-            <i class="{{ post.get_icono_enlace }}"></i>
+            <i class="{{ enlace.get_icon_class }}"></i>
             <div class="link-content">
                 <span class="link-label">
-                    {% if enlace.tipo == 'YOUTUBE' %}Video de YouTube
+                    {% if enlace.titulo %}{{ enlace.titulo }}
+                    {% elif enlace.tipo == 'YOUTUBE' %}Video de YouTube
                     {% elif enlace.tipo == 'INSTAGRAM' %}Publicación de Instagram
                     {% elif enlace.tipo == 'FACEBOOK' %}Publicación de Facebook
                     {% elif enlace.tipo == 'TWITTER' %}Tweet
@@ -590,7 +592,7 @@
             </a>
         </div>
         
-        {% if enlace.tipo == 'YOUTUBE' and enlace.mostrar_video %}
+        {% if enlace.tipo == 'YOUTUBE' %}
         <div class="video-container">
             {% with youtube_id=enlace.url|slice:"32:" %}
             <iframe src="https://www.youtube.com/embed/{{ youtube_id }}" 
@@ -600,6 +602,7 @@
             </iframe>
             {% endwith %}
         </div>
+        {% endif %}
         {% endif %}
         {% endfor %}
     </div>
