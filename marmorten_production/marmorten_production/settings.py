@@ -143,6 +143,7 @@ CSRF_TRUSTED_ORIGINS = [
 # Also make sure these settings are correct:
 ALLOWED_HOSTS = [
     '0af3-46-6-18-218.ngrok-free.app', 
+    'seasons-qld-format-albany.trycloudflare.com',
     'localhost',
     '127.0.0.1'
 ]
