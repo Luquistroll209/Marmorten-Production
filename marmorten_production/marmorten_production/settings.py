@@ -136,14 +136,13 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://0af3-46-6-18-218.ngrok-free.app',
-    # Add other trusted domains if needed
+    'https://armenia-launched-coupons-tuning.trycloudflare.com/',
 ]
 
 # Also make sure these settings are correct:
-ALLOWED_HOSTS = ['von-keno-emerging-receives.trycloudflare.com', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['https://armenia-launched-coupons-tuning.trycloudflare.com/', 'localhost', '127.0.0.1']
 
 
 CORS_ALLOWED_ORIGINS = [
-    "https://0af3-46-6-18-218.ngrok-free.app",
+    "https://armenia-launched-coupons-tuning.trycloudflare.com/",
 ]

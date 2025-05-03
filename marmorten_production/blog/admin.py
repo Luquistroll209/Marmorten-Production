@@ -47,7 +47,7 @@ class GaleriaSobreNosotrosInline(admin.StackedInline, PreviewImageMixin):
 @admin.register(ConfiguracionSitio)
 class ConfiguracionSitioAdmin(BaseAdmin):
     list_display = ('titulo_sitio', 'email_contacto', 'preview_logo')
-    inlines = [GaleriaSobreNosotrosInline]
+
     
     def has_add_permission(self, request):
         return not ConfiguracionSitio.objects.exists()
@@ -144,14 +144,13 @@ class EquipoAdmin(BaseAdmin):
     
     fieldsets = (
         ('Información', {
-            'fields': ('nombre', 'puesto', 'biografia', 'redes_sociales')
+            'fields': ('nombre', 'puesto', 'biografia')
         }),
         ('Imagen', {
             'fields': ('foto',)
         }),
         ('Configuración', {
             'fields': ('orden',),
-            'classes': ('collapse',)
         })
     )
     
