@@ -141,11 +141,8 @@ CSRF_TRUSTED_ORIGINS = [
 ]
 
 # Also make sure these settings are correct:
-ALLOWED_HOSTS = [
-    'https://von-keno-emerging-receives.trycloudflare.com/',
-    'localhost',
-    '127.0.0.1'
-]
+ALLOWED_HOSTS = ['von-keno-emerging-receives.trycloudflare.com', 'localhost', '127.0.0.1']
+
 
 CORS_ALLOWED_ORIGINS = [
     "https://0af3-46-6-18-218.ngrok-free.app",
