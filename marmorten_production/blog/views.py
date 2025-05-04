@@ -35,7 +35,9 @@ def detalle_post(request, post_id):
 def sobre_nosotros(request):
     context = {
         'portada': SeccionSobreNosotros.objects.filter(tipo='PORTADA').first(),
-        'secciones': SeccionSobreNosotros.objects.exclude(tipo='PORTADA').order_by('orden'),
+        'secciones': SeccionSobreNosotros.objects.exclude(tipo='PORTADA')
+                              .order_by('orden')
+                              .prefetch_related('imagenes_del_carrusel'),
         'config': get_config()
     }
     return render(request, 'blog/sobre_nosotros.html', context)
