@@ -144,6 +144,4 @@ CSRF_TRUSTED_ORIGINS = [
 
 ALLOWED_HOSTS = ['https://story-lee-harry-meal.trycloudflare.com/', 'localhost', '127.0.0.1']
 
-CORS_ALLOWED_ORIGINS = [
-    "https://story-lee-harry-meal.trycloudflare.com/",
-]
+CORS_ALLOWED_ORIGINS = ["https://story-lee-harry-meal.trycloudflare.com/"]
