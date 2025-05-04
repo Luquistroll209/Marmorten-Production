@@ -252,19 +252,6 @@ class SeccionSobreNosotros(models.Model):
 class ImagenCarrusel(models.Model):
     seccion = models.ForeignKey(
         SeccionSobreNosotros, 
-        related_name='imagenes_del_carrusel',
-        on_delete=models.CASCADE
-    )
-    imagen = models.ImageField(upload_to='sobre_nosotros/carrusel/')
-    titulo = models.CharField(max_length=100, blank=True)
-    orden = models.PositiveIntegerField(default=0)
-    
-    class Meta:
-        ordering = ['orden']
-        verbose_name_plural = "Imágenes para Carruseles"
-class ImagenCarrusel(models.Model):
-    seccion = models.ForeignKey(
-        SeccionSobreNosotros, 
         related_name='imagenes_del_carrusel',  # Nombre único
         on_delete=models.CASCADE
     )
