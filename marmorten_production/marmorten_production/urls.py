@@ -7,7 +7,7 @@ from django.conf.urls import handler404
 handler404 = 'blog.views.custom_404'
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('adminmarmorten/', admin.site.urls),
     path('', include('blog.urls')),
 ]
 

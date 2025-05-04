@@ -159,7 +159,7 @@ class ConfiguracionSitio(models.Model):
     titulo_sitio = models.CharField(max_length=200, default="Marmoten Production")
     logo = models.ImageField(upload_to='config/', blank=True, null=True)
     email_contacto = models.EmailField(default='contacto@marmoten.com')
-    telefono_contacto = models.CharField(max_length=20, blank=True)
+    telefono_contacto = models.CharField(max_length=40, blank=True)
     direccion = models.TextField(blank=True)
     
     # Sobre Nosotros - Contenido
@@ -249,19 +249,6 @@ class SeccionSobreNosotros(models.Model):
     def __str__(self):
         return f"{self.titulo} ({self.get_tipo_display()})"
 
-class ImagenCarrusel(models.Model):
-    seccion = models.ForeignKey(
-        SeccionSobreNosotros, 
-        related_name='imagenes_del_carrusel',
-        on_delete=models.CASCADE
-    )
-    imagen = models.ImageField(upload_to='sobre_nosotros/carrusel/')
-    titulo = models.CharField(max_length=100, blank=True)
-    orden = models.PositiveIntegerField(default=0)
-    
-    class Meta:
-        ordering = ['orden']
-        verbose_name_plural = "Imágenes para Carruseles"
 class ImagenCarrusel(models.Model):
     seccion = models.ForeignKey(
         SeccionSobreNosotros, 
