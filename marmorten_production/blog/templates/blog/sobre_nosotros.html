@@ -68,6 +68,7 @@
     /* ESTILOS PARA CARRUSELES INTERNOS */
     .seccion-galeria {
       margin: 4rem 0;
+      position: relative; /* Añadido para posicionar las flechas */
     }
 
     .glide__track {
@@ -82,6 +83,7 @@
     .glide__slide {
       padding: 0 15px;
       transition: transform 0.3s ease, box-shadow 0.3s ease;
+      position: relative;
     }
 
     .glide__slide:hover {
@@ -90,7 +92,7 @@
 
     .imagen-carrusel {
       width: 100%;
-      height: 300px;
+      height: 500px;
       object-fit: cover;
       border-radius: 12px;
       box-shadow: 0 8px 20px rgba(0,0,0,0.1);
@@ -117,14 +119,21 @@
       padding: 0 10px;
     }
 
+    /* Nuevos estilos para flechas dentro de la imagen */
     .glide__arrows {
+      position: absolute;
+      top: 50%;
+      width: 100%;
       display: flex;
       justify-content: space-between;
-      margin-top: 25px;
+      padding: 0 20px;
+      box-sizing: border-box;
+      transform: translateY(-50%);
+      z-index: 2;
     }
 
     .glide__arrow {
-      background: #D4AF37;
+      background: rgba(212, 175, 55, 0.8);
       color: white;
       border: none;
       width: 45px;
@@ -140,8 +149,16 @@
     }
 
     .glide__arrow:hover {
-      background: #B8860B;
+      background: rgba(184, 134, 11, 0.9);
       transform: scale(1.1);
+    }
+
+    .glide__arrow--left {
+      left: 20px;
+    }
+
+    .glide__arrow--right {
+      right: 20px;
     }
 
     /* ESTILOS GENERALES */
@@ -173,7 +190,7 @@
     /* ESTILOS PARA DEBUG Y FALLBACKS */
     .placeholder-carrusel {
       width: 100%;
-      height: 300px;
+      height: 500px;
       background-color: #f0f0f0;
       display: flex;
       align-items: center;
@@ -197,7 +214,7 @@
       }
       
       .imagen-carrusel {
-        height: 250px;
+        height: 400px;
       }
     }
 
@@ -215,7 +232,7 @@
       }
       
       .imagen-carrusel {
-        height: 200px;
+        height: 350px;
       }
       
       .glide__arrow {
@@ -239,6 +256,15 @@
       
       .titulo-seccion {
         font-size: 1.8rem;
+      }
+      
+      .imagen-carrusel {
+        height: 300px;
+      }
+      
+      .glide__arrow {
+        width: 35px;
+        height: 35px;
       }
     }
 </style>
@@ -344,20 +370,22 @@
         document.querySelectorAll('.glide').forEach(function(element) {
             new Glide(element, {
                 type: 'carousel',
-                perView: 3,
-                gap: 30,
+                perView: 1,
+                gap: 0,
                 autoplay: 5000,
                 hoverpause: true,
                 animationDuration: 600,
                 breakpoints: {
                     1200: {
-                        gap: 20,
-                        perView: 3
+                        perView: 1
                     },
                     992: {
-                        perView: 2
+                        perView: 1
                     },
                     768: {
+                        perView: 1
+                    },
+                    576: {
                         perView: 1
                     }
                 }
