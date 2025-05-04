@@ -159,7 +159,7 @@ class ConfiguracionSitio(models.Model):
     titulo_sitio = models.CharField(max_length=200, default="Marmoten Production")
     logo = models.ImageField(upload_to='config/', blank=True, null=True)
     email_contacto = models.EmailField(default='contacto@marmoten.com')
-    telefono_contacto = models.CharField(max_length=20, blank=True)
+    telefono_contacto = models.CharField(max_length=40, blank=True)
     direccion = models.TextField(blank=True)
     
     # Sobre Nosotros - Contenido
