@@ -139,11 +139,11 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Tema de dominios
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://armenia-launched-coupons-tuning.trycloudflare.com',
+    'https://story-lee-harry-meal.trycloudflare.com/',
 ]
 
-ALLOWED_HOSTS = ['armenia-launched-coupons-tuning.trycloudflare.com', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['https://story-lee-harry-meal.trycloudflare.com/', 'localhost', '127.0.0.1']
 
 CORS_ALLOWED_ORIGINS = [
-    "https://armenia-launched-coupons-tuning.trycloudflare.com",
+    "https://story-lee-harry-meal.trycloudflare.com/",
 ]
