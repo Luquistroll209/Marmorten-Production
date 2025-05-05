@@ -6,11 +6,12 @@
 
 {% block content %}
 <style>
+    /* ESTILOS HERO CAROUSEL */
     .hero-carousel-container {
       width: 100%;
       position: relative;
       overflow: hidden;
-      margin: 0;
+
       border-radius: 0px 0px 40px 40px;
       box-shadow: 0 10px 30px rgba(0,0,0,0.1);
     }
@@ -68,7 +69,7 @@
     /* ESTILOS PARA CARRUSELES INTERNOS */
     .seccion-galeria {
       margin: 4rem 0;
-      position: relative; /* Añadido para posicionar las flechas */
+      position: relative;
     }
 
     .glide__track {
@@ -99,6 +100,7 @@
       transition: all 0.3s ease;
       border: 1px solid rgba(0,0,0,0.05);
       background-color: #f5f5f5;
+      cursor: pointer;
     }
 
     .imagen-carrusel-error {
@@ -119,7 +121,6 @@
       padding: 0 10px;
     }
 
-    /* Nuevos estilos para flechas dentro de la imagen */
     .glide__arrows {
       position: absolute;
       top: 50%;
@@ -161,7 +162,36 @@
       right: 20px;
     }
 
-    /* ESTILOS GENERALES */
+    /* ESTILOS PARA IMÁGENES SIMPLES */
+    .seccion-imagen {
+      margin: 3rem 0;
+      text-align: center;
+    }
+    
+    .imagen-destacada {
+      max-width: 100%;
+      height: auto;
+      border-radius: 12px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      max-height: 600px;
+      object-fit: cover;
+    }
+    
+    .imagen-destacada:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+    }
+    
+    .leyenda-imagen {
+      margin-top: 15px;
+      font-size: 1rem;
+      color: #555;
+      font-style: italic;
+    }
+
+    /* ESTILOS PARA TEXTO */
     .documento-sobrenosotros {
       max-width: 1400px;
       margin: 3rem auto;
@@ -185,6 +215,78 @@
       width: 60px;
       height: 3px;
       background: #D4AF37;
+    }
+
+    .texto-formatado {
+      line-height: 1.8;
+      font-size: 1.1rem;
+      color: #444;
+    }
+
+    .texto-formatado p {
+      margin-bottom: 1.5rem;
+    }
+
+    /* ESTILOS PARA POPUP DE IMAGENES */
+    .imagen-popup {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.9);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    
+    .imagen-popup.active {
+      display: flex;
+      opacity: 1;
+    }
+    
+    .imagen-popup-contenido {
+      position: relative;
+      max-width: 90%;
+      max-height: 90%;
+    }
+    
+    .imagen-popup-img {
+      max-width: 100%;
+      max-height: 90vh;
+      border-radius: 8px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+    }
+    
+    .cerrar-popup {
+      position: absolute;
+      top: -40px;
+      right: -10px;
+      color: white;
+      font-size: 2.5rem;
+      font-weight: bold;
+      cursor: pointer;
+      background: none;
+      border: none;
+      transition: transform 0.2s ease;
+    }
+    
+    .cerrar-popup:hover {
+      transform: rotate(90deg);
+    }
+    
+    .leyenda-popup {
+      position: absolute;
+      bottom: -40px;
+      left: 0;
+      width: 100%;
+      text-align: center;
+      color: white;
+      font-size: 1.1rem;
+      padding: 10px;
     }
 
     /* ESTILOS PARA DEBUG Y FALLBACKS */
@@ -213,8 +315,12 @@
         font-size: 2.5rem;
       }
       
-      .imagen-carrusel {
+      .imagen-carrusel, .placeholder-carrusel {
         height: 400px;
+      }
+
+      .imagen-destacada {
+        max-height: 500px;
       }
     }
 
@@ -231,7 +337,7 @@
         font-size: 1rem;
       }
       
-      .imagen-carrusel {
+      .imagen-carrusel, .placeholder-carrusel {
         height: 350px;
       }
       
@@ -239,11 +345,29 @@
         width: 40px;
         height: 40px;
       }
+
+      .imagen-destacada {
+        max-height: 400px;
+      }
+
+      .imagen-popup-contenido {
+        max-width: 95%;
+      }
+      
+      .cerrar-popup {
+        top: -35px;
+        right: 0;
+        font-size: 2rem;
+      }
     }
 
     @media (max-width: 576px) {
+      .hero-carousel-container{
+        margin-top: -70px;
+      }
       .hero-carousel {
         min-height: 350px;
+        
       }
       
       .carousel-content {
@@ -258,13 +382,22 @@
         font-size: 1.8rem;
       }
       
-      .imagen-carrusel {
+      .imagen-carrusel, .placeholder-carrusel {
         height: 300px;
       }
       
       .glide__arrow {
         width: 35px;
         height: 35px;
+      }
+
+      .imagen-destacada {
+        max-height: 300px;
+      }
+      
+      .cerrar-popup {
+        top: -30px;
+        font-size: 1.8rem;
       }
     }
 </style>
@@ -305,10 +438,8 @@
                     <img src="{{ seccion.imagen.url }}" 
                          alt="{{ seccion.titulo }}" 
                          class="imagen-destacada"
+                         onclick="abrirPopupImagen(this)"
                          onerror="this.onerror=null;this.src='{% static 'img/placeholder.jpg' %}';">
-                    {% if seccion.titulo %}
-                        <figcaption class="leyenda-imagen">{{ seccion.titulo }}</figcaption>
-                    {% endif %}
                 </figure>
                 {% endif %}
 
@@ -334,6 +465,7 @@
                                                 <img src="{{ imagen.imagen.url }}" 
                                                      alt="{{ imagen.titulo|default:'Imagen del carrusel' }}" 
                                                      class="imagen-carrusel"
+                                                     onclick="abrirPopupImagen(this)"
                                                      onerror="this.onerror=null;this.classList.add('imagen-carrusel-error');this.src='{% static 'img/placeholder.jpg' %}';">
                                             {% else %}
                                                 <div class="placeholder-carrusel">
@@ -342,6 +474,7 @@
                                             {% endif %}
                                             {% if imagen.titulo %}
                                                 <div class="leyenda-carrusel">{{ imagen.titulo }}</div>
+                                                
                                             {% endif %}
                                         </li>
                                     {% endfor %}
@@ -360,6 +493,15 @@
         </div>
     {% endfor %}
 </article>
+
+<!-- POPUP PARA IMAGENES -->
+<div class="imagen-popup" id="imagenPopup">
+    <div class="imagen-popup-contenido">
+        <button class="cerrar-popup" onclick="cerrarPopupImagen()">&times;</button>
+        <img src="" alt="" class="imagen-popup-img" id="imagenPopupImg">
+        <div class="leyenda-popup" id="imagenPopupLeyenda"></div>
+    </div>
+</div>
 
 <!-- Glide JS -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@glidejs/glide/dist/css/glide.core.min.css">
@@ -391,6 +533,51 @@
                 }
             }).mount();
         });
+    });
+
+    // Función para abrir el popup de imagen
+    function abrirPopupImagen(imgElement) {
+        const popup = document.getElementById('imagenPopup');
+        const popupImg = document.getElementById('imagenPopupImg');
+        const popupLeyenda = document.getElementById('imagenPopupLeyenda');
+        
+        popupImg.src = imgElement.src;
+        popupImg.alt = imgElement.alt;
+        
+        // Obtener la leyenda si existe
+        const figura = imgElement.closest('figure, .glide__slide');
+        if (figura) {
+            const leyenda = figura.querySelector('.leyenda-imagen, .leyenda-carrusel');
+            if (leyenda) {
+                popupLeyenda.textContent = leyenda.textContent;
+            } else {
+                popupLeyenda.textContent = '';
+            }
+        }
+        
+        popup.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+    
+    // Función para cerrar el popup
+    function cerrarPopupImagen() {
+        const popup = document.getElementById('imagenPopup');
+        popup.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+    
+    // Cerrar al hacer clic fuera de la imagen
+    document.getElementById('imagenPopup').addEventListener('click', function(e) {
+        if (e.target === this) {
+            cerrarPopupImagen();
+        }
+    });
+    
+    // Cerrar con tecla ESC
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            cerrarPopupImagen();
+        }
     });
 </script>
 {% endblock %}

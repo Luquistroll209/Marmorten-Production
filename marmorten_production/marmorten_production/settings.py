@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -23,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-bh4c+q0w8r7gp%&f!l4+-l6ggf6led$sm3%jwz56i@ned@q!-6'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 handler404 = 'blog.views.custom_404'
 
 ALLOWED_HOSTS = ['*']
@@ -79,7 +80,10 @@ TEMPLATES = [
 WSGI_APPLICATION = 'marmorten_production.wsgi.application'
 
 STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR / 'static'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
