@@ -70,17 +70,24 @@
                     </div>
                 {% endif %}
                 
-                {% if config.telefono_contacto %}
-                    <div class="info-item">
-                        <div class="info-icon">
-                            <i class="fas fa-phone-alt"></i>
-                        </div>
-                        <div>
-                            <h3>Teléfono</h3>
-                            <p><a href="tel:{{ config.telefono_contacto }}">{{ config.telefono_contacto }}</a></p>
-                        </div>
+                {% if config.telefonos.all %}
+                <div class="info-item">
+                    <div class="info-icon">
+                        <i class="fas fa-phone-alt"></i>
                     </div>
-                {% endif %}
+                    <div>
+                        <h3>Teléfonos</h3>
+                        {% for telefono in config.telefonos.all %}
+                            <p>
+                                {% if telefono.descripcion %}
+                                    <strong>{{ telefono.descripcion }}:</strong> 
+                                {% endif %}
+                                <a href="tel:{{ telefono.numero }}">{{ telefono.numero }}</a>
+                            </p>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
                 
                 {% if config.direccion %}
                     <div class="info-item">

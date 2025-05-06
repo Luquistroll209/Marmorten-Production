@@ -13,6 +13,7 @@ from .models import (
     ImagenCarrusel,
     MensajeContacto,
     EnlaceExterno,
+    TelefonoContacto,
 
 )
 import json
@@ -44,10 +45,15 @@ class GaleriaSobreNosotrosInline(admin.StackedInline, PreviewImageMixin):
     readonly_fields = ('preview',)
 
 # ===== CONFIGURACIÓN DEL SITIO =====
-@admin.register(ConfiguracionSitio)
-class ConfiguracionSitioAdmin(BaseAdmin):
-    list_display = ('titulo_sitio', 'email_contacto', 'preview_logo')
+class TelefonoContactoInline(admin.StackedInline):
+    model = TelefonoContacto
+    extra = 1
+    fields = ('numero', 'descripcion', 'orden')
 
+@admin.register(ConfiguracionSitio)
+class ConfiguracionSitioAdmin(admin.ModelAdmin):  # Asegúrate de heredar de admin.ModelAdmin
+    inlines = [TelefonoContactoInline]
+    list_display = ('titulo_sitio', 'email_contacto', 'preview_logo')
     
     def has_add_permission(self, request):
         return not ConfiguracionSitio.objects.exists()
@@ -66,7 +72,7 @@ class ConfiguracionSitioAdmin(BaseAdmin):
     
     fieldsets = (
         ('Información Básica', {
-            'fields': ('titulo_sitio', 'logo', 'email_contacto', 'telefono_contacto', 'direccion')
+            'fields': ('titulo_sitio', 'logo', 'email_contacto', 'direccion')
         }),
         ('Redes Sociales', {
             'fields': ('facebook_url', 'instagram_url', 'youtube_url')

@@ -159,7 +159,6 @@ class ConfiguracionSitio(models.Model):
     titulo_sitio = models.CharField(max_length=200, default="Marmoten Production")
     logo = models.ImageField(upload_to='config/', blank=True, null=True)
     email_contacto = models.EmailField(default='contacto@marmoten.com')
-    telefono_contacto = models.CharField(max_length=40, blank=True)
     direccion = models.TextField(blank=True)
     
     # Sobre Nosotros - Contenido
@@ -203,7 +202,19 @@ class ConfiguracionSitio(models.Model):
 
     def __str__(self):
         return "Configuración del Sitio"
-
+class TelefonoContacto(models.Model):
+    configuracion = models.ForeignKey(
+        ConfiguracionSitio, 
+        related_name='telefonos', 
+        on_delete=models.CASCADE
+    )
+    numero = models.CharField(max_length=40)
+    descripcion = models.CharField(max_length=100, blank=True, help_text="Ej: Oficina, Móvil, WhatsApp")
+    orden = models.PositiveIntegerField(default=0)
+    
+    class Meta:
+        ordering = ['orden']
+        verbose_name_plural = "Teléfonos de Contacto"
 class ImagenGaleriaSobreNosotros(models.Model):
     configuracion = models.ForeignKey(
         ConfiguracionSitio, 
