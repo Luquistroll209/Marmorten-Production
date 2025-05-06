@@ -146,7 +146,8 @@ CSRF_TRUSTED_ORIGINS = [
 ]
 
 
-ALLOWED_HOSTS = ['proven-main-mastodon.ngrok-free.app/', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['proven-main-mastodon.ngrok-free.app', 'localhost', '127.0.0.1']
+
 
 
 CORS_ALLOWED_ORIGINS = ["https://proven-main-mastodon.ngrok-free.app/"]
