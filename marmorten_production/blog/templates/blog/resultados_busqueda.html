@@ -149,7 +149,7 @@
                         <h3 class="produccion-title">{{ post.title }}</h3>
                         <p>{{ post.resumen|default:post.content|truncatechars:150 }}</p>
                         <div class="produccion-meta">
-                            <span>{{ post.fecha_publicacion|date:"M Y" }}</span>
+                            <!--<span>{{ post.fecha_publicacion|date:"M Y" }}</span>-->
                             <a href="{% url 'detalle_post' post.id %}" class="btn btn-outline">Ver más</a>
                         </div>
                     </div>
