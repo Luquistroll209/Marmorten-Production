@@ -142,8 +142,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Tema de dominios
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://proven-main-mastodon.ngrok-free.app/',
+    'https://proven-main-mastodon.ngrok-free.app',
 ]
+
 
 
 ALLOWED_HOSTS = ['proven-main-mastodon.ngrok-free.app', 'localhost', '127.0.0.1']
