@@ -142,11 +142,11 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Tema de dominios
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://theme-traveler-detective-dump.trycloudflare.com/',
+    'https://proven-main-mastodon.ngrok-free.app/',
 ]
 
 
-ALLOWED_HOSTS = ['https://theme-traveler-detective-dump.trycloudflare.com/', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['https://proven-main-mastodon.ngrok-free.app/', 'localhost', '127.0.0.1']
 
 
-CORS_ALLOWED_ORIGINS = ["https://theme-traveler-detective-dump.trycloudflare.com/"]
+CORS_ALLOWED_ORIGINS = ["https://proven-main-mastodon.ngrok-free.app/"]
