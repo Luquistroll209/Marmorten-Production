@@ -24,10 +24,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-bh4c+q0w8r7gp%&f!l4+-l6ggf6led$sm3%jwz56i@ned@q!-6'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 handler404 = 'blog.views.custom_404'
 
-ALLOWED_HOSTS = ['*']
 
 CKEDITOR_BASEPATH = "/static/ckeditor/ckeditor/"
 # Application definition
@@ -143,7 +142,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Tema de dominios
 
 CSRF_TRUSTED_ORIGINS = [
-    'hhttps://theme-traveler-detective-dump.trycloudflare.com/',
+    'https://theme-traveler-detective-dump.trycloudflare.com/',
 ]
 
 
