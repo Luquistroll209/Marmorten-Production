@@ -394,9 +394,24 @@
                 {% if config.email_contacto %}
                 <a href="mailto:{{ config.email_contacto }}"><i class="fas fa-envelope"></i> {{ config.email_contacto }}</a>
                 {% endif %}
-                {% if config.telefono_contacto %}
-                <a href="tel:{{ config.telefono_contacto }}"><i class="fas fa-phone"></i> {{ config.telefono_contacto }}</a>
-                {% endif %}
+                {% if config.telefonos.all %}
+                <div class="info-item">
+                    <div class="info-icon">
+                        <i class="fas fa-phone-alt"></i>
+                    </div>
+                    <div>
+                        <h3>Teléfonos</h3>
+                        {% for telefono in config.telefonos.all %}
+                            <p>
+                                {% if telefono.descripcion %}
+                                    <strong>{{ telefono.descripcion }}:</strong> 
+                                {% endif %}
+                                <a href="tel:{{ telefono.numero }}">{{ telefono.numero }}</a>
+                            </p>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
                 {% if config.direccion %}
                 <p><i class="fas fa-map-marker-alt"></i> {{ config.direccion }}</p>
                 {% endif %}
