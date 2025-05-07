@@ -150,10 +150,7 @@ class EquipoAdmin(BaseAdmin):
     
     fieldsets = (
         ('Información', {
-            'fields': ('nombre', 'puesto', 'biografia')
-        }),
-        ('Imagen', {
-            'fields': ('foto',)
+            'fields': ('nombre', 'puesto', 'biografia', 'foto')
         }),
         ('Configuración', {
             'fields': ('orden',),
