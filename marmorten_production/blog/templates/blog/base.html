@@ -564,6 +564,11 @@
                     
                     // Forzar reproducción en móviles
                     const playPromise = splashVideo.play();
+                    const video = document.getElementById('splashVideo');
+                    video.addEventListener('click', () => {
+                        video.muted = false;
+                        video.play();
+                    });
                     
                     if (playPromise !== undefined) {
                         playPromise.catch(e => {
