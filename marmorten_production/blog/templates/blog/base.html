@@ -495,6 +495,9 @@
                     <div class="telefono"">
                         {% if config.telefonos.all %}
                             {% for telefono in config.telefonos.all %}
+                                {% if telefono.descripcion %}
+                                    <a>{{ telefono.descripcion }}:</a> 
+                                {% endif %}
                                 <a href="tel:{{ telefono.numero }}">{{ telefono.numero }}</a>
                             {% endfor %}
                         {% endif %}
