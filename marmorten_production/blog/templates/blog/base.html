@@ -45,6 +45,33 @@
             flex-direction: column;
         }
 
+        /* Animación de carga */
+        .splash-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #000;
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 1;
+            transition: opacity 0.5s ease-out;
+        }
+
+        .splash-screen.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .splash-video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
         /* Navbar Flotante Mejorado */
         .navbar {
             margin-top: 20px;
@@ -361,7 +388,15 @@
     </style>
 </head>
 <body>
-     <!--Esta pagina web fue hecha por LT209, por si casualidad si quieres modificar el codigo hazlo bajo tu responsabilidad, si se rompe no es mi culpa-->
+    <!-- Splash Screen -->
+    <div class="splash-screen" id="splashScreen">
+        <video autoplay muted playsinline class="splash-video" id="splashVideo">
+            <source src="{% static 'videos/splash.mp4' %}" type="video/mp4">
+            Tu navegador no soporta videos HTML5.
+        </video>
+    </div>
+
+    <!--Esta pagina web fue hecha por LT209, por si casualidad si quieres modificar el codigo hazlo bajo tu responsabilidad, si se rompe no es mi culpa-->
     <nav class="navbar" id="navbar">
         <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
         <img src="{{ config.logo.url }}" alt="Marmoten Production Logo" class="navbar-logo">
@@ -435,6 +470,40 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            const splashScreen = document.getElementById('splashScreen');
+            const splashVideo = document.getElementById('splashVideo');
+            
+            // Verificar si es una nueva sesión (nueva pestaña/ventana)
+            if (!sessionStorage.getItem('splashShown')) {
+                sessionStorage.setItem('splashShown', 'true');
+                
+                if (splashVideo) {
+                    splashVideo.addEventListener('ended', function() {
+                        splashScreen.classList.add('hidden');
+                        setTimeout(() => {
+                            splashScreen.remove();
+                        }, 500);
+                    });
+                    
+                    // Forzar reproducción en móviles
+                    const playPromise = splashVideo.play();
+                    
+                    if (playPromise !== undefined) {
+                        playPromise.catch(e => {
+                            // Si falla la reproducción automática, ocultar igual
+                            splashScreen.classList.add('hidden');
+                            console.log("Error al reproducir video:", e);
+                        });
+                    }
+                }
+            } else {
+                // Si ya se mostró en esta sesión, ocultar inmediatamente
+                splashScreen.classList.add('hidden');
+                setTimeout(() => {
+                    splashScreen.remove();
+                }, 10);
+            }
+
             const mobileMenuBtn = document.getElementById('mobileMenuBtn');
             const navLinks = document.getElementById('navLinks');
             const searchContainer = document.getElementById('searchContainer');
