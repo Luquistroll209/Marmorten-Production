@@ -75,7 +75,7 @@ class ConfiguracionSitioAdmin(admin.ModelAdmin):  # Asegúrate de heredar de adm
             'fields': ('titulo_sitio', 'logo', 'email_contacto', 'direccion')
         }),
         ('Redes Sociales', {
-            'fields': ('facebook_url', 'instagram_url', 'youtube_url')
+            'fields': ('imb_url', 'instagram_url', 'youtube_url')
         })
     )
 

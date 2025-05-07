@@ -193,7 +193,7 @@ class ConfiguracionSitio(models.Model):
     )
     
     # Redes Sociales
-    facebook_url = models.URLField(blank=True)
+    imb_url = models.URLField(blank=True)
     instagram_url = models.URLField(blank=True)
     youtube_url = models.URLField(blank=True)
     
