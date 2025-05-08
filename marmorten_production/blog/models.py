@@ -240,6 +240,7 @@ class SeccionSobreNosotros(models.Model):
         ('TEXTO', 'Texto'),
         ('IMAGEN', 'Imagen'),
         ('CAROUSEL', 'Carrusel de imágenes'),
+        ('REDES', 'Enlaces/Redes Sociales'),  # Nueva opción
     ]
     
     titulo = models.CharField(max_length=100)
@@ -259,7 +260,50 @@ class SeccionSobreNosotros(models.Model):
 
     def __str__(self):
         return f"{self.titulo} ({self.get_tipo_display()})"
-
+class EnlaceSeccionSobreNosotros(models.Model):
+    TIPO_ENLACE_CHOICES = [
+        ('YOUTUBE', 'YouTube'),
+        ('INSTAGRAM', 'Instagram'),
+        ('FACEBOOK', 'Facebook'),
+        ('TWITTER', 'Twitter/X'),
+        ('IMDB', 'IMDb'),
+        ('OTRO', 'Otro'),
+    ]
+    
+    seccion = models.ForeignKey(
+        SeccionSobreNosotros, 
+        related_name='enlaces', 
+        on_delete=models.CASCADE
+    )
+    url = models.URLField()
+    tipo = models.CharField(max_length=10, choices=TIPO_ENLACE_CHOICES)
+    titulo = models.CharField(max_length=100, blank=True)
+    icono = models.ImageField(
+        upload_to='sobre_nosotros/iconos/', 
+        blank=True, 
+        null=True,
+        help_text="Icono personalizado (opcional). Si no se sube, se usará el icono por defecto según el tipo."
+    )
+    orden = models.PositiveIntegerField(default=0)
+    
+    class Meta:
+        ordering = ['orden']
+        verbose_name = "Enlace de sección"
+        verbose_name_plural = "Enlaces de sección"
+    
+    def __str__(self):
+        return f"{self.get_tipo_display()}: {self.titulo or self.url}"
+    
+    def get_icon_class(self):
+        iconos = {
+            'YOUTUBE': 'fab fa-youtube',
+            'INSTAGRAM': 'fab fa-instagram',
+            'FACEBOOK': 'fab fa-facebook-f',
+            'TWITTER': 'fab fa-twitter',
+            'IMDB': 'fab fa-imdb',
+            'OTRO': 'fas fa-external-link-alt',
+        }
+        return iconos.get(self.tipo, 'fas fa-link')
 class ImagenCarrusel(models.Model):
     seccion = models.ForeignKey(
         SeccionSobreNosotros, 

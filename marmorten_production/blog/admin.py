@@ -14,6 +14,7 @@ from .models import (
     MensajeContacto,
     EnlaceExterno,
     TelefonoContacto,
+    EnlaceSeccionSobreNosotros,
 
 )
 import json
@@ -43,12 +44,28 @@ class GaleriaSobreNosotrosInline(admin.StackedInline, PreviewImageMixin):
     extra = 1
     fields = ('imagen', 'titulo', 'orden', 'preview')
     readonly_fields = ('preview',)
+class EnlaceSeccionInline(admin.StackedInline):
+    model = EnlaceSeccionSobreNosotros
+    extra = 1
+    fields = ('tipo', 'url', 'titulo', 'icono', 'orden')
+    
+    def preview(self, obj):
+        if obj.icono:
+            return format_html(
+                '<img src="{}" style="max-height:50px;"/>',
+                obj.icono.url
+            )
+        return "-"
+    preview.short_description = "Vista previa"
+
 
 # ===== CONFIGURACIÓN DEL SITIO =====
 class TelefonoContactoInline(admin.StackedInline):
     model = TelefonoContacto
     extra = 1
     fields = ('numero', 'descripcion', 'orden')
+
+
 
 @admin.register(ConfiguracionSitio)
 class ConfiguracionSitioAdmin(admin.ModelAdmin):  # Asegúrate de heredar de admin.ModelAdmin
@@ -232,7 +249,12 @@ class SeccionSobreNosotrosAdmin(admin.ModelAdmin):
     list_display = ('titulo', 'tipo', 'orden', 'preview_content')
     list_editable = ('orden',)
     list_filter = ('tipo',)
-    inlines = [ImagenCarruselInline]  # Solo para secciones de tipo carrusel
+    inlines = [ImagenCarruselInline]  # Para secciones de tipo carrusel
+    
+    def get_inlines(self, request, obj):
+        if obj and obj.tipo == 'REDES':
+            return [EnlaceSeccionInline]
+        return super().get_inlines(request, obj)
     
     def preview_content(self, obj):
         if obj.tipo == 'TEXTO':
@@ -243,6 +265,8 @@ class SeccionSobreNosotrosAdmin(admin.ModelAdmin):
             return f"{obj.imagenes_del_carrusel.count()} imágenes"
         elif obj.tipo == 'PORTADA':
             return "Portada principal"
+        elif obj.tipo == 'REDES':
+            return f"{obj.enlaces.count()} enlaces"
         return "-"
     preview_content.short_description = "Contenido"
 
