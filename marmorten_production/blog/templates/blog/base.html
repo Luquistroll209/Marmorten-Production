@@ -334,8 +334,11 @@
             font-size: 0.8rem;
         }
         .telefono{
-            display: flex;
+            display: grid;
+            margin-top: 10px;
             gap: 10px;
+            grid-template-columns: repeat(3, 1fr);
+            margin-left: -250px;
         }
 
         /* Responsive */
@@ -347,6 +350,13 @@
             .search-container {
                 width: 200px;
             }
+        }
+        .telefono{
+            display: grid;
+            margin-top: 10px;
+            gap: 10px;
+            grid-template-columns: repeat(3, 1fr);
+            margin-left: -170px;
         }
 
         @media (max-width: 768px) {
@@ -416,6 +426,7 @@
                 text-align: center;
                 padding: 12px 15px;
             }
+            
         }
         
         @media (max-width: 480px) {
@@ -483,7 +494,7 @@
         <!-- El contenido a poner -->
         {% endblock %}
     </div>
-    
+    <!--Parte final de la pagina-->
     <footer>
         <div class="footer-container">
             <div class="footer-section">
@@ -495,10 +506,9 @@
                     <div class="telefono"">
                         {% if config.telefonos.all %}
                             {% for telefono in config.telefonos.all %}
-                                {% if telefono.descripcion %}
+                                <a href="tel:{{ telefono.numero }}">{% if telefono.descripcion %}
                                     <a>{{ telefono.descripcion }}:</a> 
-                                {% endif %}
-                                <a href="tel:{{ telefono.numero }}">{{ telefono.numero }}</a>
+                                {% endif %}{{ telefono.numero }}</a>
                             {% endfor %}
                         {% endif %}
                     </div>
