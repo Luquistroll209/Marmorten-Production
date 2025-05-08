@@ -243,7 +243,7 @@ class SeccionSobreNosotros(models.Model):
         ('REDES', 'Enlaces/Redes Sociales'),  # Nueva opción
     ]
     
-    titulo = models.CharField(max_length=100)
+    titulo = models.CharField(max_length=100, blank=True)
     tipo = models.CharField(max_length=10, choices=TIPO_SECCION)
     contenido_texto = models.TextField(blank=True, null=True)
     imagen = models.ImageField(upload_to='sobre_nosotros/secciones/', blank=True, null=True)
