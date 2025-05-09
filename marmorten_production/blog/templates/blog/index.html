@@ -5,21 +5,25 @@
 {% block content %}
 <style>
 :root {
-  /* Colores y Efectos para toda la web, cambio de color por si no le gusta los colores a la señora */
-  --color-blanco: #ffffff;
-  --color-fondo: #f8f8f8;
-  --color-borde: #e0e0e0;
-  --color-texto: #333333;
-  --color-texto-claro: #666666;
-  --color-acento: #D4AF37;
-  --color-acento-hover: #B8860B;
+  /* Paleta de colores profesional mejorada */
+  --color-negro: #0a0a0a;
+  --color-fondo: #121212;
+  --color-borde: rgba(255, 255, 255, 0.1);
+  --color-texto: #ffffff;
+  --color-texto-claro: #e0e0e0;
+  --color-acento: #c0c0c0; /* Plateado */
+  --color-acento-hover: #ffffff;
+  --color-tarjeta: #1e1e1e;
+  --color-texto-bg: rgba(18, 18, 18, 0.92);
+  --color-overlay: rgba(10, 10, 10, 0.7);
   
-  --borde-redondeado: 12px;
-  --borde-redondeado-pequeno: 8px;
-  --sombra: 0 4px 20px rgba(0, 0, 0, 0.05);
-  --sombra-hover: 0 8px 30px rgba(0, 0, 0, 0.1);
-  --transicion: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  --borde-redondeado: 20px;
+  --borde-redondeado-pequeno: 10px;
+  --sombra: 0 12px 40px rgba(0, 0, 0, 0.25);
+  --sombra-hover: 0 16px 50px rgba(0, 0, 0, 0.35);
+  --transicion: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
 }
+
 * {
   margin: 0;
   padding: 0;
@@ -30,59 +34,72 @@ body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   background-color: var(--color-fondo);
   color: var(--color-texto);
-  line-height: 1.6;
+  line-height: 1.7;
   margin: 0;
   padding: 0;
-  padding
   -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
 }
 
-/* Tipografía de Google fonts */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap');
+/* Tipografía premium mejorada */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Bebas+Neue&family=Playfair+Display:wght@700;800&display=swap');
 
 h1, h2, h3, h4 {
-  font-family: 'Playfair Display', serif;
-  font-weight: 700;
-  line-height: 1.3;
+  font-family: 'Bebas Neue', sans-serif;
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: 1px;
   color: var(--color-texto);
+  margin-bottom: 1.5rem;
 }
 
 h2 {
-  font-size: 2.2rem;
-  margin-bottom: 1.5rem;
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  position: relative;
+  text-transform: uppercase;
+}
+
+h3 {
+  font-size: clamp(1.5rem, 3vw, 1.8rem);
+  letter-spacing: 1.5px;
 }
 
 p {
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.8rem;
   color: var(--color-texto-claro);
+  font-size: clamp(1rem, 1.1vw, 1.1rem);
+  line-height: 1.8;
+  font-weight: 300;
 }
 
-  /* Objetos principales del html */
+/* Estructura principal mejorada */
 .main-container {
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 0 20px;
+  max-width: 1800px;
+  margin: 20px auto;
+  position: relative;
 }
 
 .section {
-  padding: 80px 0;
+  padding: clamp(60px, 8vw, 120px) 0;
+  position: relative;
 }
 
 .section-header {
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: clamp(40px, 6vw, 70px);
+  position: relative;
 }
 
-.section-title {
-  position: relative;
+.section-header h2 {
   display: inline-block;
   padding-bottom: 15px;
 }
 
-.section-title:after {
+.section-header h2:after {
   content: '';
   display: block;
-  width: 60px;
+  width: 100px;
   height: 3px;
   background: var(--color-acento);
   position: absolute;
@@ -91,44 +108,103 @@ p {
   transform: translateX(-50%);
 }
 
-/* Carrusel */
+/* Carrusel hero premium mejorado */
 .hero-carousel-container {
   width: 100%;
   position: relative;
   overflow: hidden;
   margin: 0;
-  border-radius: 0px 0px 40px 40px;
+  border-radius: 0;
+  height: 100vh;
+  max-height: 100vh;
+  min-height: 600px;
 }
 
 .hero-carousel {
   width: 100%;
-  height: 40vh;
-  max-height: 800px;
-  min-height: 500px;
+  height: 100%;
   position: relative;
-  border-radius: 0px 0px 40px 40px;
 }
 
 .carousel-inner {
   display: flex;
   height: 100%;
-  transition: transform 0.8s ease;
-  border-radius: 0px 0px 40px 40px;
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
 }
 
 .carousel-slide {
   min-width: 100%;
-  background: white;
   position: relative;
-  border-radius: 0px 0px 40px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.carousel-bg-image {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: blur(15px) brightness(0.6);
+  transform: scale(1.1);
+  z-index: 1;
+  transition: filter 0.8s ease;
+  background: white;
+}
+
+.carousel-slide.active .carousel-bg-image {
+  filter: blur(8px) brightness(0.7);
+}
+
+.carousel-content {
+  display: flex;
+  width: 90%;
+  max-width: 1400px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 3;
+  align-items: center;
+  gap: clamp(30px, 4vw, 60px);
+  padding: 40px 0;
+}
+
+.carousel-text {
+  flex: 1;
+  background-color: var(--color-texto-bg);
+  padding: clamp(30px, 4vw, 60px);
+  border-radius: var(--borde-redondeado);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: var(--sombra);
+  transform: translateY(20px);
+  opacity: 0;
+  transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.3s;
+}
+
+.carousel-slide.active .carousel-text {
+  transform: translateY(0);
+  opacity: 1;
 }
 
 .carousel-image-container {
-  width: 100%;
-  height: 100%;
+  flex: 1;
   position: relative;
+  height: clamp(300px, 50vh, 500px);
+  border-radius: var(--borde-redondeado);
   overflow: hidden;
-  border-radius: 0px 0px 40px 40px;
+  box-shadow: var(--sombra);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transform: translateY(20px);
+  opacity: 0;
+  transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.5s;
+}
+
+.carousel-slide.active .carousel-image-container {
+  transform: translateY(0);
+  opacity: 1;
 }
 
 .carousel-image {
@@ -136,246 +212,365 @@ p {
   height: 100%;
   object-fit: cover;
   object-position: center;
-  border-radius: 0px 0px 40px 40px;
-}
-.carousel-image-container::before,
-.carousel-image-container::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 200px;
-  z-index: 2;
-  pointer-events: none;
+  transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.carousel-image-container::before {
-  left: 0;
-  background: linear-gradient(to right, rgba(0,0,0,0.5), transparent);
-}
-
-.carousel-image-container::after {
-  right: 0;
-  background: linear-gradient(to left, rgba(0,0,0,0.5), transparent);
-}
-
-.carousel-content {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: 40px;
-  background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
-  color: white;
-  z-index: 3;
+.carousel-slide.active .carousel-image {
+  transform: scale(1.03);
 }
 
 .carousel-title {
-  font-size: 3rem;
-  margin-bottom: 15px;
-  color: white;
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  margin-bottom: clamp(15px, 2vw, 25px);
+  color: var(--color-texto);
+  line-height: 1;
+  letter-spacing: 2px;
+  text-transform: uppercase;
 }
 
 .carousel-description {
-  color: white;
-  max-width: 700px;
-  margin-bottom: 25px;
-  font-size: 1.2rem;
-  opacity: 0.9;
+  color: var(--color-texto-claro);
+  margin-bottom: clamp(20px, 3vw, 40px);
+  font-size: clamp(1rem, 1.2vw, 1.2rem);
+  line-height: 1.8;
+  max-width: 600px;
 }
 
+/* Controles del carrusel mejorados */
 .carousel-nav {
   position: absolute;
   top: 50%;
   width: 100%;
   display: flex;
   justify-content: space-between;
-  padding: 0 20px;
+  padding: 0 clamp(20px, 4vw, 40px);
   transform: translateY(-50%);
   z-index: 10;
+  pointer-events: none;
 }
 
 .carousel-btn {
-  width: 50px;
-  height: 50px;
+  width: clamp(50px, 5vw, 70px);
+  height: clamp(50px, 5vw, 70px);
   border-radius: 50%;
-  background: rgba(255,255,255,0.2);
+  background: rgba(0,0,0,0.3);
   backdrop-filter: blur(5px);
-  border: none;
-  color: white;
-  font-size: 1.2rem;
+  -webkit-backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: var(--color-acento);
+  font-size: clamp(1.5rem, 2vw, 1.8rem);
   cursor: pointer;
   transition: var(--transicion);
   display: flex;
   align-items: center;
   justify-content: center;
+  pointer-events: auto;
 }
 
 .carousel-btn:hover {
-  background: var(--color-acento);
+  background: rgba(255,255,255,0.2);
+  color: white;
   transform: scale(1.1);
+  border-color: rgba(255, 255, 255, 0.4);
 }
 
 .carousel-indicators {
   position: absolute;
-  bottom: 20px;
+  bottom: clamp(30px, 5vw, 60px);
   left: 50%;
   transform: translateX(-50%);
   display: flex;
-  gap: 10px;
+  gap: 15px;
   z-index: 10;
 }
 
 .carousel-indicator {
-  width: 10px;
-  height: 10px;
+  width: clamp(10px, 1.5vw, 14px);
+  height: clamp(10px, 1.5vw, 14px);
   border-radius: 50%;
-  background: rgba(255,255,255,0.3);
-  border: 1px solid rgba(255,255,255,0.5);
+  background: rgba(255,255,255,0.2);
+  border: 1px solid rgba(255,255,255,0.4);
   cursor: pointer;
   transition: var(--transicion);
 }
 
 .carousel-indicator.active {
   background: var(--color-acento);
-  transform: scale(1.2);
+  transform: scale(1.3);
+  border-color: var(--color-acento);
 }
 
+/* Sección de cortometrajes premium mejorada */
+.cortometrajes-section {
+  position: relative;
+  padding: 30px;
+  border-radius: 40px;
+  background: linear-gradient(to bottom, rgba(30,30,30,0.9), rgba(10,10,10,1));
+  box-shadow: 0 0px 20px 20px rgba(0, 0, 0, 0.6);
+
+}
+
+.cortometrajes-section:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('{% static "images/noise.png" %}') repeat;
+  opacity: 0.03;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.cortometrajes-header {
+  background-color: var(--color-texto-bg);
+  padding: clamp(30px, 4vw, 40px);
+  border-radius: var(--borde-redondeado);
+  margin-bottom: clamp(40px, 5vw, 60px);
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: var(--sombra);
+  position: relative;
+  z-index: 2;
+}
+
+.cortometrajes-header h2 {
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  letter-spacing: 3px;
+}
+
+.cortometrajes-header p {
+  font-size: clamp(1rem, 1.2vw, 1.2rem);
+  max-width: 800px;
+  margin: 0 auto;
+}
 
 .producciones-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 30px;
-  margin-top: 40px;
+  grid-template-columns: repeat(auto-fill, minmax(clamp(300px, 30vw, 400px), 1fr));
+  gap: clamp(30px, 4vw, 50px);
+  margin-top: clamp(40px, 5vw, 60px);
+  position: relative;
+  z-index: 2;
 }
 
 .produccion-card {
-  background: var(--color-blanco);
+  background: var(--color-tarjeta);
   border-radius: var(--borde-redondeado);
   overflow: hidden;
   box-shadow: var(--sombra);
   transition: var(--transicion);
+  border: 1px solid var(--color-borde);
+  position: relative;
+  will-change: transform;
 }
 
 .produccion-card:hover {
-  transform: translateY(-10px);
+  transform: translateY(-15px);
   box-shadow: var(--sombra-hover);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.produccion-image-container {
+  width: 100%;
+  height: clamp(250px, 30vw, 300px);
+  position: relative;
+  overflow: hidden;
+}
+
+.produccion-image-container:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, transparent 60%, rgba(0,0,0,0.7));
+  z-index: 1;
 }
 
 .produccion-image {
   width: 100%;
-  height: 220px;
+  height: 100%;
   object-fit: cover;
+  transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.produccion-card:hover .produccion-image {
+  transform: scale(1.1);
 }
 
 .produccion-content {
-  padding: 25px;
+  padding: clamp(25px, 3vw, 40px);
+  position: relative;
 }
 
 .produccion-title {
-  font-size: 1.4rem;
-  margin-bottom: 10px;
+  font-size: clamp(1.5rem, 2.5vw, 2rem);
+  margin-bottom: clamp(15px, 2vw, 20px);
+  color: var(--color-texto);
+  letter-spacing: 1.5px;
 }
 
 .produccion-meta {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 20px;
-  color: var(--color-acento);
-  font-weight: 500;
+  margin-top: clamp(20px, 3vw, 30px);
 }
 
+.produccion-category {
+  color: var(--color-acento);
+  font-weight: 600;
+  font-size: clamp(0.8rem, 1vw, 0.9rem);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
 
+/* Botones premium mejorados */
 .btn {
   display: inline-flex;
   align-items: center;
-  padding: 12px 24px;
+  justify-content: center;
+  padding: clamp(12px, 1.5vw, 16px) clamp(20px, 2.5vw, 32px);
   border-radius: var(--borde-redondeado-pequeno);
   font-weight: 600;
   text-decoration: none;
   transition: var(--transicion);
   border: none;
   cursor: pointer;
+  font-size: clamp(0.9rem, 1.1vw, 1rem);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  font-family: 'Bebas Neue', sans-serif;
+  position: relative;
+  overflow: hidden;
+  will-change: transform;
+  white-space: nowrap;
+}
+
+.btn:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(rgba(255,255,255,0.1), transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.btn:hover:after {
+  opacity: 1;
 }
 
 .btn-primary {
   background: var(--color-acento);
-  color: white;
+  color: var(--color-negro);
+  box-shadow: 0 5px 15px rgba(192, 192, 192, 0.2);
 }
 
 .btn-primary:hover {
   background: var(--color-acento-hover);
-  transform: translateY(-2px);
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(192, 192, 192, 0.3);
 }
 
 .btn-outline {
   background: transparent;
   border: 2px solid var(--color-acento);
   color: var(--color-acento);
+  padding: clamp(10px, 1.5vw, 14px) clamp(20px, 2.5vw, 30px);
 }
 
 .btn-outline:hover {
   background: var(--color-acento);
-  color: white;
+  color: var(--color-negro);
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(192, 192, 192, 0.2);
 }
 
-/* Newsletter */
-.newsletter-section {
-  background: var(--color-blanco);
+/* Sección de noticias premium mejorada */
+.news-section {
+  background: var(--color-tarjeta);
   border-radius: var(--borde-redondeado);
-  padding: 60px;
-  text-align: center;
-  box-shadow: var(--sombra);
-  margin: 80px 0;
-}
-
-.newsletter-form {
-  max-width: 600px;
-  margin: 0 auto;
-  display: flex;
-  gap: 15px;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-.newsletter-input {
-  flex: 1;
-  min-width: 300px;
-  padding: 15px 20px;
+  padding: clamp(40px, 6vw, 100px) clamp(30px, 5vw, 100px);
+  margin: clamp(60px, 10vw, 120px) 0;
   border: 1px solid var(--color-borde);
-  border-radius: var(--borde-redondeado-pequeno);
-  font-size: 1rem;
-  transition: var(--transicion);
+  box-shadow: var(--sombra);
+  position: relative;
+  overflow: hidden;
 }
 
-.newsletter-input:focus {
-  outline: none;
-  border-color: var(--color-acento);
-  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.2);
+.news-section:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 5px;
+  background: linear-gradient(to right, var(--color-acento), transparent);
 }
 
-/* Botón flotante */
+.news-section:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('{% static "images/noise.png" %}') repeat;
+  opacity: 0.03;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.news-header {
+  margin-bottom: clamp(40px, 6vw, 60px);
+  text-align: center;
+  position: relative;
+  z-index: 2;
+}
+
+.news-header h2 {
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  letter-spacing: 3px;
+}
+
+.news-header p {
+  font-size: clamp(1rem, 1.2vw, 1.2rem);
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+/* Botón flotante premium mejorado */
 .floating-btn {
   position: fixed;
-  bottom: 30px;
-  right: 30px;
-  width: 50px;
-  height: 50px;
+  bottom: clamp(30px, 5vw, 50px);
+  right: clamp(30px, 5vw, 50px);
+  width: clamp(50px, 6vw, 70px);
+  height: clamp(50px, 6vw, 70px);
   border-radius: 50%;
   background: var(--color-acento);
-  color: white;
+  color: var(--color-negro);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.2rem;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  font-size: clamp(1.5rem, 2.5vw, 1.8rem);
+  box-shadow: 0 10px 30px rgba(192, 192, 192, 0.3);
   cursor: pointer;
   opacity: 0;
   visibility: hidden;
   transition: var(--transicion);
   z-index: 100;
   border: none;
+  font-family: 'Bebas Neue', sans-serif;
+  will-change: transform;
 }
 
 .floating-btn.visible {
@@ -384,129 +579,124 @@ p {
 }
 
 .floating-btn:hover {
-  transform: translateY(-3px) scale(1.1);
+  transform: translateY(-8px) scale(1.1);
   background: var(--color-acento-hover);
+  box-shadow: 0 15px 40px rgba(192, 192, 192, 0.4);
 }
 
-/* Adaptación a movil */
-@media (max-width: 1200px) {
-  .hero-carousel {
-    height: 70vh;
-  }
-  
-  .carousel-title {
-    font-size: 2.5rem;
-  }
+/* Efectos decorativos mejorados */
+.divider {
+  height: 1px;
+  width: 100%;
+  background: linear-gradient(to right, transparent, rgba(255,255,255,0.1), transparent);
+  margin: clamp(20px, 3vw, 40px) 0;
 }
 
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Media queries optimizadas */
 @media (max-width: 992px) {
-  .section {
-    padding: 60px 0;
-  }
-  
-  .hero-carousel {
-    height: 60vh;
-    min-height: 450px;
-  }
-  
   .carousel-content {
-    padding: 30px;
+    flex-direction: column;
+    gap: 40px;
   }
   
-  .carousel-title {
-    font-size: 2.2rem;
+  .carousel-text {
+    order: 2;
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
   }
   
-  .producciones-grid {
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  .carousel-image-container {
+    order: 1;
+    width: 100%;
+    max-width: 600px;
   }
 }
 
 @media (max-width: 768px) {
-  .hero-carousel {
-    height: 50vh;
-    min-height: 400px;
-  }
-  
-  .carousel-content {
-    padding: 25px;
+  .hero-carousel-container {
+    min-height: 500px;
   }
   
   .carousel-title {
-    font-size: 2rem;
+    font-size: clamp(2rem, 6vw, 2.5rem);
   }
   
   .carousel-description {
-    font-size: 1.1rem;
+    font-size: 1rem;
+  }
+  
+  .carousel-text {
+    padding: 25px;
   }
   
   .carousel-btn {
-    width: 45px;
-    height: 45px;
-    font-size: 1.1rem;
-  }
-  
-  .newsletter-section {
-    padding: 40px 30px;
-  }
-}
-
-@media (max-width: 576px) {
-  .hero-carousel {
-    height: 45vh;
-    min-height: 350px;
-  }
-  
-  .carousel-content {
-    padding: 20px;
-  }
-  
-  .carousel-title {
-    font-size: 1.8rem;
-    margin-bottom: 10px;
-  }
-  
-  .section-title {
-    font-size: 1.8rem;
+    width: 40px;
+    height: 40px;
+    font-size: 1.2rem;
   }
   
   .producciones-grid {
     grid-template-columns: 1fr;
   }
-  
-  .newsletter-form {
-    flex-direction: column;
-    gap: 10px;
+}
+
+@media (max-width: 576px) {
+  .hero-carousel-container {
+    min-height: 400px;
   }
   
-  .newsletter-input {
-    min-width: 100%;
+  .carousel-content {
+    padding-top: 60px;
+    padding-bottom: 60px;
+  }
+  
+  .carousel-indicators {
+    bottom: 20px;
   }
   
   .floating-btn {
-    width: 45px;
-    height: 45px;
-    bottom: 20px;
-    right: 20px;
-    font-size: 1.1rem;
+    width: 50px;
+    height: 50px;
+    font-size: 1.3rem;
   }
+}
+
+/* Preload de fuentes */
+body:after {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  z-index: -1;
+  content: url('{% static "images/noise.png" %}') 
+           url('{% static "images/placeholder.jpg" %}');
 }
 </style>
 
-<!-- Carrusel y portada -->
+
+<!-- Carrusel hero premium -->
 <div class="hero-carousel-container">
   <div class="hero-carousel">
     <div class="carousel-inner" id="mainCarousel">
       {% for item in carrusel_items %}
       {% if item.post.imagen %}
-      <div class="carousel-slide">
-        <div class="carousel-image-container">
-          <img src="{{ item.post.imagen.url }}" alt="{{ item.titulo }}" class="carousel-image">
-        </div>
+      <div class="carousel-slide {% if forloop.first %}active{% endif %}">
+        <img src="{{ item.post.imagen.url }}" alt="{{ item.titulo }}" class="carousel-bg-image">
         <div class="carousel-content">
-          <h2 class="carousel-title">{{ item.titulo|default:item.post.title }}</h2>
-          <p class="carousel-description">{{ item.descripcion|default:item.post.resumen }}</p>
-          <a href="{% url 'detalle_post' item.post.id %}" class="btn btn-primary">Ver más</a>
+          <div class="carousel-text">
+            <h2 class="carousel-title">{{ item.titulo|default:item.post.title }}</h2>
+            <p class="carousel-description">{{ item.descripcion|default:item.post.resumen }}</p>
+            <a href="{% url 'detalle_post' item.post.id %}" class="btn btn-primary">Ver Proyecto</a>
+          </div>
+          <div class="carousel-image-container">
+            <img src="{{ item.post.imagen.url }}" alt="{{ item.titulo }}" class="carousel-image" loading="lazy">
+          </div>
         </div>
       </div>
       {% endif %}
@@ -514,78 +704,85 @@ p {
     </div>
     
     <div class="carousel-nav">
-      <button class="carousel-btn" id="prevBtn">❮</button>
-      <button class="carousel-btn" id="nextBtn">❯</button>
+      <button class="carousel-btn" id="prevBtn" aria-label="Slide anterior">❮</button>
+      <button class="carousel-btn" id="nextBtn" aria-label="Slide siguiente">❯</button>
     </div>
     
     <div class="carousel-indicators" id="carouselIndicators">
       {% for item in carrusel_items %}
-      <div class="carousel-indicator {% if forloop.first %}active{% endif %}"></div>
+      <button class="carousel-indicator {% if forloop.first %}active{% endif %}" aria-label="Ir al slide {{ forloop.counter }}"></button>
       {% endfor %}
     </div>
   </div>
 </div>
 
-<!-- Contenidos de los post -->
+<!-- Contenido principal -->
 <div class="main-container">
-  <!-- Post Destacados -->
-  <section class="section">
-    <div class="section-header">
-      <h2 class="section-title">Cortometrajes</h2>
-      <p>Nuestros trabajos más emblemáticos que representan nuestra calidad y estilo único</p>
+  <!-- Sección de cortometrajes premium -->
+  <section class="cortometrajes-section">
+    <div class="cortometrajes-header">
+      <h2>Cortometrajes</h2>
+      <p>Nuestros trabajos más emblemáticos que representan nuestra calidad y estilo único en producción audiovisual</p>
     </div>
     
     <div class="producciones-grid">
       {% for post in posts_destacados %}
-      <div class="produccion-card">
-        {% if post.imagen %}
-        <img src="{{ post.imagen.url }}" alt="{{ post.title }}" class="produccion-image">
-        {% endif %}
+      <article class="produccion-card">
+        <div class="produccion-image-container">
+          {% if post.imagen %}
+          <img src="{{ post.imagen.url }}" alt="{{ post.title }}" class="produccion-image" loading="lazy">
+          {% endif %}
+        </div>
         <div class="produccion-content">
           <h3 class="produccion-title">{{ post.title }}</h3>
-          <p>{{ post.resumen|truncatechars:120 }}</p>
+          <p>{{ post.resumen|truncatechars:180 }}</p>
           <div class="produccion-meta">
-            <!--<span>{{ post.fecha_publicacion|date:"M Y" }}</span>-->
-            <a href="{% url 'detalle_post' post.id %}" class="btn btn-outline">Ver más</a>
+            <span class="produccion-category">Cortometraje</span>
+            <a href="{% url 'detalle_post' post.id %}" class="btn btn-outline">Detalles</a>
           </div>
         </div>
-      </div>
+      </article>
       {% endfor %}
     </div>
   </section>
   
-  <!-- Ultimos post, por fecha de creación -->
-  <section class="section" style="background: var(--color-blanco); border-radius: var(--borde-redondeado); padding: 20px; margin: 20px;">
-    <div class="section-header">
-      <h2 class="section-title">Últimas Noticias</h2>
-      <p>Descubre nuestros trabajos más recientes</p>
+  <!-- Sección de noticias premium -->
+  <section class="news-section">
+    <div class="news-header">
+      <h2>Últimas Noticias</h2>
+      <p>Mantente al día con nuestros proyectos, anuncios y eventos más recientes</p>
     </div>
     
     <div class="producciones-grid">
       {% for post in ultimos_posts %}
-      <div class="produccion-card">
-        {% if post.imagen %}
-        <img src="{{ post.imagen.url }}" alt="{{ post.title }}" class="produccion-image">
-        {% endif %}
+      <article class="produccion-card">
+        <div class="produccion-image-container">
+          {% if post.imagen %}
+          <img src="{{ post.imagen.url }}" alt="{{ post.title }}" class="produccion-image" loading="lazy">
+          {% endif %}
+        </div>
         <div class="produccion-content">
           <h3 class="produccion-title">{{ post.title }}</h3>
-          <p>{{ post.resumen|default:post.content|truncatechars:150 }}</p>
+          <p>{{ post.resumen|default:post.content|truncatechars:180 }}</p>
           <div class="produccion-meta">
-            <!--<span>{{ post.fecha_publicacion|date:"M Y" }}</span>-->
-            <a href="{% url 'detalle_post' post.id %}" class="btn btn-outline">Ver más</a>
+            <span class="produccion-category">Noticia</span>
+            <a href="{% url 'detalle_post' post.id %}" class="btn btn-outline">Leer más</a>
           </div>
         </div>
-      </div>
+      </article>
       {% endfor %}
     </div>
   </section>
+</div>
 
-
-<!-- Botón flotante -->
-<button class="floating-btn" id="backToTop">↑</button>
+<!-- Botón flotante premium -->
+<button class="floating-btn" id="backToTop" aria-label="Volver arriba">↑</button>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+  // Ocultar overlay de carga
+  
+  // Carrusel mejorado
   const carousel = document.getElementById('mainCarousel');
   const slides = document.querySelectorAll('.carousel-slide');
   const prevBtn = document.getElementById('prevBtn');
@@ -595,83 +792,120 @@ document.addEventListener('DOMContentLoaded', function() {
   let currentIndex = 0;
   let isAnimating = false;
   let autoSlideInterval;
+  let touchStartX = 0;
+  let isDragging = false;
+  let startPos = 0;
+  let currentTranslate = 0;
+  let prevTranslate = 0;
+  let animationID;
   
+  // Inicializar carrusel
+  function initCarousel() {
+    slides.forEach((slide, index) => {
+      if (index === 0) {
+        slide.classList.add('active');
+      } else {
+        slide.classList.remove('active');
+      }
+    });
+    
+    if (slides.length > 1) {
+      startAutoSlide();
+    } else {
+      prevBtn.style.display = 'none';
+      nextBtn.style.display = 'none';
+      document.getElementById('carouselIndicators').style.display = 'none';
+    }
+  }
+  
+  // Ir a slide específico
   function goToSlide(index) {
-    if (isAnimating) return;
+    if (isAnimating || index === currentIndex) return;
     
     isAnimating = true;
+    const prevIndex = currentIndex;
     currentIndex = (index + slides.length) % slides.length;
+    
+    // Actualizar clases de slides
+    slides[prevIndex].classList.remove('active');
+    slides[currentIndex].classList.add('active');
+    
+    // Animación suave
+    carousel.style.transition = 'transform 0.8s cubic-bezier(0.16, 1, 0.3, 1)';
     carousel.style.transform = `translateX(-${currentIndex * 100}%)`;
     
     // Actualizar indicadores
-    indicators.forEach((indicator, i) => {
-      indicator.classList.toggle('active', i === currentIndex);
-    });
+    updateIndicators();
     
+    // Reiniciar autoplay
+    resetAutoSlide();
+    
+    // Finalizar animación
     setTimeout(() => {
       isAnimating = false;
+      carousel.style.transition = 'none';
     }, 800);
   }
   
+  // Actualizar indicadores
+  function updateIndicators() {
+    indicators.forEach((indicator, i) => {
+      indicator.classList.toggle('active', i === currentIndex);
+    });
+  }
+  
+  // Autoplay
   function startAutoSlide() {
-    clearInterval(autoSlideInterval);
     autoSlideInterval = setInterval(() => {
-      if (!isAnimating) {
+      if (!isAnimating && !isDragging) {
         goToSlide(currentIndex + 1);
       }
-    }, 7000);
+    }, 8000);
+  }
+  
+  function resetAutoSlide() {
+    clearInterval(autoSlideInterval);
+    startAutoSlide();
+  }
+  
+  
+  function touchStart(e) {
+    startPos = e.touches[0].clientX;
+    isDragging = true;
+    carousel.style.transition = 'none';
+    prevTranslate = currentIndex * -window.innerWidth;
+    clearInterval(autoSlideInterval);
+    cancelAnimationFrame(animationID);
+  }
+  
+  function touchMove(e) {
+    if (!isDragging) return;
+    const currentPos = e.touches[0].clientX;
+    currentTranslate = prevTranslate + currentPos - startPos;
+    carousel.style.transform = `translateX(${currentTranslate}px)`;
+  }
+  
+  function touchEnd() {
+    if (!isDragging) return;
+    isDragging = false;
+    
+    const movedBy = currentTranslate - prevTranslate;
+    if (movedBy < -100 && currentIndex < slides.length - 1) {
+      goToSlide(currentIndex + 1);
+    } else if (movedBy > 100 && currentIndex > 0) {
+      goToSlide(currentIndex - 1);
+    } else {
+      goToSlide(currentIndex);
+    }
   }
   
   // Event listeners
-  prevBtn.addEventListener('click', () => {
-    clearInterval(autoSlideInterval);
-    goToSlide(currentIndex - 1);
-    startAutoSlide();
-  });
-  
-  nextBtn.addEventListener('click', () => {
-    clearInterval(autoSlideInterval);
-    goToSlide(currentIndex + 1);
-    startAutoSlide();
-  });
+  prevBtn.addEventListener('click', () => goToSlide(currentIndex - 1));
+  nextBtn.addEventListener('click', () => goToSlide(currentIndex + 1));
   
   indicators.forEach((indicator, index) => {
-    indicator.addEventListener('click', () => {
-      if (currentIndex !== index) {
-        clearInterval(autoSlideInterval);
-        goToSlide(index);
-        startAutoSlide();
-      }
-    });
+    indicator.addEventListener('click', () => goToSlide(index));
   });
-  
-  // Touch events
-  let touchStartX = 0;
-  
-  carousel.addEventListener('touchstart', (e) => {
-    touchStartX = e.touches[0].clientX;
-    clearInterval(autoSlideInterval);
-  }, {passive: true});
-  
-  carousel.addEventListener('touchend', (e) => {
-    const touchEndX = e.changedTouches[0].clientX;
-    const diff = touchStartX - touchEndX;
-    
-    if (Math.abs(diff) > 50 && !isAnimating) {
-      clearInterval(autoSlideInterval);
-      goToSlide(diff > 0 ? currentIndex + 1 : currentIndex - 1);
-      startAutoSlide();
-    }
-  }, {passive: true});
-  
-  // Iniciar autoplay
-  if (slides.length > 1) {
-    startAutoSlide();
-  } else {
-    prevBtn.style.display = 'none';
-    nextBtn.style.display = 'none';
-    document.getElementById('carouselIndicators').style.display = 'none';
-  }
   
   // Botón flotante
   const backToTopBtn = document.getElementById('backToTop');
@@ -687,39 +921,18 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
   
-  // Efecto de difuminado dinámico
-  function updateBlurEffect() {
-    document.querySelectorAll('.carousel-slide').forEach(slide => {
-      const img = slide.querySelector('.carousel-image');
-      if (img.naturalWidth && img.naturalHeight) {
-        const aspectRatio = img.naturalWidth / img.naturalHeight;
-        const container = slide.querySelector('.carousel-image-container');
-        if (aspectRatio < 1) {
-          // Imagen alta (portrait)
-          container.style.setProperty('--blur-amount', '200px');
-        } else {
-          // Imagen ancha (landscape)
-          container.style.setProperty('--blur-amount', '0px');
-        }
-      }
-    });
-  }
-
-  // Observar cambios en las imágenes
-  const observer = new MutationObserver(updateBlurEffect);
-  observer.observe(document.body, { 
-    childList: true,
-    subtree: true
-  });
-
-  // Ejecutar al cargar y cuando las imágenes se cargan
-  document.querySelectorAll('.carousel-image').forEach(img => {
-    if (img.complete) {
-      updateBlurEffect();
-    } else {
-      img.addEventListener('load', updateBlurEffect);
+  // Inicializar
+  initCarousel();
+  
+  // Optimización de imágenes
+  document.querySelectorAll('img').forEach(img => {
+    if (!img.loading) {
+      img.loading = 'lazy';
     }
   });
+  
+  // Prevenir FOUC
+  document.body.style.visibility = 'visible';
 });
 </script>
 {% endblock %}

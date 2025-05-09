@@ -6,658 +6,571 @@
 
 {% block content %}
 <style>
-    /* ESTILOS HERO CAROUSEL */
-    .hero-carousel-container {
-      width: 100%;
-      position: relative;
-      overflow: hidden;
+  :root {
+    /* Paleta de colores consistente */
+    --color-primario: #0a0a0a;
+    --color-secundario: #121212;
+    --color-borde-suave: rgba(255, 255, 255, 0.1);
+    --color-texto-principal: #ffffff;
+    --color-texto-secundario: #e0e0e0;
+    --color-destacado: #c0c0c0;
+    --color-destacado-hover: #ffffff;
+    --color-tarjeta-oscura: #1e1e1e;
+    --color-texto-fondo: rgba(18, 18, 18, 0.92);
+    --color-overlay: rgba(10, 10, 10, 0.7);
+    
+    --radio-borde-grande: 20px;
+    --radio-borde-pequeno: 10px;
+    --sombra-intensa: 0 12px 40px rgba(0, 0, 0, 0.25);
+    --sombra-intensa-hover: 0 16px 50px rgba(0, 0, 0, 0.35);
+    --transicion-suave: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+    --transicion-rapida: all 0.3s ease-out;
+  }
 
-      border-radius: 0px 0px 40px 40px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  /* Estructura principal */
+  .about-section {
+    max-width: 1400px;
+    margin: 100px auto;
+    padding: 0 30px;
+  }
+
+  /* Hero section */
+  .hero-container {
+    position: relative;
+    width: 100%;
+    height: 70vh;
+    min-height: 500px;
+    max-height: 800px;
+    border-radius: var(--radio-borde-grande);
+    overflow: hidden;
+    margin-bottom: clamp(60px, 8vw, 100px);
+    box-shadow: var(--sombra-intensa);
+  }
+
+  .hero-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.7);
+    transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .hero-content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: clamp(40px, 6vw, 80px);
+    background: linear-gradient(to top, var(--color-overlay), transparent);
+    z-index: 2;
+  }
+
+  .hero-title {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    color: var(--color-texto-principal);
+    margin-bottom: 1.5rem;
+    line-height: 1.1;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+  }
+
+  .hero-description {
+    color: var(--color-texto-secundario);
+    font-size: clamp(1rem, 1.2vw, 1.2rem);
+    max-width: 700px;
+    line-height: 1.8;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+  }
+
+  /* Secciones de contenido */
+  .content-section {
+    margin-bottom: clamp(60px, 8vw, 100px);
+  }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: clamp(40px, 6vw, 70px);
+  }
+
+  .section-title {
+    font-size: clamp(2.5rem, 5vw, 3.5rem);
+    color: var(--color-destacado);
+    margin-bottom: 1.5rem;
+    position: relative;
+    display: inline-block;
+    padding-bottom: 15px;
+  }
+
+  .section-title:after {
+    content: '';
+    display: block;
+    width: 100px;
+    height: 3px;
+    background: var(--color-destacado);
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .section-description {
+    color: var(--color-texto-secundario);
+    font-size: clamp(1rem, 1.2vw, 1.2rem);
+    max-width: 800px;
+    margin: 0 auto;
+    line-height: 1.8;
+  }
+
+  /* Texto formateado */
+  .formatted-text {
+    line-height: 1.8;
+    font-size: clamp(1rem, 1.1vw, 1.1rem);
+    color: var(--color-texto-secundario);
+  }
+
+  .formatted-text p {
+    margin-bottom: 1.8rem;
+  }
+
+  /* Galería de imágenes */
+  .gallery-container {
+    background: var(--color-tarjeta-oscura);
+    border-radius: var(--radio-borde-grande);
+    padding: clamp(30px, 4vw, 50px);
+    box-shadow: var(--sombra-intensa);
+    border: 1px solid var(--color-borde-suave);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .gallery-container:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('{% static "images/noise.png" %}') repeat;
+    opacity: 0.03;
+    pointer-events: none;
+  }
+
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 25px;
+    margin-top: 40px;
+  }
+
+  .gallery-item {
+    position: relative;
+    border-radius: var(--radio-borde-pequeno);
+    overflow: hidden;
+    box-shadow: var(--sombra-intensa);
+    aspect-ratio: 16/9;
+    transition: var(--transicion-suave);
+  }
+
+  .gallery-item:hover {
+    transform: translateY(-10px);
+    box-shadow: var(--sombra-intensa-hover);
+  }
+
+  .gallery-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .gallery-item:hover .gallery-image {
+    transform: scale(1.1);
+  }
+
+  .gallery-caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 20px;
+    background: linear-gradient(to top, var(--color-overlay), transparent);
+    color: var(--color-texto-principal);
+    z-index: 2;
+  }
+
+  /* Sección de redes sociales */
+  .social-section {
+    background: var(--color-tarjeta-oscura);
+    border-radius: var(--radio-borde-grande);
+    padding: clamp(40px, 6vw, 80px);
+    margin: clamp(60px, 8vw, 100px) 0;
+    box-shadow: var(--sombra-intensa);
+    border: 1px solid var(--color-borde-suave);
+    position: relative;
+  }
+
+  .social-section:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('{% static "images/noise.png" %}') repeat;
+    opacity: 0.03;
+    pointer-events: none;
+  }
+
+  .social-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 30px;
+    margin-top: 50px;
+  }
+
+  .social-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    color: var(--color-texto-secundario);
+    transition: var(--transicion-suave);
+    padding: 30px 20px;
+    background: rgba(30, 30, 30, 0.6);
+    border-radius: var(--radio-borde-pequeno);
+    border: 1px solid var(--color-borde-suave);
+  }
+
+  .social-card:hover {
+    transform: translateY(-10px);
+    background: rgba(40, 40, 40, 0.8);
+    color: var(--color-destacado-hover);
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+
+  .social-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(192, 192, 192, 0.1);
+    margin-bottom: 20px;
+    font-size: 1.8rem;
+    color: var(--color-destacado);
+    transition: var(--transicion-suave);
+  }
+
+  .social-card:hover .social-icon {
+    background: var(--color-destacado);
+    color: var(--color-primario);
+    transform: scale(1.1);
+  }
+
+  .social-title {
+    font-size: 1.1rem;
+    text-align: center;
+    font-weight: 500;
+  }
+
+  /* Imagen destacada */
+  .featured-image-container {
+    margin: clamp(40px, 6vw, 80px) 0;
+    border-radius: var(--radio-borde-grande);
+    overflow: hidden;
+    box-shadow: var(--sombra-intensa);
+    position: relative;
+  }
+
+  .featured-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .featured-image-container:hover .featured-image {
+    transform: scale(1.05);
+  }
+
+  .image-caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 20px;
+    background: linear-gradient(to top, var(--color-overlay), transparent);
+    color: var(--color-texto-principal);
+    text-align: center;
+    font-size: 0.9rem;
+  }
+
+  /* Popup de imagen */
+  .image-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: var(--transicion-suave);
+  }
+
+  .image-popup.active {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .popup-content {
+    position: relative;
+    max-width: 90%;
+    max-height: 90%;
+  }
+
+  .popup-image {
+    max-width: 100%;
+    max-height: 90vh;
+    border-radius: var(--radio-borde-pequeno);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  }
+
+  .close-popup {
+    position: absolute;
+    top: -50px;
+    right: -10px;
+    color: var(--color-texto-principal);
+    font-size: 2.5rem;
+    cursor: pointer;
+    background: none;
+    border: none;
+    transition: var(--transicion-rapida);
+  }
+
+  .close-popup:hover {
+    color: var(--color-destacado);
+    transform: rotate(90deg);
+  }
+
+  .popup-caption {
+    position: absolute;
+    bottom: -40px;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    color: var(--color-texto-principal);
+    font-size: 1rem;
+  }
+
+  /* Responsive */
+  @media (max-width: 992px) {
+    .hero-container {
+      height: 60vh;
     }
+    
+    .gallery-grid {
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    }
+    
+    .social-grid {
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    }
+  }
 
-    .hero-carousel {
-      width: 100%;
+  @media (max-width: 768px) {
+    .hero-container {
+      height: 50vh;
+      min-height: 400px;
+    }
+    
+    .hero-content {
+      padding: 30px;
+    }
+    
+    .gallery-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+    
+    .social-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .about-section {
+      padding: 0 20px;
+    }
+    
+    .hero-container {
       height: 40vh;
-      max-height: 800px;
-      min-height: 500px;
-      position: relative;
-    }
-
-    .carousel-image-container {
-      width: 100%;
-      height: 100%;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .carousel-image {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center;
-    }
-
-    .carousel-content {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      padding: 40px;
-      background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
-      color: white;
-      z-index: 3;
-    }
-
-    .carousel-title {
-      font-size: 3rem;
-      margin-bottom: 15px;
-      color: white;
-      font-family: 'Playfair Display', serif;
-      text-shadow: 0 2px 4px rgba(0,0,0,0.3);
-    }
-
-    .carousel-description {
-      color: white;
-      max-width: 700px;
-      margin-bottom: 25px;
-      font-size: 1.2rem;
-      opacity: 0.9;
-      text-shadow: 0 1px 2px rgba(0,0,0,0.3);
-    }
-
-    /* ESTILOS PARA CARRUSELES INTERNOS */
-    .seccion-galeria {
-      margin: 4rem 0;
-      position: relative;
-    }
-
-    .glide__track {
-      overflow: visible;
-    }
-
-    .glide__slides {
-      padding: 20px 0;
-      list-style: none;
-    }
-
-    .glide__slide {
-      padding: 0 15px;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      position: relative;
-    }
-
-    .glide__slide:hover {
-      transform: translateY(-5px);
-    }
-
-    .imagen-carrusel {
-      width: 100%;
-      height: 500px;
-      object-fit: cover;
-      border-radius: 20px 20px 0 0;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-      transition: all 0.3s ease;
-      border: 1px solid rgba(0,0,0,0.05);
-      cursor: pointer;
-    }
-
-    .imagen-carrusel-error {
-      object-fit: contain;
-      padding: 20px;
-      background-color: #f9f9f9;
-    }
-
-    .glide__slide:hover .imagen-carrusel {
-      box-shadow: 0 12px 25px rgba(0,0,0,0.15);
-    }
-
-    .leyenda-carrusel {
-      text-align: center;
-      margin-top: -12px;
-      font-size: 1.5rem;
-      color: #333;
-      padding: 0 10px;
-      background:rgba(202, 149, 14, 0.6);
-      border-radius: 0 0 20px 20px;
-      font-family: 'Playfair Display', serif;
-    }
-
-    .glide__arrows {
-      position: absolute;
-      top: 50%;
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      padding: 0 20px;
-      box-sizing: border-box;
-      transform: translateY(-50%);
-      z-index: 2;
-    }
-
-    .glide__arrow {
-      background: rgba(212, 175, 55, 0.8);
-      color: white;
-      border: none;
-      width: 45px;
-      height: 45px;
-      border-radius: 50%;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.2rem;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    }
-
-    .glide__arrow:hover {
-      background: rgba(184, 134, 11, 0.9);
-      transform: scale(1.1);
-    }
-
-    .glide__arrow--left {
-      left: 20px;
-    }
-
-    .glide__arrow--right {
-      right: 20px;
-    }
-
-    /* ESTILOS PARA IMÁGENES SIMPLES */
-    .seccion-imagen {
-      margin: 3rem 0;
-      text-align: center;
+      min-height: 300px;
     }
     
-    .imagen-destacada {
-      max-width: 100%;
-      height: auto;
-      border-radius: 12px;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.1);
-      cursor: pointer;
-      transition: all 0.3s ease;
-      max-height: 600px;
-      object-fit: cover;
+    .hero-title {
+      font-size: 2rem;
     }
     
-    .imagen-destacada:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+    .gallery-grid {
+      grid-template-columns: 1fr;
     }
     
-    .leyenda-imagen {
-      margin-top: 15px;
-      font-size: 1rem;
-      color: #555;
-      font-style: italic;
+    .social-grid {
+      grid-template-columns: 1fr;
     }
-
-    /* ESTILOS PARA TEXTO */
-    .documento-sobrenosotros {
-      max-width: 1400px;
-      margin: 3rem auto;
-      padding: 0 20px;
-    }
-
-    .titulo-seccion {
-      font-size: 2.2rem;
-      margin-bottom: 2rem;
-      color: #2c3e50;
-      font-family: 'Playfair Display', serif;
-      position: relative;
-      padding-bottom: 10px;
-    }
-
-    .titulo-seccion:after {
-      content: '';
-      position: absolute;
-      left: 0;
-      bottom: 0;
-      width: 60px;
-      height: 3px;
-      background: #D4AF37;
-    }
-
-    .texto-formatado {
-      line-height: 1.8;
-      font-size: 1.1rem;
-      color: #444;
-    }
-
-    .texto-formatado p {
-      margin-bottom: 1.5rem;
-    }
-
-    /* ESTILOS PARA POPUP DE IMAGENES */
-    .imagen-popup {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0,0,0,0.9);
-      z-index: 1000;
-      justify-content: center;
-      align-items: center;
-      opacity: 0;
-      transition: opacity 0.3s ease;
-    }
-    
-    .imagen-popup.active {
-      display: flex;
-      opacity: 1;
-    }
-    
-    .imagen-popup-contenido {
-      position: relative;
-      max-width: 90%;
-      max-height: 90%;
-    }
-    
-    .imagen-popup-img {
-      max-width: 100%;
-      max-height: 90vh;
-      border-radius: 8px;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.3);
-    }
-    
-    .cerrar-popup {
-      position: absolute;
-      top: -40px;
-      right: -10px;
-      color: white;
-      font-size: 2.5rem;
-      font-weight: bold;
-      cursor: pointer;
-      background: none;
-      border: none;
-      transition: transform 0.2s ease;
-    }
-    
-    .cerrar-popup:hover {
-      transform: rotate(90deg);
-    }
-    
-    .leyenda-popup {
-      position: absolute;
-      bottom: -40px;
-      left: 0;
-      width: 100%;
-      text-align: center;
-      color: white;
-      font-size: 1.1rem;
-      padding: 10px;
-    }
-
-    /* ESTILOS PARA DEBUG Y FALLBACKS */
-    .placeholder-carrusel {
-      width: 100%;
-      height: 500px;
-      background-color: #f0f0f0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #666;
-      border-radius: 12px;
-    }
-
-    .no-images-message {
-      color: #666;
-      text-align: center;
-      padding: 20px;
-      background-color: #f9f9f9;
-      border-radius: 8px;
-    }
-    .seccion-redes {
-      margin: 3rem 0;
-      text-align: center;
   }
-  
-  .contenedor-redes {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 20px;
-      margin-top: 2rem;
-  }
-  
-  .enlace-redes {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-decoration: none;
-      color: var(--color-texto);
-      transition: all 0.3s ease;
-      width: 120px;
-  }
-  
-  .enlace-redes:hover {
-      transform: translateY(-5px);
-      color: var(--color-acento);
-  }
-  
-  .icono-redes {
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background-color: rgba(212, 175, 55, 0.1);
-      margin-bottom: 10px;
-      font-size: 1.8rem;
-      color: var(--color-acento);
-      transition: all 0.3s ease;
-  }
-  
-  .enlace-redes:hover .icono-redes {
-      background-color: var(--color-acento);
-      color: white;
-  }
-  
-  .imagen-icono {
-      width: 40px;
-      height: 40px;
-      object-fit: contain;
-      border-radius: 50%;
-  }
-  
-  .titulo-enlace {
-      font-size: 0.9rem;
-      text-align: center;
-      word-break: break-word;
-  }
-
-    /* RESPONSIVE */
-    @media (max-width: 992px) {
-      .carousel-title {
-        font-size: 2.5rem;
-      }
-      
-      .imagen-carrusel, .placeholder-carrusel {
-        height: 400px;
-      }
-
-      .imagen-destacada {
-        max-height: 500px;
-      }
-    }
-
-    @media (max-width: 768px) {
-      .hero-carousel {
-        min-height: 400px;
-      }
-      
-      .carousel-title {
-        font-size: 2rem;
-      }
-      
-      .carousel-description {
-        font-size: 1rem;
-      }
-      
-      .imagen-carrusel, .placeholder-carrusel {
-        height: 350px;
-      }
-      
-      .glide__arrow {
-        width: 40px;
-        height: 40px;
-      }
-
-      .imagen-destacada {
-        max-height: 400px;
-      }
-
-      .imagen-popup-contenido {
-        max-width: 95%;
-      }
-      
-      .cerrar-popup {
-        top: -35px;
-        right: 0;
-        font-size: 2rem;
-      }
-    }
-
-    @media (max-width: 576px) {
-      .hero-carousel-container{
-        margin-top: -70px;
-      }
-      .hero-carousel {
-        min-height: 350px;
-        
-      }
-      
-      .carousel-content {
-        padding: 25px;
-      }
-      
-      .carousel-title {
-        font-size: 1.8rem;
-      }
-      
-      .titulo-seccion {
-        font-size: 1.8rem;
-      }
-      
-      .imagen-carrusel, .placeholder-carrusel {
-        height: 300px;
-      }
-      
-      .glide__arrow {
-        width: 35px;
-        height: 35px;
-      }
-
-      .imagen-destacada {
-        max-height: 300px;
-      }
-      
-      .cerrar-popup {
-        top: -30px;
-        font-size: 1.8rem;
-      }
-    }
 </style>
 
-<!-- PORTADA -->
-<div class="hero-carousel-container">
-  <div class="hero-carousel">
-    {% if portada and portada.imagen %}
-    <div class="carousel-image-container">
-      <img src="{{ portada.imagen.url }}" alt="{{ portada.titulo }}" class="carousel-image"
-           onerror="this.onerror=null;this.src='{% static 'img/placeholder.jpg' %}';">
-      <div class="carousel-content">
-        <h2 class="carousel-title">{{ portada.titulo }}</h2>
-        {% if portada.contenido_texto %}
-        <p class="carousel-description">{{ portada.contenido_texto }}</p>
+<div class="about-section">
+  <!-- Hero Section -->
+  {% if portada and portada.imagen %}
+  <div class="hero-container">
+    <img src="{{ portada.imagen.url }}" alt="{{ portada.titulo }}" class="hero-image" loading="lazy">
+    <div class="hero-content">
+      <h1 class="hero-title">{{ portada.titulo }}</h1>
+      {% if portada.contenido_texto %}
+      <p class="hero-description">{{ portada.contenido_texto }}</p>
+      {% endif %}
+    </div>
+  </div>
+  {% endif %}
+
+  <!-- Secciones de contenido -->
+  {% for seccion in secciones %}
+    {% if seccion.tipo == 'TEXTO' %}
+      <section class="content-section">
+        <div class="section-header">
+          <h2 class="section-title">{{ seccion.titulo }}</h2>
+          {% if seccion.descripcion %}
+          <p class="section-description">{{ seccion.descripcion }}</p>
+          {% endif %}
+        </div>
+        
+        <div class="formatted-text">
+          {{ seccion.contenido_texto|linebreaks }}
+        </div>
+      </section>
+    
+    {% elif seccion.tipo == 'IMAGEN' and seccion.imagen %}
+      <div class="featured-image-container" onclick="openImagePopup('{{ seccion.imagen.url }}', '{{ seccion.titulo }}')">
+        <img src="{{ seccion.imagen.url }}" alt="{{ seccion.titulo }}" class="featured-image" loading="lazy">
+        {% if seccion.titulo %}
+        <div class="image-caption">{{ seccion.titulo }}</div>
         {% endif %}
       </div>
-    </div>
+    
+    {% elif seccion.tipo == 'CAROUSEL' and seccion.imagenes_del_carrusel.all %}
+      <section class="content-section">
+        <div class="section-header">
+          <h2 class="section-title">{{ seccion.titulo }}</h2>
+          {% if seccion.descripcion %}
+          <p class="section-description">{{ seccion.descripcion }}</p>
+          {% endif %}
+        </div>
+        
+        <div class="gallery-container">
+          <div class="gallery-grid">
+            {% for imagen in seccion.imagenes_del_carrusel.all %}
+              {% if imagen.imagen %}
+              <div class="gallery-item" onclick="openImagePopup('{{ imagen.imagen.url }}', '{{ imagen.titulo }}')">
+                <img src="{{ imagen.imagen.url }}" alt="{{ imagen.titulo|default:'Imagen de galería' }}" class="gallery-image" loading="lazy">
+                {% if imagen.titulo %}
+                <div class="gallery-caption">{{ imagen.titulo }}</div>
+                {% endif %}
+              </div>
+              {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+      </section>
+    
+    {% elif seccion.tipo == 'REDES' and seccion.enlaces.all %}
+      <section class="social-section">
+        <div class="section-header">
+          <h2 class="section-title">{{ seccion.titulo }}</h2>
+          {% if seccion.descripcion %}
+          <p class="section-description">{{ seccion.descripcion }}</p>
+          {% endif %}
+        </div>
+        
+        <div class="social-grid">
+          {% for enlace in seccion.enlaces.all %}
+          <a href="{{ enlace.url }}" target="_blank" class="social-card">
+            <div class="social-icon">
+              {% if enlace.icono %}
+                <img src="{{ enlace.icono.url }}" alt="{{ enlace.titulo }}" width="30" height="30">
+              {% else %}
+                <i class="{{ enlace.get_icon_class }}"></i>
+              {% endif %}
+            </div>
+            <span class="social-title">{{ enlace.titulo|default:enlace.get_tipo_display }}</span>
+          </a>
+          {% endfor %}
+        </div>
+      </section>
     {% endif %}
+  {% endfor %}
+</div>
+
+<!-- Image Popup -->
+<div class="image-popup" id="imagePopup">
+  <div class="popup-content">
+    <button class="close-popup" onclick="closeImagePopup()">&times;</button>
+    <img src="" alt="" class="popup-image" id="popupImage">
+    <div class="popup-caption" id="popupCaption"></div>
   </div>
 </div>
 
-<!-- CONTENIDO PRINCIPAL -->
-<article class="documento-sobrenosotros">
-    {% for seccion in secciones %}
-        <div class="seccion-contenido">
-            {% if seccion.tipo == 'TEXTO' %}
-                <section class="seccion-texto">
-                    <h2 class="titulo-seccion">{{ seccion.titulo }}</h2>
-                    <div class="texto-formatado">
-                        {{ seccion.contenido_texto|linebreaks }}
-                    </div>
-                </section>
-
-            {% elif seccion.tipo == 'IMAGEN' %}
-                {% if seccion.imagen and seccion.imagen.url %}
-                <figure class="seccion-imagen">
-                    <img src="{{ seccion.imagen.url }}" 
-                         alt="{{ seccion.titulo }}" 
-                         class="imagen-destacada"
-                         onclick="abrirPopupImagen(this)"
-                         onerror="this.onerror=null;this.src='{% static 'img/placeholder.jpg' %}';">
-                </figure>
-                {% endif %}
-
-            {% elif seccion.tipo == 'CAROUSEL' %}
-                <section class="seccion-galeria">
-                    <h2 class="titulo-seccion">{{ seccion.titulo }}</h2>
-                    
-                    <!-- Debug: Muestra información sobre las imágenes (oculto en producción) -->
-                    <div style="display: none;">
-                        <p>Total imágenes: {{ seccion.imagenes_del_carrusel.all|length }}</p>
-                        {% for img in seccion.imagenes_del_carrusel.all %}
-                            <p>Imagen {{ forloop.counter }}: {{ img.imagen.url }} - Existe: {{ img.imagen.url|file_exists }}</p>
-                        {% endfor %}
-                    </div>
-                    
-                    {% if seccion.imagenes_del_carrusel.all %}
-                        <div class="glide">
-                            <div class="glide__track" data-glide-el="track">
-                                <ul class="glide__slides">
-                                    {% for imagen in seccion.imagenes_del_carrusel.all %}
-                                        <li class="glide__slide">
-                                            {% if imagen.imagen %}
-                                                <img src="{{ imagen.imagen.url }}" 
-                                                     alt="{{ imagen.titulo|default:'Imagen del carrusel' }}" 
-                                                     class="imagen-carrusel"
-                                                     onclick="abrirPopupImagen(this)"
-                                                     onerror="this.onerror=null;this.classList.add('imagen-carrusel-error');this.src='{% static 'img/placeholder.jpg' %}';">
-                                            {% else %}
-                                                <div class="placeholder-carrusel">
-                                                    Imagen no disponible
-                                                </div>
-                                            {% endif %}
-                                            {% if imagen.titulo %}
-                                                <div class="leyenda-carrusel">{{ imagen.titulo }}</div>
-                                                
-                                            {% endif %}
-                                        </li>
-                                    {% endfor %}
-                                </ul>
-                            </div>
-                            <div class="glide__arrows" data-glide-el="controls">
-                                <button class="glide__arrow glide__arrow--left" data-glide-dir="<">‹</button>
-                                <button class="glide__arrow glide__arrow--right" data-glide-dir=">">›</button>
-                            </div>
-                        </div>
-                    {% else %}
-                        <p class="no-images-message">No hay imágenes disponibles en este carrusel.</p>
-                    {% endif %}
-                </section>
-                {% elif seccion.tipo == 'REDES' %}
-                  <section class="seccion-redes">
-                      <h2 class="titulo-seccion">{{ seccion.titulo }}</h2>
-                      <div class="contenedor-redes">
-                          {% for enlace in seccion.enlaces.all %}
-                              <a href="{{ enlace.url }}" target="_blank" class="enlace-redes" title="{{ enlace.titulo|default:enlace.get_tipo_display }}">
-                                  <div class="icono-redes">
-                                      {% if enlace.icono %}
-                                          <img src="{{ enlace.icono.url }}" alt="{{ enlace.titulo|default:enlace.get_tipo_display }}" class="imagen-icono">
-                                      {% else %}
-                                          <i class="{{ enlace.get_icon_class }}"></i>
-                                      {% endif %}
-                                  </div>
-                                  <span class="titulo-enlace">{{ enlace.titulo|default:enlace.get_tipo_display }}</span>
-                              </a>
-                          {% endfor %}
-                      </div>
-                  </section
-            {% endif %}
-            
-        </div>
-    {% endfor %}
-</article>
-
-<!-- POPUP PARA IMAGENES -->
-<div class="imagen-popup" id="imagenPopup">
-    <div class="imagen-popup-contenido">
-        <button class="cerrar-popup" onclick="cerrarPopupImagen()">&times;</button>
-        <img src="" alt="" class="imagen-popup-img" id="imagenPopupImg">
-        <div class="leyenda-popup" id="imagenPopupLeyenda"></div>
-    </div>
-</div>
-
-<!-- Glide JS -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@glidejs/glide/dist/css/glide.core.min.css">
-<script src="https://cdn.jsdelivr.net/npm/@glidejs/glide"></script>
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Inicializa todos los carruseles internos
-        document.querySelectorAll('.glide').forEach(function(element) {
-            new Glide(element, {
-                type: 'carousel',
-                perView: 1,
-                gap: 0,
-                autoplay: 5000,
-                hoverpause: true,
-                animationDuration: 600,
-                breakpoints: {
-                    1200: {
-                        perView: 1
-                    },
-                    992: {
-                        perView: 1
-                    },
-                    768: {
-                        perView: 1
-                    },
-                    576: {
-                        perView: 1
-                    }
-                }
-            }).mount();
-        });
-    });
-
-    // Función para abrir el popup de imagen
-    function abrirPopupImagen(imgElement) {
-        const popup = document.getElementById('imagenPopup');
-        const popupImg = document.getElementById('imagenPopupImg');
-        const popupLeyenda = document.getElementById('imagenPopupLeyenda');
-        
-        popupImg.src = imgElement.src;
-        popupImg.alt = imgElement.alt;
-        
-        // Obtener la leyenda si existe
-        const figura = imgElement.closest('figure, .glide__slide');
-        if (figura) {
-            const leyenda = figura.querySelector('.leyenda-imagen, .leyenda-carrusel');
-            if (leyenda) {
-                popupLeyenda.textContent = leyenda.textContent;
-            } else {
-                popupLeyenda.textContent = '';
-            }
-        }
-        
-        popup.classList.add('active');
-        document.body.style.overflow = 'hidden';
+  // Función para abrir el popup de imagen
+  function openImagePopup(imageSrc, caption = '') {
+    const popup = document.getElementById('imagePopup');
+    const popupImage = document.getElementById('popupImage');
+    const popupCaption = document.getElementById('popupCaption');
+    
+    popupImage.src = imageSrc;
+    popupImage.alt = caption;
+    popupCaption.textContent = caption;
+    
+    popup.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+  
+  // Función para cerrar el popup
+  function closeImagePopup() {
+    const popup = document.getElementById('imagePopup');
+    popup.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+  
+  // Cerrar al hacer clic fuera de la imagen
+  document.getElementById('imagePopup').addEventListener('click', function(e) {
+    if (e.target === this) {
+      closeImagePopup();
     }
-    
-    // Función para cerrar el popup
-    function cerrarPopupImagen() {
-        const popup = document.getElementById('imagenPopup');
-        popup.classList.remove('active');
-        document.body.style.overflow = '';
+  });
+  
+  // Cerrar con tecla ESC
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      closeImagePopup();
     }
-    
-    // Cerrar al hacer clic fuera de la imagen
-    document.getElementById('imagenPopup').addEventListener('click', function(e) {
-        if (e.target === this) {
-            cerrarPopupImagen();
-        }
+  });
+  
+  // Inicialización cuando el DOM está listo
+  document.addEventListener('DOMContentLoaded', function() {
+    // Optimización de imágenes
+    document.querySelectorAll('img').forEach(img => {
+      if (!img.loading) {
+        img.loading = 'lazy';
+      }
     });
-    
-    // Cerrar con tecla ESC
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape') {
-            cerrarPopupImagen();
-        }
-    });
+  });
 </script>
 {% endblock %}
