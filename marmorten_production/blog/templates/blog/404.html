@@ -9,14 +9,14 @@
   --color-blanco: #ffffff;
   --color-fondo: #f8f8f8;
   --color-borde: #e0e0e0;
-  --color-texto: #333333;
-  --color-texto-claro: #666666;
-  --color-acento: #D4AF37;
+  --color-texto:rgb(255, 255, 255);
+  --color-texto-claro:rgb(175, 175, 175);
+  --color-acento:rgb(160, 133, 46);
   --color-acento-hover: #B8860B;
   --borde-redondeado: 12px;
   --borde-redondeado-pequeno: 8px;
   --sombra: 0 4px 20px rgba(0, 0, 0, 0.05);
-  --sombra-hover: 0 8px 30px rgba(0, 0, 0, 0.1);
+  --sombra-hover: 0 8px 30px rgba(223, 191, 6, 0.32);
   --transicion: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
@@ -67,7 +67,24 @@
   flex-wrap: wrap;
   justify-content: center;
 }
-
+.btn_btn-primary {
+  background-color: var(--color-acento);
+  color: var(--color-texto);
+  padding: 10px 20px;
+  border-radius: var(--borde-redondeado);
+  text-decoration: none;
+  transition: var(--transicion);
+  box-shadow: var(--sombra-hover);
+}
+.btn_btn-primary:hover {
+  background-color: var(--color-acento-hover);
+  color: var(--color-texto);
+  transform: translateY(-3px);
+  
+  padding: 10px 20px;
+  border-radius: var(--borde-redondeado);
+  text-decoration: none;
+}
 @media (max-width: 768px) {
   .error-code {
     font-size: 6rem;
@@ -105,8 +122,8 @@
     <p class="error-message">Lo sentimos, la página que estás buscando no existe o ha sido movida.</p>
     
     <div class="error-actions">
-      <a href="{% url 'inicio' %}" class="btn btn-primary">Volver al inicio</a>
-      <a href="{% url 'contacto' %}" class="btn btn-outline">Contactar soporte</a>
+      <a href="{% url 'inicio' %}" class="btn_btn-primary">Volver al inicio</a>
+      <a href="{% url 'contacto' %}" class="btn_btn-primary">Contactar soporte</a>
     </div>
   </div>
 </div>

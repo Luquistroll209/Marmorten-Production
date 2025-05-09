@@ -1,51 +1,71 @@
 {% extends 'blog/base.html' %}
-
+{% load static %}
 {% block title %}Resultados de búsqueda - MARMOTEN PRODUCTION{% endblock %}
 
 {% block content %}
 <style>
-    /* Reutiliza los estilos de index.html para mantener consistencia */
     :root {
-        --color-blanco: #ffffff;
-        --color-fondo: #f8f8f8;
-        --color-borde: #e0e0e0;
-        --color-texto: #333333;
-        --color-texto-claro: #666666;
-        --color-acento: #D4AF37;
-        --color-acento-hover: #B8860B;
-        --borde-redondeado: 12px;
-        --borde-redondeado-pequeno: 8px;
-        --sombra: 0 4px 20px rgba(0, 0, 0, 0.05);
-        --sombra-hover: 0 8px 30px rgba(0, 0, 0, 0.1);
-        --transicion: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        /* Paleta de colores profesional consistente */
+        --color-negro: #0a0a0a;
+        --color-fondo: #121212;
+        --color-borde: rgba(255, 255, 255, 0.1);
+        --color-texto: #ffffff;
+        --color-texto-claro: #e0e0e0;
+        --color-acento: #c0c0c0;
+        --color-acento-hover: #ffffff;
+        --color-tarjeta: #1e1e1e;
+        --color-texto-bg: rgba(18, 18, 18, 0.92);
+        --color-overlay: rgba(10, 10, 10, 0.7);
+        
+        --borde-redondeado: 20px;
+        --borde-redondeado-pequeno: 10px;
+        --sombra: 0 12px 40px rgba(0, 0, 0, 0.25);
+        --sombra-hover: 0 16px 50px rgba(0, 0, 0, 0.35);
+        --transicion: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
     }
 
-    .main-container {
+    .search-section {
         max-width: 1400px;
-        margin: 0 auto;
-        padding: 0 20px;
+        margin: 100px auto;
+        padding: 0 30px;
     }
 
-    .section {
-        padding: 80px 0;
-    }
-
-    .section-header {
+    .search-header {
         text-align: center;
-        margin-bottom: 40px;
     }
 
-    .section-title {
+    .search-title {
+        font-size: clamp(2.5rem, 5vw, 4rem);
+        color: var(--color-acento);
+        margin-bottom: 1.5rem;
+        line-height: 1.1;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        text-shadow: 0 2px 10px rgba(192, 192, 192, 0.2);
+    }
+
+    .search-subtitle {
+        color: var(--color-texto-claro);
+        font-size: clamp(1rem, 1.2vw, 1.2rem);
+        max-width: 700px;
+        margin: 0 auto;
+        line-height: 1.8;
+    }
+
+    .resultados-count {
+        text-align: center;
+        margin-bottom: clamp(30px, 5vw, 50px);
+        font-size: clamp(1.1rem, 1.3vw, 1.3rem);
+        color: var(--color-texto-claro);
         position: relative;
-        display: inline-block;
-        padding-bottom: 15px;
+        padding-bottom: 20px;
     }
 
-    .section-title:after {
+    .resultados-count:after {
         content: '';
         display: block;
-        width: 60px;
-        height: 3px;
+        width: 100px;
+        height: 2px;
         background: var(--color-acento);
         position: absolute;
         bottom: 0;
@@ -53,119 +73,313 @@
         transform: translateX(-50%);
     }
 
+    .search-query {
+        color: var(--color-acento);
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
     .producciones-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-        gap: 30px;
-        margin-top: 40px;
+        grid-template-columns: repeat(auto-fill, minmax(clamp(300px, 30vw, 400px), 1fr));
+        gap: clamp(30px, 4vw, 50px);
+        margin-top: clamp(40px, 6vw, 80px);
     }
 
     .produccion-card {
-        background: var(--color-blanco);
+        background: var(--color-tarjeta);
         border-radius: var(--borde-redondeado);
         overflow: hidden;
         box-shadow: var(--sombra);
         transition: var(--transicion);
+        border: 1px solid var(--color-borde);
+        position: relative;
+        will-change: transform;
     }
 
     .produccion-card:hover {
         transform: translateY(-10px);
         box-shadow: var(--sombra-hover);
+        border-color: rgba(255, 255, 255, 0.3);
+    }
+
+    .produccion-image-container {
+        width: 100%;
+        height: clamp(250px, 30vw, 350px);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .produccion-image-container:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(to bottom, transparent 60%, rgba(0,0,0,0.7));
+        z-index: 1;
     }
 
     .produccion-image {
         width: 100%;
-        height: 220px;
+        height: 100%;
         object-fit: cover;
+        transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .produccion-card:hover .produccion-image {
+        transform: scale(1.1);
     }
 
     .produccion-content {
-        padding: 25px;
+        padding: clamp(25px, 3vw, 40px);
+        position: relative;
     }
 
     .produccion-title {
-        font-size: 1.4rem;
-        margin-bottom: 10px;
+        font-size: clamp(1.5rem, 2.5vw, 2rem);
+        margin-bottom: clamp(10px, 1.5vw, 15px);
+        color: var(--color-texto);
+        letter-spacing: 1.5px;
+    }
+
+    .produccion-excerpt {
+        color: var(--color-texto-claro);
+        margin-bottom: clamp(15px, 2vw, 25px);
+        font-size: clamp(0.95rem, 1.1vw, 1.05rem);
+        line-height: 1.7;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
     }
 
     .produccion-meta {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-top: 20px;
+        margin-top: clamp(15px, 2vw, 25px);
+    }
+
+    .produccion-category {
         color: var(--color-acento);
         font-weight: 500;
+        font-size: clamp(0.8rem, 1vw, 0.9rem);
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
     }
 
-    .resultados-count {
-        text-align: center;
-        margin-bottom: 30px;
-        font-size: 1.1rem;
-        color: var(--color-texto-claro);
+    /* Botones premium */
+    .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: clamp(10px, 1.5vw, 14px) clamp(20px, 2.5vw, 30px);
+        border-radius: var(--borde-redondeado-pequeno);
+        font-weight: 600;
+        text-decoration: none;
+        transition: var(--transicion);
+        border: none;
+        cursor: pointer;
+        font-size: clamp(0.9rem, 1.1vw, 1rem);
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        font-family: 'Bebas Neue', sans-serif;
+        position: relative;
+        overflow: hidden;
+        will-change: transform;
     }
 
-    .no-resultados {
-        text-align: center;
-        padding: 50px 0;
-        font-size: 1.2rem;
-        color: var(--color-texto-claro);
-    }
-
-    .search-query {
-        font-weight: bold;
+    .btn-outline {
+        background: transparent;
+        border: 2px solid var(--color-acento);
         color: var(--color-acento);
+    }
+
+    .btn-outline:hover {
+        background: var(--color-acento);
+        color: var(--color-negro);
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(192, 192, 192, 0.2);
+    }
+
+    /* Mensaje sin resultados */
+    .no-resultados {
+        background: var(--color-tarjeta);
+        border-radius: var(--borde-redondeado);
+        padding: clamp(60px, 8vw, 100px);
+        text-align: center;
+        grid-column: 1 / -1;
+        box-shadow: var(--sombra);
+        border: 1px solid var(--color-borde);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .no-resultados:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url('{% static "images/noise.png" %}') repeat;
+        opacity: 0.03;
+        pointer-events: none;
+    }
+
+    .no-resultados h3 {
+        font-size: clamp(1.8rem, 3vw, 2.5rem);
+        color: var(--color-acento);
+        margin-bottom: 1.5rem;
+    }
+
+    .no-resultados p {
+        color: var(--color-texto-claro);
+        max-width: 600px;
+        margin: 0 auto 2rem;
+    }
+
+    .no-resultados a {
+        color: var(--color-acento);
+        text-decoration: none;
+        font-weight: 500;
+        transition: var(--transicion);
+        display: inline-flex;
+        align-items: center;
+    }
+
+    .no-resultados a:hover {
+        color: var(--color-acento-hover);
+        transform: translateX(5px);
+    }
+
+    .no-resultados a i {
+        margin-left: 8px;
+        transition: var(--transicion);
+    }
+
+    .no-resultados a:hover i {
+        transform: translateX(3px);
+    }
+
+    /* Responsive */
+    @media (max-width: 992px) {
+        .search-section {
+            padding: 0 20px;
+        }
     }
 
     @media (max-width: 768px) {
-        .section {
-            padding: 60px 0;
+        .producciones-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        .produccion-image-container {
+            height: clamp(250px, 50vw, 400px);
+        }
+    }
+
+    @media (max-width: 576px) {
+        .search-section {
+            padding: 0 15px;
+        }
+        
+        .search-title {
+            font-size: clamp(2rem, 6vw, 2.5rem);
+        }
+        
+        .no-resultados {
+            padding: 40px;
         }
     }
 </style>
 
-<div class="main-container">
-    <section class="section">
-        <div class="section-header">
-            <h2 class="section-title">Resultados de Búsqueda</h2>
-            {% if query %}
-                <p class="resultados-count">
-                    {% if resultados.count > 0 %}
-                        {{ resultados.count }} resultado{{ resultados.count|pluralize }} encontrado{{ resultados.count|pluralize }} para <span class="search-query">"{{ query }}"</span>
-                    {% else %}
-                        No se encontraron resultados para <span class="search-query">"{{ query }}"</span>
-                    {% endif %}
-                </p>
+<div class="search-section">
+    <!-- Cabecera -->
+    <div class="search-header">
+        <h1 class="search-title">Resultados de Búsqueda</h1>
+        <p class="search-subtitle">Explora los resultados que coinciden con tu consulta</p>
+    </div>
+
+    {% if query %}
+        <div class="resultados-count">
+            {% if resultados.count > 0 %}
+                {{ resultados.count }} resultado{{ resultados.count|pluralize }} encontrado{{ resultados.count|pluralize }} para <span class="search-query">"{{ query }}"</span>
+            {% else %}
+                No se encontraron resultados para <span class="search-query">"{{ query }}"</span>
             {% endif %}
         </div>
+    {% endif %}
 
-        {% if resultados %}
-            <div class="producciones-grid">
-                {% for post in resultados %}
-                <div class="produccion-card">
-                    {% if post.imagen %}
-                    <img src="{{ post.imagen.url }}" alt="{{ post.title }}" class="produccion-image">
-                    {% endif %}
-                    <div class="produccion-content">
-                        <h3 class="produccion-title">{{ post.title }}</h3>
-                        <p>{{ post.resumen|default:post.content|truncatechars:150 }}</p>
-                        <div class="produccion-meta">
-                            <!--<span>{{ post.fecha_publicacion|date:"M Y" }}</span>-->
-                            <a href="{% url 'detalle_post' post.id %}" class="btn btn-outline">Ver más</a>
-                        </div>
+    {% if resultados %}
+        <div class="producciones-grid">
+            {% for post in resultados %}
+            <div class="produccion-card">
+                {% if post.imagen %}
+                <div class="produccion-image-container">
+                    <img src="{{ post.imagen.url }}" alt="{{ post.title }}" class="produccion-image" loading="lazy">
+                </div>
+                {% endif %}
+                <div class="produccion-content">
+                    <h3 class="produccion-title">{{ post.title }}</h3>
+                    <p class="produccion-excerpt">{{ post.resumen|default:post.content|truncatechars:150 }}</p>
+                    <div class="produccion-meta">
+                        <span class="produccion-category">
+                            {% if post.categoria %}{{ post.categoria }}
+                            {% else %}Producción{% endif %}
+                        </span>
+                        <a href="{% url 'detalle_post' post.id %}" class="btn btn-outline">Ver más</a>
                     </div>
                 </div>
-                {% endfor %}
             </div>
-        {% elif query %}
-            <div class="no-resultados">
-                <p>No encontramos producciones que coincidan con tu búsqueda.</p>
-                <p>Intenta con diferentes términos o revisa nuestra <a href="{% url 'inicio' %}">página de inicio</a>.</p>
-            </div>
-        {% else %}
-            <div class="no-resultados">
-                <p>Ingresa un término de búsqueda para encontrar producciones.</p>
-            </div>
-        {% endif %}
-    </section>
+            {% endfor %}
+        </div>
+    {% elif query %}
+        <div class="no-resultados">
+            <h3>No encontramos resultados</h3>
+            <p>No hay producciones que coincidan con tu búsqueda. Intenta con diferentes términos o revisa nuestro catálogo completo.</p>
+            <a href="{% url 'inicio' %}">
+                Ir a la página de inicio <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    {% else %}
+        <div class="no-resultados">
+            <h3>Búsqueda vacía</h3>
+            <p>Por favor ingresa un término de búsqueda para encontrar producciones.</p>
+            <a href="{% url 'inicio' %}">
+                Volver al inicio <i class="fas fa-arrow-left"></i>
+            </a>
+        </div>
+    {% endif %}
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Optimización de imágenes
+    document.querySelectorAll('img').forEach(img => {
+        if (!img.loading) {
+            img.loading = 'lazy';
+        }
+    });
+    
+    // Efecto hover en las tarjetas
+    const cards = document.querySelectorAll('.produccion-card');
+    cards.forEach(card => {
+        const img = card.querySelector('.produccion-image');
+        
+        if (img) {
+            card.addEventListener('mouseenter', () => {
+                img.style.transform = 'scale(1.1)';
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                img.style.transform = 'scale(1)';
+            });
+        }
+    });
+});
+</script>
 {% endblock %}
