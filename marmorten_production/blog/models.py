@@ -4,11 +4,12 @@ from django.core.exceptions import ValidationError
 from django.db.models import Q
 from django.shortcuts import render, get_object_or_404
 from django.utils.text import slugify
+from django.utils.translation import gettext_lazy as _
 
 
 class Post(models.Model):
-    title = models.CharField(max_length=200)
-    content = models.TextField(blank=True, null=True)
+    title = models.CharField(_('Título'), max_length=200)
+    content = models.TextField(_('Contenido'), blank=True, null=True)
     resumen = models.TextField(blank=True, null=True, help_text="Breve resumen para mostrar en las tarjetas")
     fecha_publicacion = models.DateTimeField(default=timezone.now)
     imagen = models.ImageField(upload_to='images/', blank=True, null=True)

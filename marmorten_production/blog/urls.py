@@ -8,9 +8,6 @@ from django.views.static import serve as static_serve
 from django.conf.urls.i18n import i18n_patterns
 handler404 = 'blog.views.custom_404'
 
-urlpatterns = [
-    path('i18n/', include('django.conf.urls.i18n')),
-]
 
 urlpatterns = [
     path('', views.inicio, name='inicio'),
@@ -19,6 +16,7 @@ urlpatterns = [
     path('contacto/', views.contacto, name='contacto'),
     path('nuestro-equipo/', views.nuestro_equipo, name='nuestro_equipo'),
     path('buscar/', views.buscar_posts, name='buscar_posts'),
+    path('i18n/', include('django.conf.urls.i18n')),
 ]
 
 handler404 = 'blog.views.custom_404'
@@ -33,3 +31,7 @@ else:
         re_path(r'^static/(?P<path>.*)$', serve, {'document_root': settings.STATIC_ROOT}),
         re_path(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),
     ]
+urlpatterns += i18n_patterns(
+    path('', include('blog.urls')),  # Tus URLs de la aplicación blog
+    prefix_default_language=False,
+)

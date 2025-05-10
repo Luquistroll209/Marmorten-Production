@@ -653,12 +653,28 @@
         <button class="mobile-nav-toggle" id="mobileNavToggle">☰</button>
         <img src="{{ config.logo.url }}" alt="Marmoten Production Logo" class="nav-brand">
         <div class="nav-menu" id="navMenu">
-            <a href="{% url 'inicio' %}" class="nav-item active">Inicio</a>
+            <a href="{% url 'inicio' %}" class="nav-item active">{% trans "Incio" %}</a>
             <a href="{% url 'sobre_nosotros' %}" class="nav-item">Sobre Nosotros</a>
             <a href="{% url 'contacto' %}" class="nav-item">Contacto</a>
             <a href="{% url 'nuestro_equipo' %}" class="nav-item">Nuestro Equipo</a>
         </div>
-        
+        <!-- Dentro de tu navbar, después del menú de navegación -->
+        <div class="language-options">
+            <form action="{% url 'set_language' %}" method="post" style="display: inline;">
+                {% csrf_token %}
+                <input name="next" type="hidden" value="{{ request.path }}">
+                <button type="submit" name="language" value="es" class="language-option {% if LANGUAGE_CODE == 'es' %}active{% endif %}">
+                    <img src="{% static 'images/es-flag.png' %}" alt="Español" title="Español">
+                </button>
+            </form>
+            <form action="{% url 'set_language' %}" method="post" style="display: inline;">
+                {% csrf_token %}
+                <input name="next" type="hidden" value="{{ request.path }}">
+                <button type="submit" name="language" value="en" class="language-option {% if LANGUAGE_CODE == 'en' %}active{% endif %}">
+                    <img src="{% static 'images/us-flag.png' %}" alt="English" title="English">
+                </button>
+            </form>
+        </div>
         <div class="search-wrapper" id="searchWrapper">
             <form action="{% url 'buscar_posts' %}" method="get" class="search-form">
                 <input type="search" name="q" class="search-field" placeholder="Buscar producciones..." value="{{ request.GET.q }}">
@@ -705,11 +721,11 @@
             </div>
             
             <div class="footer-column">
-                <h3>Enlaces Rápidos</h3>
-                <a href="{% url 'inicio' %}">Inicio</a>
-                <a href="{% url 'sobre_nosotros' %}">Sobre Nosotros</a>
-                <a href="{% url 'nuestro_equipo' %}">Nuestro Equipo</a>
-                <a href="{% url 'contacto' %}">Contacto</a>
+                <h3>{% trans "Enlaces Rápidos" %}</h3>
+                <a href="{% url 'inicio' %}">{% trans "Inicio" %}</a>
+                <a href="{% url 'sobre_nosotros' %}">{% trans "Sobre Nosotros" %}</a>
+                <a href="{% url 'nuestro_equipo' %}">{% trans "Nuestro Equipo" %}</a>
+                <a href="{% url 'contacto' %}">{% trans "Contacto" %}</a>
                 
                 <div class="social-links-wrapper">
                     {% if config.imb_url %}
