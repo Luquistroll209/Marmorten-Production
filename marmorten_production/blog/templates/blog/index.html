@@ -200,6 +200,7 @@ p {
   transform: translateY(20px);
   opacity: 0;
   transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.5s;
+  aspect-ratio: 16/9; /* Nueva propiedad añadida */
 }
 
 .carousel-slide.active .carousel-image-container {
@@ -210,9 +211,10 @@ p {
 .carousel-image {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain; /* Cambiado de 'cover' a 'contain' */
   object-position: center;
   transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+  background-color: var(--color-tarjeta); /* Nuevo fondo añadido */
 }
 
 .carousel-slide.active .carousel-image {
@@ -615,6 +617,8 @@ p {
     order: 1;
     width: 100%;
     max-width: 600px;
+    height: auto;
+    aspect-ratio: 16/9;
   }
 }
 
@@ -667,6 +671,11 @@ p {
     width: 50px;
     height: 50px;
     font-size: 1.3rem;
+  }
+  
+  .carousel-image-container {
+    height: auto;
+    max-height: 40vh;
   }
 }
 
