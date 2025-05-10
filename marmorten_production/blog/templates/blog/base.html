@@ -605,11 +605,12 @@
     </style>
 </head>
 <body>
+    
     <!-- Splash Screen con animación -->
     <div class="splash-overlay" id="splashOverlay">
         <div class="splash-video-wrapper">
-            <video autoplay muted playsinline class="splash-video-content" id="splashVideo">
-                <source src="{% static 'videos/splash.mp4' %}" type="video/mp4">
+            <video autoplay muted playsinline allow="autoplay" class="splash-video-content" id="splashVideo">
+                <source src="{% static 'videos/splash.webm' %}" type="video/webm">
                 Tu navegador no soporta videos HTML5.
             </video>
             <button class="skip-splash-btn" id="skipSplashBtn">Saltar</button>
@@ -753,6 +754,12 @@
                     
                     // Forzar reproducción en móviles
                     const playPromise = splashVideo.play();
+                    
+                    const video = document.getElementById('splashVideo');
+                    video.addEventListener('click', () => {
+                        video.muted = false;
+                        video.play();
+                    });
                     
                     if (playPromise !== undefined) {
                         playPromise.catch(e => {

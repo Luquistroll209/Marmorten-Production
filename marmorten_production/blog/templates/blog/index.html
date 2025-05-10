@@ -307,7 +307,6 @@ p {
   border-radius: 40px;
   background: linear-gradient(to bottom, rgba(30,30,30,0.9), rgba(10,10,10,1));
   box-shadow: 0 0px 20px 20px rgba(0, 0, 0, 0.6);
-
 }
 
 .cortometrajes-section:before {
@@ -381,6 +380,7 @@ p {
   background: white;
   border-radius: var(--borde-redondeado) var(--borde-redondeado) 0 0;
   overflow: hidden;
+  position: relative;
 }
 
 .produccion-image-container:before {
@@ -593,7 +593,6 @@ p {
   margin: clamp(20px, 3vw, 40px) 0;
 }
 
-
 @keyframes spin {
   to { transform: rotate(360deg); }
 }
@@ -683,7 +682,6 @@ body:after {
 }
 </style>
 
-
 <!-- Carrusel hero premium -->
 <div class="hero-carousel-container">
   <div class="hero-carousel">
@@ -732,19 +730,21 @@ body:after {
     <div class="producciones-grid">
       {% for post in posts_destacados %}
       <article class="produccion-card">
-        <div class="produccion-image-container">
-          {% if post.imagen %}
-          <img src="{{ post.imagen.url }}" alt="{{ post.title }}" class="produccion-image" loading="lazy">
-          {% endif %}
-        </div>
-        <div class="produccion-content">
-          <h3 class="produccion-title">{{ post.title }}</h3>
-          <p>{{ post.resumen|truncatechars:180 }}</p>
-          <div class="produccion-meta">
-            <span class="produccion-category">Cortometraje</span>
-            <a href="{% url 'detalle_post' post.id %}" class="btn btn-outline">Detalles</a>
+        <a href="{% url 'detalle_post' post.id %}" style="text-decoration: none; color: inherit;">
+          <div class="produccion-image-container">
+            {% if post.imagen %}
+            <img src="{{ post.imagen.url }}" alt="{{ post.title }}" class="produccion-image" loading="lazy">
+            {% endif %}
           </div>
-        </div>
+          <div class="produccion-content">
+            <h3 class="produccion-title">{{ post.title }}</h3>
+            <p>{{ post.resumen|truncatechars:180 }}</p>
+            <div class="produccion-meta">
+              <span class="produccion-category">Cortometraje</span>
+              <span class="btn btn-outline">Detalles</span>
+            </div>
+          </div>
+        </a>
       </article>
       {% endfor %}
     </div>
@@ -760,19 +760,21 @@ body:after {
     <div class="producciones-grid">
       {% for post in ultimos_posts %}
       <article class="produccion-card">
-        <div class="produccion-image-container">
-          {% if post.imagen %}
-          <img src="{{ post.imagen.url }}" alt="{{ post.title }}" class="produccion-image" loading="lazy">
-          {% endif %}
-        </div>
-        <div class="produccion-content">
-          <h3 class="produccion-title">{{ post.title }}</h3>
-          <p>{{ post.resumen|default:post.content|truncatechars:180 }}</p>
-          <div class="produccion-meta">
-            <span class="produccion-category">Noticia</span>
-            <a href="{% url 'detalle_post' post.id %}" class="btn btn-outline">Leer más</a>
+        <a href="{% url 'detalle_post' post.id %}" style="text-decoration: none; color: inherit;">
+          <div class="produccion-image-container">
+            {% if post.imagen %}
+            <img src="{{ post.imagen.url }}" alt="{{ post.title }}" class="produccion-image" loading="lazy">
+            {% endif %}
           </div>
-        </div>
+          <div class="produccion-content">
+            <h3 class="produccion-title">{{ post.title }}</h3>
+            <p>{{ post.resumen|default:post.content|truncatechars:180 }}</p>
+            <div class="produccion-meta">
+              <span class="produccion-category">Noticia</span>
+              <span class="btn btn-outline">Leer más</span>
+            </div>
+          </div>
+        </a>
       </article>
       {% endfor %}
     </div>
@@ -784,8 +786,6 @@ body:after {
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-  // Ocultar overlay de carga
-  
   // Carrusel mejorado
   const carousel = document.getElementById('mainCarousel');
   const slides = document.querySelectorAll('.carousel-slide');
@@ -871,7 +871,6 @@ document.addEventListener('DOMContentLoaded', function() {
     clearInterval(autoSlideInterval);
     startAutoSlide();
   }
-  
   
   function touchStart(e) {
     startPos = e.touches[0].clientX;
