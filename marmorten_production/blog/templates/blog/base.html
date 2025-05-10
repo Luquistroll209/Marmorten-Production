@@ -3,6 +3,7 @@
 <head>
     {% csrf_token %}
     {% load static %}
+    {% load i18n %}
 
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -602,6 +603,36 @@
             0%, 100% { opacity: 1; }
             50% { opacity: 0.6); }
         }
+        .language-options {
+            display: flex;
+            gap: 10px;
+        }
+
+        .language-option {
+            background: none;
+            border: none;
+            padding: 0;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: var(--transicion-suave);
+        }
+
+        .language-option:hover {
+            opacity: 1;
+            transform: scale(1.1);
+        }
+
+        .language-option.active {
+            opacity: 1;
+            transform: scale(1.1);
+            filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.5));
+        }
+
+        .language-option img {
+            width: 24px;
+            height: 16px;
+            border-radius: 2px;
+        }
     </style>
 </head>
 <body>
@@ -701,7 +732,7 @@
         </div>
         
         <div class="footer-bottom">
-            &copy; {% now "Y" %} Marmorten Productions. Todos los derechos reservados.
+            &copy; {% now "Y" %} Marmorten Production. Todos los derechos reservados.
         </div>
         
         <!-- Partículas decorativas -->

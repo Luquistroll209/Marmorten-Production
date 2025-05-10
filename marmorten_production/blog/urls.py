@@ -1,11 +1,16 @@
-from django.urls import path
+from django.urls import path, include
 from . import views
 from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import re_path
 from django.contrib.staticfiles.views import serve
 from django.views.static import serve as static_serve
+from django.conf.urls.i18n import i18n_patterns
 handler404 = 'blog.views.custom_404'
+
+urlpatterns = [
+    path('i18n/', include('django.conf.urls.i18n')),
+]
 
 urlpatterns = [
     path('', views.inicio, name='inicio'),
