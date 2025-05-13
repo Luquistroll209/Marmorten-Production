@@ -28,7 +28,7 @@ msgstr ""
 
 #: .\blog\templates\blog\base.html:656
 msgid "Incio"
-msgstr ""
+msgstr "Home"
 
 #: .\blog\templates\blog\base.html:724
 msgid "Enlaces Rápidos"
@@ -36,7 +36,7 @@ msgstr ""
 
 #: .\blog\templates\blog\base.html:725
 msgid "Inicio"
-msgstr ""
+msgstr "Home"
 
 #: .\blog\templates\blog\base.html:726
 msgid "Sobre Nosotros"

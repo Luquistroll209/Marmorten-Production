@@ -33,6 +33,7 @@ CKEDITOR_BASEPATH = "/static/ckeditor/ckeditor/"
 # Application definition
 
 INSTALLED_APPS = [
+    'modeltranslation',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

@@ -18,6 +18,7 @@ from .models import (
 
 )
 import json
+from modeltranslation.admin import TranslationAdmin
 
 admin.site.site_header = 'Marmorten Productión'
 admin.site.index_title = 'Panel de Administración'
