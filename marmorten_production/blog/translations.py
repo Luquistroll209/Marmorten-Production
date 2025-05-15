@@ -1,19 +1,19 @@
-from modeltranslation.translator import translator, TranslationOptions
-from .models import Post, EnlaceExterno, Equipo
+# blog/translation.py
+from modeltranslation.translator import register, TranslationOptions
+from .models import Post, SeccionSobreNosotros, ConfiguracionSitio, Equipo
 
-# Registrar las traducciones del modelo Post
+@register(Post)
 class PostTranslationOptions(TranslationOptions):
     fields = ('title', 'content', 'resumen')
 
-# Registrar las traducciones del modelo EnlaceExterno
-class EnlaceExternoTranslationOptions(TranslationOptions):
-    fields = ('titulo',)
+@register(SeccionSobreNosotros)
+class SeccionSobreNosotrosTranslationOptions(TranslationOptions):
+    fields = ('titulo', 'contenido_texto')
 
-# Registrar las traducciones del modelo Equipo
+@register(ConfiguracionSitio)
+class ConfiguracionSitioTranslationOptions(TranslationOptions):
+    fields = ('titulo_sitio', 'sobre_nosotros', 'mision', 'vision', 'direccion')
+
+@register(Equipo)
 class EquipoTranslationOptions(TranslationOptions):
     fields = ('nombre', 'puesto', 'biografia')
-
-# Registrando las clases de traducción
-translator.register(Post, PostTranslationOptions)
-translator.register(EnlaceExterno, EnlaceExternoTranslationOptions)
-translator.register(Equipo, EquipoTranslationOptions)
