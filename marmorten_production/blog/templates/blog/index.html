@@ -747,7 +747,13 @@ body:after {
           </div>
           <div class="produccion-content">
             <h3 class="produccion-title">{{ post.title }}</h3>
-            <p>{{ post.resumen|truncatechars:180 }}</p>
+              <p>
+                {% if LANGUAGE_CODE == 'es' %}
+                  {{ post.resumen|truncatechars:180 }}
+                {% else %}
+                  {{ post.resumen_en|default:post.resumen|truncatechars:180 }}
+                {% endif %}
+            </p>
             <div class="produccion-meta">
               <span class="produccion-category">Cortometraje</span>
               <span class="btn btn-outline">Detalles</span>
@@ -759,7 +765,7 @@ body:after {
     </div>
   </section>
   
-  <!-- Sección de noticias premium -->
+  <!-- Sección de noticias -->
   <section class="news-section">
     <div class="news-header">
       <h2>Últimas Noticias</h2>

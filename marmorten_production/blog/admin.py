@@ -2,20 +2,9 @@ from django.contrib import admin
 from django.utils.html import format_html
 from django import forms
 from .models import (
-    Post, 
-    CarruselPost, 
-    GaleriaImagenes, 
-    Equipo, 
-    ConfiguracionSitio,
-    ImagenGaleriaSobreNosotros,
-    ImagenCarruselSobreNosotros,
-    SeccionSobreNosotros,
-    ImagenCarrusel,
-    MensajeContacto,
-    EnlaceExterno,
-    TelefonoContacto,
-    EnlaceSeccionSobreNosotros,
-
+    Post, CarruselPost, GaleriaImagenes, Equipo, ConfiguracionSitio,
+    ImagenGaleriaSobreNosotros, ImagenCarruselSobreNosotros, SeccionSobreNosotros,
+    ImagenCarrusel, MensajeContacto, EnlaceExterno, TelefonoContacto, EnlaceSeccionSobreNosotros
 )
 import json
 from modeltranslation.admin import TranslationAdmin
@@ -23,11 +12,13 @@ from modeltranslation.admin import TranslationAdmin
 admin.site.site_header = 'Marmorten Productión'
 admin.site.index_title = 'Panel de Administración'
 
+
 class BaseAdmin(admin.ModelAdmin):
     class Media:
         css = {
             'all': ('css/admin_custom.css',)
         }
+
 
 class PreviewImageMixin:
     def preview(self, obj):
@@ -39,17 +30,20 @@ class PreviewImageMixin:
         return "-"
     preview.short_description = "Vista Previa"
 
+
 # ===== GALERÍA SOBRE NOSOTROS =====
 class GaleriaSobreNosotrosInline(admin.StackedInline, PreviewImageMixin):
     model = ImagenGaleriaSobreNosotros
     extra = 1
     fields = ('imagen', 'titulo', 'orden', 'preview')
     readonly_fields = ('preview',)
+
+
 class EnlaceSeccionInline(admin.StackedInline):
     model = EnlaceSeccionSobreNosotros
     extra = 1
     fields = ('tipo', 'url', 'titulo', 'icono', 'orden')
-    
+
     def preview(self, obj):
         if obj.icono:
             return format_html(
@@ -67,27 +61,24 @@ class TelefonoContactoInline(admin.StackedInline):
     fields = ('numero', 'descripcion', 'orden')
 
 
-
 @admin.register(ConfiguracionSitio)
-class ConfiguracionSitioAdmin(admin.ModelAdmin):  # Asegúrate de heredar de admin.ModelAdmin
+class ConfiguracionSitioAdmin(admin.ModelAdmin):
     inlines = [TelefonoContactoInline]
     list_display = ('titulo_sitio', 'email_contacto', 'preview_logo')
-    
+
     def has_add_permission(self, request):
         return not ConfiguracionSitio.objects.exists()
-    
+
     def has_delete_permission(self, request, obj=None):
         return False
-    
+
     def preview_logo(self, obj):
         if obj.logo:
-            return format_html(
-                '<img src="{}" style="max-height:50px;"/>',
-                obj.logo.url
-            )
+            return format_html('<img src="{}" style="max-height:50px;"/>', obj.logo.url)
         return "-"
+
     preview_logo.short_description = "Logo"
-    
+
     fieldsets = (
         ('Información Básica', {
             'fields': ('titulo_sitio', 'logo', 'email_contacto', 'direccion')
@@ -96,6 +87,7 @@ class ConfiguracionSitioAdmin(admin.ModelAdmin):  # Asegúrate de heredar de adm
             'fields': ('imb_url', 'instagram_url', 'youtube_url')
         })
     )
+
 
 # ===== ADMINISTRACIÓN DE POSTS =====
 class GaleriaPostInline(admin.StackedInline, PreviewImageMixin):
@@ -109,7 +101,7 @@ class PostForm(forms.ModelForm):
     class Meta:
         model = Post
         fields = '__all__'
-        
+
     def clean_enlaces_externos(self):
         data = self.cleaned_data.get('enlaces_externos', '[]')
         try:
@@ -117,7 +109,8 @@ class PostForm(forms.ModelForm):
                 return json.loads(data)
             return data
         except json.JSONDecodeError:
-            raise forms.ValidationError("Formato JSON inválido. Ejemplo: [{'url':'...','tipo':'YOUTUBE','mostrar_video':true}]")
+            raise forms.ValidationError("Formato JSON inválido")
+
 
 class EnlaceExternoInline(admin.StackedInline):
     model = EnlaceExterno
@@ -126,63 +119,69 @@ class EnlaceExternoInline(admin.StackedInline):
 
 
 @admin.register(Post)
-class PostAdmin(admin.ModelAdmin):
+class PostAdmin(TranslationAdmin):
     inlines = [GaleriaPostInline, EnlaceExternoInline]
-    
+
     list_display = ('title', 'fecha_publicacion', 'destacado')
+
     fieldsets = (
-        ('Contenido', {
+        ('Contenido (Español)', {
             'fields': ('title', 'resumen', 'content')
         }),
+        ('Contenido (Inglés)', {
+            'fields': ('title_en', 'resumen_en', 'content_en')
+        }),
         ('Multimedia', {
-            'fields': ('imagen', 'video') 
+            'fields': ('imagen', 'video')
         }),
         ('Configuración', {
             'fields': ('destacado', 'mostrar_en_carrusel', 'orden'),
             'classes': ('collapse',)
         })
     )
-    
+
     def preview(self, obj):
         if obj.imagen:
-            return format_html(
-                '<img src="{}" style="max-height:50px; border-radius:4px;"/>',
-                obj.imagen.url
-            )
+            return format_html('<img src="{}" style="max-height:50px; border-radius:4px;"/>', obj.imagen.url)
         return "-"
+
     preview.short_description = "Miniatura"
+
 
 # ===== ADMINISTRACIÓN DEL EQUIPO =====
 class EnlaceExternoEquipoInline(admin.StackedInline):
     model = EnlaceExterno
     extra = 1
     fields = ('url', 'tipo', 'titulo', 'mostrar', 'orden')
-    fk_name = 'equipo'  
+    fk_name = 'equipo'
+
 
 @admin.register(Equipo)
-class EquipoAdmin(BaseAdmin):
+class EquipoAdmin(BaseAdmin, TranslationAdmin):
     list_display = ('nombre', 'puesto', 'orden', 'foto_preview')
     list_editable = ('orden',)
     search_fields = ('nombre', 'puesto')
-    inlines = [EnlaceExternoEquipoInline]  
-    
+    inlines = [EnlaceExternoEquipoInline]
+
     fieldsets = (
-        ('Información', {
+        ('Información (Español)', {
             'fields': ('nombre', 'puesto', 'biografia', 'foto')
         }),
+        ('Información (Inglés)', {
+            'fields': ('puesto_en', 'biografia_en')
+        }),
         ('Configuración', {
-            'fields': ('orden',),
+            'fields': ('orden',)
         })
     )
-    
+
     def foto_preview(self, obj):
         if obj.foto:
-            return format_html(
-                '<img src="{}" style="max-height:50px; border-radius:50%;"/>',
-                obj.foto.url
-            )
+            return format_html('<img src="{}" style="max-height:50px; border-radius:50%;"/>', obj.foto.url)
         return "-"
+
     foto_preview.short_description = "Foto"
+
 
 # ===== CARRUSEL PRINCIPAL =====
 class PostAdminForm(forms.ModelForm):
@@ -190,12 +189,12 @@ class PostAdminForm(forms.ModelForm):
         widget=forms.Textarea(attrs={'rows': 5}),
         required=False,
         help_text="""Formato JSON: [{
-            "url": "https://ejemplo.com", 
-            "tipo": "YOUTUBE/INSTAGRAM/FACEBOOK/TWITTER/OTRO", 
+            "url": "https://ejemplo.com ",
+            "tipo": "YOUTUBE/INSTAGRAM/FACEBOOK/TWITTER/OTRO",
             "mostrar_video": true/false
         }]"""
     )
-    
+
     def clean_enlaces_externos(self):
         data = self.cleaned_data['enlaces_externos']
         try:
@@ -204,27 +203,32 @@ class PostAdminForm(forms.ModelForm):
             return []
         except json.JSONDecodeError:
             raise forms.ValidationError("Formato JSON inválido")
+
+
 @admin.register(CarruselPost)
-class CarruselPostAdmin(BaseAdmin):
+class CarruselPostAdmin(TranslationAdmin):
     list_display = ('titulo', 'post', 'orden', 'activo')
     list_editable = ('orden', 'activo')
+
     fieldsets = (
-        ('Información Básica', {
-            'fields': ('post', 'titulo')
+        ('Información Básica (Español)', {
+            'fields': ('post', 'titulo', 'descripcion')
+        }),
+        ('Información Básica (Inglés)', {
+            'fields': ('titulo_en', 'descripcion_en')
         }),
         ('Configuración', {
-            'fields': ('orden', 'activo'),
+            'fields': ('orden', 'activo')
         })
     )
-    
+
     def preview(self, obj):
         if obj.post and obj.post.imagen:
-            return format_html(
-                '<img src="{}" style="max-height:50px; border-radius:4px;"/>',
-                obj.post.imagen.url
-            )
+            return format_html('<img src="{}" style="max-height:50px; border-radius:4px;"/>', obj.post.imagen.url)
         return "-"
+
     preview.short_description = "Miniatura del Post"
+
 
 class ImagenCarruselSobreNosotrosInline(admin.StackedInline, PreviewImageMixin):
     model = ImagenCarruselSobreNosotros
@@ -232,34 +236,46 @@ class ImagenCarruselSobreNosotrosInline(admin.StackedInline, PreviewImageMixin):
     fields = ('imagen', 'titulo', 'orden', 'preview')
     readonly_fields = ('preview',)
 
+
 class ImagenCarruselInline(admin.StackedInline):
     model = ImagenCarrusel
     extra = 1
     fields = ('imagen', 'titulo', 'orden', 'preview')
     readonly_fields = ('preview',)
-    
+
     def preview(self, obj):
         if obj.imagen:
             return format_html('<img src="{}" style="max-height:100px;"/>', obj.imagen.url)
         return "-"
+
     preview.short_description = "Vista previa"
 
 
 @admin.register(SeccionSobreNosotros)
-class SeccionSobreNosotrosAdmin(admin.ModelAdmin):
+class SeccionSobreNosotrosAdmin(TranslationAdmin):  # ✅ Aquí estaba el error ❌
     list_display = ('titulo', 'tipo', 'orden', 'preview_content')
     list_editable = ('orden',)
     list_filter = ('tipo',)
-    inlines = [ImagenCarruselInline]  # Para secciones de tipo carrusel
-    
+    inlines = [ImagenCarruselInline]
+
+    fieldsets = (
+        ('Contenido (Español)', {
+            'fields': ('titulo', 'tipo', 'contenido_texto', 'imagen', 'orden')
+        }),
+        ('Contenido (Inglés)', {
+            'fields': ('titulo_en', 'contenido_texto_en')
+        }),
+    )
+
     def get_inlines(self, request, obj):
         if obj and obj.tipo == 'REDES':
             return [EnlaceSeccionInline]
         return super().get_inlines(request, obj)
-    
+
     def preview_content(self, obj):
         if obj.tipo == 'TEXTO':
-            return obj.contenido_texto[:100] + "..." if obj.contenido_texto else "-"
+            texto = obj.contenido_texto_en if obj.contenido_texto_en else obj.contenido_texto
+            return texto[:100] + "..." if texto else "-"
         elif obj.tipo == 'IMAGEN' and obj.imagen:
             return format_html('<img src="{}" style="max-height:50px;"/>', obj.imagen.url)
         elif obj.tipo == 'CAROUSEL':
@@ -269,9 +285,11 @@ class SeccionSobreNosotrosAdmin(admin.ModelAdmin):
         elif obj.tipo == 'REDES':
             return f"{obj.enlaces.count()} enlaces"
         return "-"
+
     preview_content.short_description = "Contenido"
 
 
+# ===== OTROS MODELOS =====
 @admin.register(MensajeContacto)
 class MensajeContactoAdmin(admin.ModelAdmin):
     list_display = ('nombre', 'email', 'asunto', 'fecha', 'leido')

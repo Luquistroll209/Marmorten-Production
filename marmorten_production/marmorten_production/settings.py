@@ -133,6 +133,11 @@ LOCALE_PATHS = [
     os.path.join(BASE_DIR, 'locale'),  # Directorio donde se guardarán las traducciones
 ]
 USE_I18N = True
+MODELTRANSLATION_LANGUAGES = ('es', 'en')  # Orden importante
+MODELTRANSLATION_DEFAULT_LANGUAGE = 'es'
+MODELTRANSLATION_PREPOPULATE_LANGUAGE = 'es'
+
+# Opcional: Para que no se vea "[es]" en los campos originales
 
 USE_TZ = True
 
