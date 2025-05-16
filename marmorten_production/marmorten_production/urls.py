@@ -24,7 +24,7 @@ urlpatterns += i18n_patterns(
     path('contacto/', views.contacto, name='contacto'),
     path('nuestro-equipo/', views.nuestro_equipo, name='nuestro_equipo'),
     path('buscar/', views.buscar_posts, name='buscar_posts'),
-    prefix_default_language=False,
+    prefix_default_language=True,
 )
 
 # Configuración para archivos estáticos y media

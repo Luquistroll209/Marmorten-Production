@@ -5,6 +5,7 @@
     {% load static %}
     {% load i18n %}
 
+
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -603,32 +604,102 @@
             0%, 100% { opacity: 1; }
             50% { opacity: 0.6); }
         }
-        .language-form {
-                margin-left: 20px;
-            }
-            
-            .language-selector {
-                background: rgba(30, 30, 30, 0.8);
-                color: var(--color-texto-principal);
-                border: 1px solid var(--color-borde-suave);
-                border-radius: var(--radio-borde-pequeno);
-                padding: 8px 15px;
-                font-size: 0.9rem;
-                cursor: pointer;
-                transition: var(--transicion-suave);
-                backdrop-filter: blur(5px);
-                -webkit-backdrop-filter: blur(5px);
-            }
-            
-            .language-selector:hover {
-                border-color: rgba(255, 255, 255, 0.3);
-                background: rgba(40, 40, 40, 0.9);
-            }
-            
-            .language-selector option {
-                background: var(--color-tarjeta-oscura);
-                color: var(--color-texto-principal);
-            }
+        /* Selector de idioma mejorado */
+        .language-switcher {
+            position: relative;
+            margin-left: 20px;
+            z-index: 100;
+        }
+
+        .language-selector {
+            position: relative;
+        }
+
+        .language-current {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(30, 30, 30, 0.8);
+            color: var(--color-texto-principal);
+            border: 1px solid var(--color-borde-suave);
+            border-radius: var(--radio-borde-pequeno);
+            padding: 8px 15px;
+            cursor: pointer;
+            transition: var(--transicion-suave);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            font-size: 0.9rem;
+        }
+
+        .language-current:hover {
+            background: rgba(40, 40, 40, 0.9);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .language-flag i {
+            font-size: 1.1rem;
+        }
+
+        .language-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: var(--color-tarjeta-oscura);
+            border: 1px solid var(--color-borde-suave);
+            border-radius: var(--radio-borde-pequeno);
+            padding: 10px 0;
+            margin-top: 5px;
+            min-width: 150px;
+            box-shadow: var(--sombra-intensa);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: var(--transicion-suave);
+            z-index: 100;
+        }
+
+        .language-selector:hover .language-dropdown {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .language-dropdown li {
+            list-style: none;
+        }
+
+        .language-dropdown button {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+            padding: 8px 20px;
+            background: transparent;
+            border: none;
+            color: var(--color-texto-secundario);
+            text-align: left;
+            cursor: pointer;
+            transition: var(--transicion-rapida);
+        }
+
+        .language-dropdown button:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--color-destacado);
+        }
+
+        .language-dropdown button.active {
+            color: var(--color-destacado);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Banderas específicas */
+        .fa-flag-spain {
+            color: #ffc400; /* Amarillo de la bandera de España */
+        }
+
+        .fa-flag-usa {
+            color: #3c78d8; /* Azul de la bandera de USA */
+        }
     </style>
 </head>
 <body>
@@ -644,31 +715,59 @@
         </div>
     </div>
 
-    <!-- Navbar premium - MANTENIENDO ESTILO ORIGINAL -->
+    <!-- Navbar  -->
     <nav class="main-navigation" id="mainNav">
         <button class="mobile-nav-toggle" id="mobileNavToggle">☰</button>
         <img src="{{ config.logo.url }}" alt="Marmoten Production Logo" class="nav-brand">
         <div class="nav-menu" id="navMenu">
             <a href="{% url 'inicio' %}" class="nav-item active">{% trans "Inicio" %}</a>
-            <a href="{% url 'sobre_nosotros' %}" class="nav-item">Sobre Nosotros</a>
-            <a href="{% url 'contacto' %}" class="nav-item">Contacto</a>
-            <a href="{% url 'nuestro_equipo' %}" class="nav-item">Nuestro Equipo</a>
+            <a href="{% url 'sobre_nosotros' %}" class="nav-item">{% trans "Sobre Nosotros" %}</a>
+            <a href="{% url 'contacto' %}" class="nav-item">{% trans "Contacto" %}</a>
+            <a href="{% url 'nuestro_equipo' %}" class="nav-item">{% trans "Contacto" %}</a>
         </div>
-        <!-- Dentro de tu navbar, después del menú de navegación -->
-        <form action="{% url 'set_language' %}" method="post" class="language-form">
-            {% csrf_token %}
-            <input name="next" type="hidden" value="{{ redirect_to }}">
-            <select name="language" onchange="this.form.submit()" class="language-selector">
-                {% get_current_language as LANGUAGE_CODE %}
-                {% get_available_languages as LANGUAGES %}
-                {% get_language_info_list for LANGUAGES as languages %}
-                {% for language in languages %}
-                    <option value="{{ language.code }}" {% if language.code == LANGUAGE_CODE %} selected{% endif %}>
-                        {{ language.name_local|title }}
-                    </option>
-                {% endfor %}
-            </select>
-        </form>
+
+        <div class="language-switcher">
+            <form action="{% url 'set_language' %}" method="post" class="language-form">
+                {% csrf_token %}
+                <input name="next" type="hidden" value="{{ request.get_full_path|default:request.path }}">
+                <p>Redirect to: {{ request.get_full_path|default:request.path }}</p>
+                <div class="language-selector">
+                    {% get_current_language as LANGUAGE_CODE %}
+                    {% get_available_languages as LANGUAGES %}
+                    
+                    <button type="button" class="language-current" aria-label="Change language">
+                        <span class="language-flag">
+                            {% if LANGUAGE_CODE == 'es' %}
+                                <span class="flag-icon flag-icon-es"></span>
+                            {% else %}
+                                <span class="flag-icon flag-icon-us"></span>
+                            {% endif %}
+                        </span>
+                        <span class="language-code">{{ LANGUAGE_CODE|upper }}</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    
+                    <ul class="language-dropdown">
+                        {% for language in LANGUAGES %}
+                            <li>
+                               <button type="submit" name="language" value="{{ language.0 }}" class="{% if language.0 == LANGUAGE_CODE %}active{% endif %}">
+                                    <span class="language-flag">
+                                        {% if language.0 == 'es' %}
+                                            <span class="flag-icon flag-icon-es"></span>
+                                        {% else %}
+                                            <span class="flag-icon flag-icon-us"></span>
+                                        {% endif %}
+                                    </span>
+                                    <span>{{ language.1 }}</span>
+                                </button>
+                            </li>
+                        {% endfor %}
+                        
+                    </ul>
+                </div>
+            </form>
+        </div>
+
         <div class="search-wrapper" id="searchWrapper">
             <form action="{% url 'buscar_posts' %}" method="get" class="search-form">
                 <input type="search" name="q" class="search-field" placeholder="Buscar producciones..." value="{{ request.GET.q }}">
@@ -742,7 +841,7 @@
         </div>
         
         <div class="footer-bottom">
-            &copy; {% now "Y" %} Marmorten Production. Todos los derechos reservados.
+            &copy; {% now "Y" %} {% trans "Marmorten Production. Todos los derechos reservados." %}
         </div>
         
         <!-- Partículas decorativas -->

@@ -5,6 +5,8 @@ from django.conf import settings
 from .models import Post, CarruselPost, Equipo, ConfiguracionSitio, SeccionSobreNosotros
 from django.http import Http404
 from django.contrib import messages
+from django.utils.translation import get_language
+from urllib.parse import urlparse, urlunparse
 
 def get_config():
     """Función helper para obtener la configuración del sitio una sola vez por request"""
@@ -100,3 +102,31 @@ def buscar_posts(request):
         'config': get_config()
     }
     return render(request, 'blog/resultados_busqueda.html', context)
+
+def your_view(request):
+    # Obtener la URL actual
+    full_path = request.get_full_path()
+    
+    # Parsear la URL
+    parsed_url = urlparse(full_path)
+    path_parts = parsed_url.path.strip('/').split('/')
+    
+    # Eliminar el código de idioma si está como primer segmento
+    current_lang = get_language()  # por ejemplo 'en' o 'es'
+    if path_parts and path_parts[0] == current_lang:
+        path_parts.pop(0)
+
+    # Reconstruir la ruta
+    new_path = '/' + '/'.join(path_parts) if path_parts else '/'
+
+    # Volver a armar la URL completa
+    redirect_to = urlunparse((
+        parsed_url.scheme,
+        parsed_url.netloc,
+        new_path,
+        parsed_url.params,
+        parsed_url.query,
+        parsed_url.fragment
+    ))
+
+    return render(request, 'tu_template.html', {'redirect_to': redirect_to})

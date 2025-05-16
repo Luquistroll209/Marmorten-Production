@@ -31,7 +31,3 @@ else:
         re_path(r'^static/(?P<path>.*)$', serve, {'document_root': settings.STATIC_ROOT}),
         re_path(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),
     ]
-urlpatterns += i18n_patterns(
-    path('', include('blog.urls')),  # Tus URLs de la aplicación blog
-    prefix_default_language=False,
-)

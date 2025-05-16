@@ -1,0 +1,69 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-05-15 12:55+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? "
+"1 : 2;\n"
+#: .\blog\models.py:11
+msgid "Título"
+msgstr ""
+
+#: .\blog\models.py:12
+msgid "Contenido"
+msgstr "Contenido"
+
+#: .\blog\templates\blog\base.html:722 .\blog\templates\blog\base.html:815
+msgid "Inicio"
+msgstr ""
+
+#: .\blog\templates\blog\base.html:723 .\blog\templates\blog\base.html:816
+msgid "Sobre Nosotros"
+msgstr ""
+
+#: .\blog\templates\blog\base.html:724 .\blog\templates\blog\base.html:725
+#: .\blog\templates\blog\base.html:818
+msgid "Contacto"
+msgstr ""
+
+#: .\blog\templates\blog\base.html:814
+msgid "Enlaces Rápidos"
+msgstr ""
+
+#: .\blog\templates\blog\base.html:817
+msgid "Nuestro Equipo"
+msgstr ""
+
+#: .\blog\templates\blog\base.html:841
+msgid "Marmorten Production. Todos los derechos reservados."
+msgstr ""
+
+#: .\blog\templates\blog\index.html:759
+msgid "Cortometraje"
+msgstr ""
+
+#: .\blog\templates\blog\index.html:760
+msgid "Detalles"
+msgstr ""
+
+#: .\blog\templates\blog\index.html:772
+msgid "Últimas Noticias"
+msgstr ""
+
+#: .\blog\templates\blog\index.html:773
+msgid ""
+"Mantente al día con nuestros proyectos, anuncios y eventos más recientes"
+msgstr ""

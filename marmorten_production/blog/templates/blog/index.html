@@ -1,6 +1,7 @@
 {% extends 'blog/base.html' %}
 {% load static %}
 {% block title %}Inicio - MARMOTEN PRODUCTION{% endblock %}
+{% load i18n %}
 
 {% block content %}
 <style>
@@ -755,8 +756,8 @@ body:after {
                 {% endif %}
             </p>
             <div class="produccion-meta">
-              <span class="produccion-category">Cortometraje</span>
-              <span class="btn btn-outline">Detalles</span>
+              <span class="produccion-category">{% trans "Cortometraje" %}</span>
+              <span class="btn btn-outline">{% trans "Detalles" %}</span>
             </div>
           </div>
         </a>
@@ -768,8 +769,8 @@ body:after {
   <!-- Sección de noticias -->
   <section class="news-section">
     <div class="news-header">
-      <h2>Últimas Noticias</h2>
-      <p>Mantente al día con nuestros proyectos, anuncios y eventos más recientes</p>
+      <h2>{% trans "Últimas Noticias" %}</h2>
+      <p>{% trans "Mantente al día con nuestros proyectos, anuncios y eventos más recientes" %}</p>
     </div>
     
     <div class="producciones-grid">

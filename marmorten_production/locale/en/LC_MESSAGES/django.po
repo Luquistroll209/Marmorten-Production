@@ -20,11 +20,11 @@ msgstr ""
 
 #: .\blog\models.py:11
 msgid "Título"
-msgstr ""
+msgstr "Title"
 
 #: .\blog\models.py:12
 msgid "Contenido"
-msgstr ""
+msgstr "Content"
 
 #: .\blog\templates\blog\base.html:656
 msgid "Incio"
@@ -32,7 +32,7 @@ msgstr "Home"
 
 #: .\blog\templates\blog\base.html:724
 msgid "Enlaces Rápidos"
-msgstr ""
+msgstr "Quick Links"
 
 #: .\blog\templates\blog\base.html:725
 msgid "Inicio"
@@ -40,15 +40,15 @@ msgstr "Home"
 
 #: .\blog\templates\blog\base.html:726
 msgid "Sobre Nosotros"
-msgstr ""
+msgstr "About Us"
 
 #: .\blog\templates\blog\base.html:727
 msgid "Nuestro Equipo"
-msgstr ""
+msgstr "Our Team"
 
 #: .\blog\templates\blog\base.html:728
 msgid "Contacto"
-msgstr ""
+msgstr "Contact"
 
 #: .\env\Lib\site-packages\django\contrib\messages\apps.py:16
 msgid "Messages"
