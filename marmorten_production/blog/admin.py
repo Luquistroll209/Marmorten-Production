@@ -4,10 +4,12 @@ from django import forms
 from .models import (
     Post, CarruselPost, GaleriaImagenes, Equipo, ConfiguracionSitio,
     ImagenGaleriaSobreNosotros, ImagenCarruselSobreNosotros, SeccionSobreNosotros,
-    ImagenCarrusel, MensajeContacto, EnlaceExterno, TelefonoContacto, EnlaceSeccionSobreNosotros
+    ImagenCarrusel, MensajeContacto, EnlaceExterno, TelefonoContacto, EnlaceSeccionSobreNosotros,
 )
 import json
 from modeltranslation.admin import TranslationAdmin
+from django.urls import reverse
+from django.utils.safestring import mark_safe
 
 admin.site.site_header = 'Marmorten Productión'
 admin.site.index_title = 'Panel de Administración'
@@ -81,7 +83,7 @@ class ConfiguracionSitioAdmin(admin.ModelAdmin):
 
     fieldsets = (
         ('Información Básica', {
-            'fields': ('titulo_sitio', 'logo', 'email_contacto', 'direccion')
+            'fields': ('titulo_sitio', 'logo', 'email_contacto', 'direccion', 'descripcion', 'descripcion_en')
         }),
         ('Redes Sociales', {
             'fields': ('imb_url', 'instagram_url', 'youtube_url')
@@ -128,9 +130,9 @@ class PostAdmin(TranslationAdmin):
         ('Contenido (Español)', {
             'fields': ('title', 'resumen', 'content')
         }),
-        ('Contenido (Inglés)', {
-            'fields': ('title_en', 'resumen_en', 'content_en')
-        }),
+        #('Contenido (Inglés)', {
+        #    'fields': ('title_en', 'resumen_en', 'content_en')
+        #}),
         ('Multimedia', {
             'fields': ('imagen', 'video')
         }),
@@ -166,9 +168,6 @@ class EquipoAdmin(BaseAdmin, TranslationAdmin):
     fieldsets = (
         ('Información (Español)', {
             'fields': ('nombre', 'puesto', 'biografia', 'foto')
-        }),
-        ('Información (Inglés)', {
-            'fields': ('puesto_en', 'biografia_en')
         }),
         ('Configuración', {
             'fields': ('orden',)
@@ -214,9 +213,6 @@ class CarruselPostAdmin(TranslationAdmin):
         ('Información Básica (Español)', {
             'fields': ('post', 'titulo', 'descripcion')
         }),
-        ('Información Básica (Inglés)', {
-            'fields': ('titulo_en', 'descripcion_en')
-        }),
         ('Configuración', {
             'fields': ('orden', 'activo')
         })
@@ -259,11 +255,8 @@ class SeccionSobreNosotrosAdmin(TranslationAdmin):  # ✅ Aquí estaba el error 
     inlines = [ImagenCarruselInline]
 
     fieldsets = (
-        ('Contenido (Español)', {
+        ('Contenido', {
             'fields': ('titulo', 'tipo', 'contenido_texto', 'imagen', 'orden')
-        }),
-        ('Contenido (Inglés)', {
-            'fields': ('titulo_en', 'contenido_texto_en')
         }),
     )
 

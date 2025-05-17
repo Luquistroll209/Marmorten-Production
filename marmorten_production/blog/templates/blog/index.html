@@ -679,6 +679,101 @@ p {
     max-height: 40vh;
   }
 }
+.description-container {
+  background: linear-gradient(135deg, var(--color-tarjeta) 0%, var(--color-negro) 100%);
+  padding: clamp(60px, 8vw, 100px) 0;
+  position: relative;
+  overflow: hidden;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  margin: clamp(40px, 6vw, 80px) 0;
+}
+
+.description-container:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('{% static "images/noise.png" %}') repeat;
+  opacity: 0.03;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.description-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 clamp(20px, 5vw, 40px);
+  position: relative;
+  z-index: 2;
+}
+
+.description-title {
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  color: var(--color-acento);
+  text-align: center;
+  margin-bottom: clamp(30px, 4vw, 50px);
+  letter-spacing: 1px;
+  position: relative;
+  display: inline-block;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.description-title:after {
+  content: '';
+  display: block;
+  width: 80px;
+  height: 3px;
+  background: var(--color-acento);
+  position: absolute;
+  bottom: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.description-text {
+  background-color: var(--color-texto-bg);
+  padding: clamp(40px, 5vw, 60px);
+  border-radius: var(--borde-redondeado);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: var(--sombra);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  text-align: center;
+  line-height: 1.8;
+}
+
+.description-text p {
+  font-size: clamp(1rem, 1.3vw, 1.2rem);
+  color: var(--color-texto-claro);
+  margin-bottom: 1.5rem;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.description-text p:last-child {
+  margin-bottom: 0;
+}
+
+@media (max-width: 768px) {
+  .description-container {
+    padding: 40px 0;
+  }
+  
+  .description-text {
+    padding: 30px;
+  }
+  
+  .description-title {
+    margin-bottom: 25px;
+  }
+}
 
 /* Preload de fuentes */
 body:after {
@@ -702,8 +797,8 @@ body:after {
         <img src="{{ item.post.imagen.url }}" alt="{{ item.titulo }}" class="carousel-bg-image">
         <div class="carousel-content">
           <div class="carousel-text">
-            <h2 class="carousel-title">{{ item.titulo|default:item.post.title }}</h2>
-            <p class="carousel-description">{{ item.descripcion|default:item.post.resumen }}</p>
+            <h2 class="carousel-title">{{ item.titulo|default:item.post.title|default:"" }}</h2>
+            <p class="carousel-description">{{ item.descripcion|default:item.post.resumen|default:"" }}</p>
             <a href="{% url 'detalle_post' item.post.id %}" class="btn btn-primary">Ver Proyecto</a>
           </div>
           <div class="carousel-image-container">
@@ -727,14 +822,28 @@ body:after {
     </div>
   </div>
 </div>
+<div class="description-container">
+  <div class="description-content">
+    <h2 class="description-title">{% trans "NUESTRA FILOSOFÍA" %}</h2>
+    <div class="description-text">
+      {% if config %}
+          {% if request.LANGUAGE_CODE == 'en' and config.descripcion_en %}
+              <p>{{ config.descripcion_en }}</p>
+          {% else %}
+              <p>{{ config.descripcion }}</p>
+          {% endif %}
+      {% endif %}
+    </div>
+  </div>
+</div>
 
 <!-- Contenido principal -->
 <div class="main-container">
   <!-- Sección de cortometrajes premium -->
   <section class="cortometrajes-section">
     <div class="cortometrajes-header">
-      <h2>Cortometrajes</h2>
-      <p>Nuestros trabajos más emblemáticos que representan nuestra calidad y estilo único en producción audiovisual</p>
+      <h2>{% trans "Cortometrajes" %}</h2>
+      <p>{% trans "Nuestros trabajos más emblemáticos que representan nuestra calidad y estilo único en producción audiovisual" %}</p>
     </div>
     
     <div class="producciones-grid">
@@ -750,9 +859,9 @@ body:after {
             <h3 class="produccion-title">{{ post.title }}</h3>
               <p>
                 {% if LANGUAGE_CODE == 'es' %}
-                  {{ post.resumen|truncatechars:180 }}
+                  {{ post.resumen|default:""|truncatechars:180 }}
                 {% else %}
-                  {{ post.resumen_en|default:post.resumen|truncatechars:180 }}
+                  {{ post.resumen_en|default:post.resumen|default:""|truncatechars:180 }}
                 {% endif %}
             </p>
             <div class="produccion-meta">
@@ -784,7 +893,7 @@ body:after {
           </div>
           <div class="produccion-content">
             <h3 class="produccion-title">{{ post.title }}</h3>
-            <p>{{ post.resumen|default:post.content|truncatechars:180 }}</p>
+            <p>{{ post.resumen|default:post.content|default:""|truncatechars:180 }}</p>
             <div class="produccion-meta">
               <span class="produccion-category">Noticia</span>
               <span class="btn btn-outline">Leer más</span>

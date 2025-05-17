@@ -13,6 +13,8 @@ pip install Django==5.2 \
     text-unidecode==1.3 \
     tzdata==2025.2 \
     asgiref==3.8.1
+pip install django-axes geoip2 django-user-agents django-admin-tools django-rosetta
+
 gunicorn --workers 3 --bind 127.0.0.1:8000 marmorten_production.wsgi:application
 
 sudo apt-get install gettext

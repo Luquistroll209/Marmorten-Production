@@ -161,6 +161,8 @@ class ConfiguracionSitio(models.Model):
     logo = models.ImageField(upload_to='config/', blank=True, null=True)
     email_contacto = models.EmailField(default='contacto@marmoten.com')
     direccion = models.TextField(blank=True)
+    descripcion = models.TextField(blank=True)
+    descripcion_en = models.TextField(blank=True, verbose_name="Descripción (Inglés)")
     
     # Sobre Nosotros - Contenido
     sobre_nosotros = models.TextField(blank=True)

@@ -10,7 +10,18 @@ from urllib.parse import urlparse, urlunparse
 
 def get_config():
     """Función helper para obtener la configuración del sitio una sola vez por request"""
-    return ConfiguracionSitio.objects.first()
+    config = ConfiguracionSitio.objects.first()
+    if not config:
+        return None
+        
+    # Añade la descripción según el idioma
+    from django.utils.translation import get_language
+    if get_language() == 'en' and config.descripcion_en:
+        config.descripcion_actual = config.descripcion_en
+    else:
+        config.descripcion_actual = config.descripcion
+        
+    return config
 
 def custom_404(request, exception):
     return render(request, 'blog/404.html', {'config': get_config()}, status=404)

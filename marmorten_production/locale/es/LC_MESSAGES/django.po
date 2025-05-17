@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-15 12:55+0200\n"
+"POT-Creation-Date: 2025-05-17 09:41+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,52 +18,93 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? "
 "1 : 2;\n"
+
 #: .\blog\models.py:11
 msgid "Título"
 msgstr ""
 
 #: .\blog\models.py:12
 msgid "Contenido"
-msgstr "Contenido"
+msgstr ""
 
-#: .\blog\templates\blog\base.html:722 .\blog\templates\blog\base.html:815
+#: .\blog\templates\blog\base.html:672 .\blog\templates\blog\base.html:740
 msgid "Inicio"
 msgstr ""
 
-#: .\blog\templates\blog\base.html:723 .\blog\templates\blog\base.html:816
+#: .\blog\templates\blog\base.html:673 .\blog\templates\blog\base.html:741
 msgid "Sobre Nosotros"
 msgstr ""
 
-#: .\blog\templates\blog\base.html:724 .\blog\templates\blog\base.html:725
-#: .\blog\templates\blog\base.html:818
+#: .\blog\templates\blog\base.html:674 .\blog\templates\blog\base.html:675
+#: .\blog\templates\blog\base.html:743
 msgid "Contacto"
 msgstr ""
 
-#: .\blog\templates\blog\base.html:814
+#: .\blog\templates\blog\base.html:739
 msgid "Enlaces Rápidos"
 msgstr ""
 
-#: .\blog\templates\blog\base.html:817
+#: .\blog\templates\blog\base.html:742
 msgid "Nuestro Equipo"
 msgstr ""
 
-#: .\blog\templates\blog\base.html:841
+#: .\blog\templates\blog\base.html:766
 msgid "Marmorten Production. Todos los derechos reservados."
 msgstr ""
 
-#: .\blog\templates\blog\index.html:759
+#: .\blog\templates\blog\index.html:827
+msgid "NUESTRA FILOSOFÍA"
+msgstr ""
+
+#: .\blog\templates\blog\index.html:830
+msgid ""
+"Podrán hacer realidad vuestro sueño,  porque Marmorten production no cree en "
+"lo imposible.  Junto a un equipo de profesionales de primera clase, desde la "
+"producción a la gestión, pasando por los diseñadores, a su disposición. "
+"Nuestro equipo creativo de estrellas incluye a los mejores expertos en todo "
+"el espectro de la producción, exactamente lo que necesita para lograr un "
+"valor de producción de alta calidad."
+msgstr ""
+
+#: .\blog\templates\blog\index.html:832
+msgid ""
+"Con la colaboración, creatividad y excelencia técnica de Marmorten "
+"production, obtendrá una producción pulida y lista para su emisión que "
+"cumplirá con los más altos estándares. Nuestra experiencia con anuncios, "
+"vídeos en línea, cortometrajes y mucho más significa que pueden ejecutar "
+"cualquier proyecto con cuidado y arte."
+msgstr ""
+
+#: .\blog\templates\blog\index.html:834
+msgid ""
+"No renuncies a la calidad; da vida a tu visión creativa con profesionales "
+"dedicados a la excelencia narrativa. Nuestro equipo de ensueño le ofrece las "
+"habilidades que necesita para alcanzar el éxito."
+msgstr ""
+
+#: .\blog\templates\blog\index.html:844
+msgid "Cortometrajes"
+msgstr ""
+
+#: .\blog\templates\blog\index.html:845
+msgid ""
+"Nuestros trabajos más emblemáticos que representan nuestra calidad y estilo "
+"único en producción audiovisual"
+msgstr ""
+
+#: .\blog\templates\blog\index.html:867
 msgid "Cortometraje"
 msgstr ""
 
-#: .\blog\templates\blog\index.html:760
+#: .\blog\templates\blog\index.html:868
 msgid "Detalles"
 msgstr ""
 
-#: .\blog\templates\blog\index.html:772
+#: .\blog\templates\blog\index.html:880
 msgid "Últimas Noticias"
 msgstr ""
 
-#: .\blog\templates\blog\index.html:773
+#: .\blog\templates\blog\index.html:881
 msgid ""
 "Mantente al día con nuestros proyectos, anuncios y eventos más recientes"
 msgstr ""

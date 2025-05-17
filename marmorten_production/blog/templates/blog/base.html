@@ -605,101 +605,50 @@
             50% { opacity: 0.6); }
         }
         /* Selector de idioma mejorado */
-        .language-switcher {
-            position: relative;
-            margin-left: 20px;
-            z-index: 100;
-        }
+.language-switcher {
+    position: relative;
+    margin-left: 20px;
+    z-index: 100;
+}
 
-        .language-selector {
-            position: relative;
-        }
+.language-flag-button {
+    background: rgba(30, 30, 30, 0.8);
+    color: var(--color-texto-principal);
+    border: 1px solid var(--color-borde-suave);
+    border-radius: var(--radio-borde-pequeno);
+    padding: 8px 15px;
+    cursor: pointer;
+    transition: var(--transicion-suave);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+}
 
-        .language-current {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(30, 30, 30, 0.8);
-            color: var(--color-texto-principal);
-            border: 1px solid var(--color-borde-suave);
-            border-radius: var(--radio-borde-pequeno);
-            padding: 8px 15px;
-            cursor: pointer;
-            transition: var(--transicion-suave);
-            backdrop-filter: blur(5px);
-            -webkit-backdrop-filter: blur(5px);
-            font-size: 0.9rem;
-        }
+.language-flag-button:hover {
+    background: rgba(40, 40, 40, 0.9);
+    border-color: rgba(255, 255, 255, 0.3);
+    transform: scale(1.1);
+}
 
-        .language-current:hover {
-            background: rgba(40, 40, 40, 0.9);
-            border-color: rgba(255, 255, 255, 0.3);
-        }
+.flag-icon {
+    display: inline-block;
+    width: 20px;
+    height: 15px;
+    background-size: cover;
+}
 
-        .language-flag i {
-            font-size: 1.1rem;
-        }
+.flag-icon-es {
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 40"><rect width="60" height="40" fill="#c60b1e"/><rect y="10" width="60" height="20" fill="#ffc400"/><rect y="15" width="60" height="10" fill="#c60b1e"/></svg>');
+}
 
-        .language-dropdown {
-            position: absolute;
-            top: 100%;
-            right: 0;
-            background: var(--color-tarjeta-oscura);
-            border: 1px solid var(--color-borde-suave);
-            border-radius: var(--radio-borde-pequeno);
-            padding: 10px 0;
-            margin-top: 5px;
-            min-width: 150px;
-            box-shadow: var(--sombra-intensa);
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(10px);
-            transition: var(--transicion-suave);
-            z-index: 100;
-        }
-
-        .language-selector:hover .language-dropdown {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
-        }
-
-        .language-dropdown li {
-            list-style: none;
-        }
-
-        .language-dropdown button {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            width: 100%;
-            padding: 8px 20px;
-            background: transparent;
-            border: none;
-            color: var(--color-texto-secundario);
-            text-align: left;
-            cursor: pointer;
-            transition: var(--transicion-rapida);
-        }
-
-        .language-dropdown button:hover {
-            background: rgba(255, 255, 255, 0.05);
-            color: var(--color-destacado);
-        }
-
-        .language-dropdown button.active {
-            color: var(--color-destacado);
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        /* Banderas específicas */
-        .fa-flag-spain {
-            color: #ffc400; /* Amarillo de la bandera de España */
-        }
-
-        .fa-flag-usa {
-            color: #3c78d8; /* Azul de la bandera de USA */
-        }
+.flag-icon-us {
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 40"><rect width="60" height="40" fill="#3c78d8"/><path fill="#fff" d="M0,0 L60,0 L60,4 L0,4 Z M0,8 L60,8 L60,12 L0,12 Z M0,16 L60,16 L60,20 L0,20 Z M0,24 L60,24 L60,28 L0,28 Z M0,32 L60,32 L60,36 L0,36 Z"/><path fill="#fff" d="M0,0 L24,0 L24,20 L0,20 Z"/><path fill="#c60b1e" d="M0,2 L24,2 L24,4 L0,4 Z M0,8 L24,8 L24,10 L0,10 Z M2,0 L2,20 L4,20 L4,0 Z M8,0 L8,20 L10,20 L10,0 Z M16,0 L16,20 L18,20 L18,0 Z"/></svg>');
+}
     </style>
 </head>
 <body>
@@ -723,48 +672,21 @@
             <a href="{% url 'inicio' %}" class="nav-item active">{% trans "Inicio" %}</a>
             <a href="{% url 'sobre_nosotros' %}" class="nav-item">{% trans "Sobre Nosotros" %}</a>
             <a href="{% url 'contacto' %}" class="nav-item">{% trans "Contacto" %}</a>
-            <a href="{% url 'nuestro_equipo' %}" class="nav-item">{% trans "Contacto" %}</a>
+            <a href="{% url 'nuestro_equipo' %}" class="nav-item">{% trans "Nuestro Equipo" %}</a>
         </div>
 
         <div class="language-switcher">
             <form action="{% url 'set_language' %}" method="post" class="language-form">
                 {% csrf_token %}
                 <input name="next" type="hidden" value="{{ request.get_full_path|default:request.path }}">
-                <p>Redirect to: {{ request.get_full_path|default:request.path }}</p>
-                <div class="language-selector">
-                    {% get_current_language as LANGUAGE_CODE %}
-                    {% get_available_languages as LANGUAGES %}
-                    
-                    <button type="button" class="language-current" aria-label="Change language">
-                        <span class="language-flag">
-                            {% if LANGUAGE_CODE == 'es' %}
-                                <span class="flag-icon flag-icon-es"></span>
-                            {% else %}
-                                <span class="flag-icon flag-icon-us"></span>
-                            {% endif %}
-                        </span>
-                        <span class="language-code">{{ LANGUAGE_CODE|upper }}</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </button>
-                    
-                    <ul class="language-dropdown">
-                        {% for language in LANGUAGES %}
-                            <li>
-                               <button type="submit" name="language" value="{{ language.0 }}" class="{% if language.0 == LANGUAGE_CODE %}active{% endif %}">
-                                    <span class="language-flag">
-                                        {% if language.0 == 'es' %}
-                                            <span class="flag-icon flag-icon-es"></span>
-                                        {% else %}
-                                            <span class="flag-icon flag-icon-us"></span>
-                                        {% endif %}
-                                    </span>
-                                    <span>{{ language.1 }}</span>
-                                </button>
-                            </li>
-                        {% endfor %}
-                        
-                    </ul>
-                </div>
+                {% get_current_language as LANGUAGE_CODE %}
+                <button type="submit" name="language" value="{% if LANGUAGE_CODE == 'es' %}en{% else %}es{% endif %}" class="language-flag-button" aria-label="Change language">
+                    {% if LANGUAGE_CODE == 'es' %}
+                        🇪🇸  <!-- Bandera España -->
+                    {% else %}
+                        🇺🇸  <!-- Bandera USA -->
+                    {% endif %}
+                </button>
             </form>
         </div>
 

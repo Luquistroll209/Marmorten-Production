@@ -18,6 +18,7 @@ import os
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
@@ -33,9 +34,12 @@ CKEDITOR_BASEPATH = "/static/ckeditor/ckeditor/"
 # Application definition
 
 INSTALLED_APPS = [
+    #'admin_interface',
     'modeltranslation',
     'django.contrib.admin',
     'django.contrib.auth',
+    'axes', 
+    'rosetta',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
@@ -45,7 +49,21 @@ INSTALLED_APPS = [
 ]
 ROSETTA_ENABLE_TRANSLATION_SUGGESTIONS = False
 
+ADMIN_INTERFACE = {
+    'THEME': 'default',  # Puedes crear tus propios temas
+    'LOGO': 'img/logo.png',
+    'FAVICON': 'img/favicon.ico',
+}
+AUTHENTICATION_BACKENDS = [
+    'axes.backends.AxesBackend',  # Debe ser el primero
+    'django.contrib.auth.backends.ModelBackend',
+]
 
+# Configuración adicional
+AXES_FAILURE_LIMIT = 5  # Intentos fallidos antes de bloquear
+AXES_COOLOFF_TIME = 1  # 1 hora de bloqueo
+AXES_LOCK_OUT_AT_FAILURE = True
+AXES_ONLY_USER_FAILURES = True
 # settings.py
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'localhost' 
@@ -61,9 +79,17 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'axes.middleware.AxesMiddleware',
 
     
 ]
+ROSETTA_STORAGE_CLASS = 'rosetta.storage.CacheRosettaStorage'
+
+ROSETTA_ACCESS_CONTROL_FUNCTION = 'blog.utils.rosetta_access'
+
+ROSETTA_ENABLE_TRANSLATION_SUGGESTIONS = True  
+ROSETTA_WSGI_AUTO_RELOAD = True
+ROSETTA_UWSGI_AUTO_RELOAD = True
 
 ROOT_URLCONF = 'marmorten_production.urls'
 

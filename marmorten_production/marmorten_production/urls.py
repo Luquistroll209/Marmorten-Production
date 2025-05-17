@@ -8,12 +8,18 @@ from django.contrib.staticfiles.views import serve
 from django.views.static import serve as static_serve
 from django.conf.urls.i18n import i18n_patterns
 from blog import views  # Importa las vistas desde tu app blog
+from django.contrib.auth.views import LoginView, LogoutView
 
 handler404 = 'blog.views.custom_404'
 
 urlpatterns = [
     path('adminmarmorten/', admin.site.urls),
-    path('i18n/', include('django.conf.urls.i18n'))
+    path('i18n/', include('django.conf.urls.i18n')),  
+    path('accounts/login/', LoginView.as_view(template_name='admin/login.html')), 
+    path('accounts/logout/', LogoutView.as_view(), name='logout'),
+    path('rosetta/', include('rosetta.urls'))
+    
+    
 ]
 
 # URLs internacionalizadas
