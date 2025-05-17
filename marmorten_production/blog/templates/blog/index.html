@@ -799,7 +799,7 @@ body:after {
           <div class="carousel-text">
             <h2 class="carousel-title">{{ item.titulo|default:item.post.title|default:"" }}</h2>
             <p class="carousel-description">{{ item.descripcion|default:item.post.resumen|default:"" }}</p>
-            <a href="{% url 'detalle_post' item.post.id %}" class="btn btn-primary">Ver Proyecto</a>
+            <a href="{% url 'detalle_post' item.post.id %}" class="btn btn-primary">{% trans "Ver Proyecto" %}</a>
           </div>
           <div class="carousel-image-container">
             <img src="{{ item.post.imagen.url }}" alt="{{ item.titulo }}" class="carousel-image" loading="lazy">

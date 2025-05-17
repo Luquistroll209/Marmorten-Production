@@ -1,7 +1,7 @@
 {% extends 'blog/base.html' %}
 {% load static %}
 {% block title %}Resultados de búsqueda - MARMOTEN PRODUCTION{% endblock %}
-
+{% load i18n %}
 {% block content %}
 <style>
     :root {
@@ -300,16 +300,16 @@
 <div class="search-section">
     <!-- Cabecera -->
     <div class="search-header">
-        <h1 class="search-title">Resultados de Búsqueda</h1>
-        <p class="search-subtitle">Explora los resultados que coinciden con tu consulta</p>
+        <h1 class="search-title">{% trans "Resultados de Búsqueda" %}</h1>
+        <p class="search-subtitle">{% trans "Explora los resultados que coinciden con tu consulta" %}</p>
     </div>
 
     {% if query %}
         <div class="resultados-count">
             {% if resultados.count > 0 %}
-                {{ resultados.count }} resultado{{ resultados.count|pluralize }} encontrado{{ resultados.count|pluralize }} para <span class="search-query">"{{ query }}"</span>
+                {{ resultados.count }} {% trans "resulto" %}{{ resultados.count|pluralize }} {% trans "encontrado" %} {{ resultados.count|pluralize }} {% trans "para" %} <span class="search-query">"{{ query }}"</span>
             {% else %}
-                No se encontraron resultados para <span class="search-query">"{{ query }}"</span>
+                {% trans "No se encontraron resultados para" %} <span class="search-query">"{{ query }}"</span>
             {% endif %}
         </div>
     {% endif %}
@@ -329,9 +329,9 @@
                     <div class="produccion-meta">
                         <span class="produccion-category">
                             {% if post.categoria %}{{ post.categoria }}
-                            {% else %}Producción{% endif %}
+                            {% else %}{% trans "Producción" %}{% endif %}
                         </span>
-                        <a href="{% url 'detalle_post' post.id %}" class="btn btn-outline">Ver más</a>
+                        <a href="{% url 'detalle_post' post.id %}" class="btn btn-outline">{% trans "Ver más" %}</a>
                     </div>
                 </div>
             </div>
@@ -339,10 +339,10 @@
         </div>
     {% elif query %}
         <div class="no-resultados">
-            <h3>No encontramos resultados</h3>
-            <p>No hay producciones que coincidan con tu búsqueda. Intenta con diferentes términos o revisa nuestro catálogo completo.</p>
+            <h3>{% trans "No encontramos resultados" %}</h3>
+            <p>{% trans "No hay producciones que coincidan con tu búsqueda. Intenta con diferentes términos o revisa nuestro catálogo completo." %}</p>
             <a href="{% url 'inicio' %}">
-                Ir a la página de inicio <i class="fas fa-arrow-right"></i>
+                {% trans "Ir a la página de inicio" %} <i class="fas fa-arrow-right"></i>
             </a>
         </div>
     {% else %}

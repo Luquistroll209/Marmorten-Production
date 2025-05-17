@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-17 10:16+0200\n"
+"POT-Creation-Date: 2025-05-17 12:01+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -34,14 +34,19 @@ msgstr "Home"
 msgid "Sobre Nosotros"
 msgstr "About Us"
 
-#: .\blog\templates\blog\base.html:674 .\blog\templates\blog\base.html:743
-#: .\blog\templates\blog\contacto.html:317
+#: .\blog\templates\blog\base.html:674 .\blog\templates\blog\base.html:713
+#: .\blog\templates\blog\base.html:743 .\blog\templates\blog\contacto.html:317
 msgid "Contacto"
 msgstr "Contact"
 
 #: .\blog\templates\blog\base.html:675 .\blog\templates\blog\base.html:742
+#: .\blog\templates\blog\nuestro_equipo.html:383
 msgid "Nuestro Equipo"
 msgstr "Our Team"
+
+#: .\blog\templates\blog\base.html:695
+msgid "Buscar producciones..."
+msgstr "Searching Productions..."
 
 #: .\blog\templates\blog\base.html:739
 msgid "Enlaces Rápidos"
@@ -54,7 +59,8 @@ msgstr "Marmorten Production. All rights reserved."
 #: .\blog\templates\blog\contacto.html:318
 msgid ""
 "Estamos aquí para responder tus preguntas y escuchar tus ideas. ¡Contáctanos!"
-msgstr "We're here to answer your questions and listen to your ideas. Contact us!"
+msgstr ""
+"We're here to answer your questions and listen to your ideas. Contact us!"
 
 #: .\blog\templates\blog\contacto.html:372
 msgid "Información de Contacto"
@@ -71,6 +77,10 @@ msgstr "Telephones"
 #: .\blog\templates\blog\contacto.html:411
 msgid "Dirección"
 msgstr "Address"
+
+#: .\blog\templates\blog\index.html:802
+msgid "Ver Proyecto"
+msgstr "View Proyect"
 
 #: .\blog\templates\blog\index.html:827
 msgid "NUESTRA FILOSOFÍA"
@@ -104,6 +114,60 @@ msgstr "Latest News"
 msgid ""
 "Mantente al día con nuestros proyectos, anuncios y eventos más recientes"
 msgstr "Stay up to date with our latest projects, announcements and events"
+
+#: .\blog\templates\blog\nuestro_equipo.html:384
+msgid "El talento creativo detrás de Marmorten Production"
+msgstr "The creative talent of Marmorten Production"
+
+#: .\blog\templates\blog\resultados_busqueda.html:303
+msgid "Resultados de Búsqueda"
+msgstr "Search results"
+
+#: .\blog\templates\blog\resultados_busqueda.html:304
+msgid "Explora los resultados que coinciden con tu consulta"
+msgstr "Explore the results that match your query"
+
+#: .\blog\templates\blog\resultados_busqueda.html:310
+msgid "resulto"
+msgstr "result"
+
+#: .\blog\templates\blog\resultados_busqueda.html:310
+msgid "encontrado"
+msgstr "found"
+
+#: .\blog\templates\blog\resultados_busqueda.html:310
+msgid "para"
+msgstr "for"
+
+#: .\blog\templates\blog\resultados_busqueda.html:312
+msgid "No se encontraron resultados para"
+msgstr "No results were found for"
+
+#: .\blog\templates\blog\resultados_busqueda.html:332
+#, fuzzy
+#| msgid "Dirección"
+msgid "Producción"
+msgstr "Address"
+
+#: .\blog\templates\blog\resultados_busqueda.html:334
+msgid "Ver más"
+msgstr "See more"
+
+#: .\blog\templates\blog\resultados_busqueda.html:342
+msgid "No encontramos resultados"
+msgstr "Don't found results"
+
+#: .\blog\templates\blog\resultados_busqueda.html:343
+msgid ""
+"No hay producciones que coincidan con tu búsqueda. Intenta con diferentes "
+"términos o revisa nuestro catálogo completo."
+msgstr ""
+"There are no productions that match your search. Try different ones. "
+"terms or check out our full catalog."
+
+#: .\blog\templates\blog\resultados_busqueda.html:345
+msgid "Ir a la página de inicio"
+msgstr "Go home"
 
 #~ msgid ""
 #~ "Podrán hacer realidad vuestro sueño, porque Marmorten production no cree "

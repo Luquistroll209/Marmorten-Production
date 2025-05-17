@@ -1,6 +1,6 @@
 {% extends 'blog/base.html' %}
 {% load static %}
-
+{% load i18n %}
 {% block title %}Nuestro Equipo | MARMOTEN PRODUCTION{% endblock %}
 
 {% block content %}
@@ -380,8 +380,8 @@
 <div class="team-section">
   <!-- Cabecera -->
   <div class="team-header">
-    <h1 class="team-title">Nuestro Equipo</h1>
-    <p class="team-subtitle">El talento creativo detrás de MARMOTEN PRODUCTION</p>
+    <h1 class="team-title">{% trans "Nuestro Equipo" %}</h1>
+    <p class="team-subtitle">{% trans "El talento creativo detrás de Marmorten Production" %}</p>
   </div>
 
   <!-- Grid de miembros -->
@@ -417,7 +417,7 @@
     </div>
     {% empty %}
     <div class="empty-team">
-      <h3>Conoce a nuestro equipo</h3>
+      <h3>Conoce a nuestro equipo </h3>
       <p>Actualmente no hay miembros del equipo para mostrar. Pronto añadiremos información sobre nuestro talentoso equipo.</p>
     </div>
     {% endfor %}
