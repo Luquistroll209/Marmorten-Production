@@ -686,7 +686,7 @@ p {
   overflow: hidden;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  margin: clamp(40px, 6vw, 80px) 0;
+  margin: 0;
 }
 
 .description-container:before {
@@ -764,8 +764,11 @@ p {
 @media (max-width: 768px) {
   .description-container {
     padding: 40px 0;
+    margin: 0px 0;
   }
-  
+  .description-content {
+    padding-top: 70px;
+  }
   .description-text {
     padding: 30px;
   }
@@ -788,6 +791,7 @@ body:after {
 </style>
 
 <!-- Carrusel hero premium -->
+
 <div class="hero-carousel-container">
   <div class="hero-carousel">
     <div class="carousel-inner" id="mainCarousel">
@@ -824,7 +828,7 @@ body:after {
 </div>
 <div class="description-container">
   <div class="description-content">
-    <h2 class="description-title">{% trans "NUESTRA FILOSOFÍA" %}</h2>
+    <h2 class="description-title">Marmorten Production</h2>
     <div class="description-text">
       {% if config %}
           {% if request.LANGUAGE_CODE == 'en' and config.descripcion_en %}
@@ -836,7 +840,6 @@ body:after {
     </div>
   </div>
 </div>
-
 <!-- Contenido principal -->
 <div class="main-container">
   <!-- Sección de cortometrajes premium -->

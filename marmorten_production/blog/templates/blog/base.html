@@ -487,9 +487,8 @@
             }
             
             .nav-brand {
-                order: 2;
-                margin-left: auto;
-                margin-right: auto;
+                order: 1;
+                margin-right: 20px;
                 height: 35px;
                 transform: scale(1.5);
             }
@@ -798,7 +797,7 @@
                     splashVideo.style.height = '100%';
                 }
             }
-            
+
             // Verificar si es una nueva sesión
             if (!sessionStorage.getItem('splashShown')) {
                 sessionStorage.setItem('splashShown', 'true');
@@ -818,6 +817,11 @@
                     const playPromise = splashVideo.play();
                     
                     const video = document.getElementById('splashVideo');
+                    
+                    setTimeout(() => {
+                        video.muted = true;
+                        video.play();
+                    }, 8);
                     video.addEventListener('click', () => {
                         video.muted = false;
                         video.play();

@@ -35,6 +35,7 @@ CKEDITOR_BASEPATH = "/static/ckeditor/ckeditor/"
 
 INSTALLED_APPS = [
     #'admin_interface',
+    'tailwind',
     'modeltranslation',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -184,12 +185,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Tema de dominios
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://zimbabwe-fragrance-bath-gathering.trycloudflare.com',
+    'https://questionnaire-steve-rental-measurement.trycloudflare.com',
 ]
 
 
 
-ALLOWED_HOSTS = ['zimbabwe-fragrance-bath-gathering.trycloudflare.com', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['questionnaire-steve-rental-measurement.trycloudflare.com', 'localhost', '127.0.0.1']
 
 
 
