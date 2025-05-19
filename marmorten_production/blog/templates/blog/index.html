@@ -914,32 +914,26 @@ body:after {
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-  // Carrusel mejorado
+  // Elementos del carrusel
   const carousel = document.getElementById('mainCarousel');
   const slides = document.querySelectorAll('.carousel-slide');
   const prevBtn = document.getElementById('prevBtn');
   const nextBtn = document.getElementById('nextBtn');
   const indicators = document.querySelectorAll('.carousel-indicator');
   
+  // Variables de estado
   let currentIndex = 0;
   let isAnimating = false;
   let autoSlideInterval;
-  let touchStartX = 0;
-  let isDragging = false;
-  let startPos = 0;
-  let currentTranslate = 0;
-  let prevTranslate = 0;
-  let animationID;
-  
-  // Inicializar carrusel
+  let carouselInitialized = false;
+
+  // Función para inicializar el carrusel
   function initCarousel() {
-    slides.forEach((slide, index) => {
-      if (index === 0) {
-        slide.classList.add('active');
-      } else {
-        slide.classList.remove('active');
-      }
-    });
+    if (carouselInitialized) return;
+    carouselInitialized = true;
+    
+    // Configurar posición inicial
+    updateSlidePosition();
     
     if (slides.length > 1) {
       startAutoSlide();
@@ -948,26 +942,54 @@ document.addEventListener('DOMContentLoaded', function() {
       nextBtn.style.display = 'none';
       document.getElementById('carouselIndicators').style.display = 'none';
     }
+    
+    // Event listeners para los controles
+    prevBtn.addEventListener('click', () => goToSlide(currentIndex - 1));
+    nextBtn.addEventListener('click', () => goToSlide(currentIndex + 1));
+    
+    indicators.forEach((indicator, index) => {
+      indicator.addEventListener('click', () => goToSlide(index));
+    });
+    
+    // Touch events para dispositivos móviles
+    setupTouchEvents();
   }
-  
-  // Ir a slide específico
+
+  // Función para actualizar la posición del slide
+  function updateSlidePosition() {
+    carousel.style.transform = `translateX(-${currentIndex * 100}%)`;
+    updateActiveSlide();
+  }
+
+  // Función para actualizar el slide activo
+  function updateActiveSlide() {
+    slides.forEach((slide, index) => {
+      if (index === currentIndex) {
+        slide.classList.add('active');
+      } else {
+        slide.classList.remove('active');
+      }
+    });
+    updateIndicators();
+  }
+
+  // Función para actualizar los indicadores
+  function updateIndicators() {
+    indicators.forEach((indicator, i) => {
+      indicator.classList.toggle('active', i === currentIndex);
+    });
+  }
+
+  // Función para ir a un slide específico
   function goToSlide(index) {
     if (isAnimating || index === currentIndex) return;
     
     isAnimating = true;
-    const prevIndex = currentIndex;
     currentIndex = (index + slides.length) % slides.length;
-    
-    // Actualizar clases de slides
-    slides[prevIndex].classList.remove('active');
-    slides[currentIndex].classList.add('active');
     
     // Animación suave
     carousel.style.transition = 'transform 0.8s cubic-bezier(0.16, 1, 0.3, 1)';
-    carousel.style.transform = `translateX(-${currentIndex * 100}%)`;
-    
-    // Actualizar indicadores
-    updateIndicators();
+    updateSlidePosition();
     
     // Reiniciar autoplay
     resetAutoSlide();
@@ -978,91 +1000,115 @@ document.addEventListener('DOMContentLoaded', function() {
       carousel.style.transition = 'none';
     }, 800);
   }
-  
-  // Actualizar indicadores
-  function updateIndicators() {
-    indicators.forEach((indicator, i) => {
-      indicator.classList.toggle('active', i === currentIndex);
-    });
-  }
-  
-  // Autoplay
+
+  // Función para iniciar el autoplay
   function startAutoSlide() {
     autoSlideInterval = setInterval(() => {
-      if (!isAnimating && !isDragging) {
+      if (!isAnimating) {
         goToSlide(currentIndex + 1);
       }
-    }, 8000);
+    }, 8000); // 8 segundos entre slides
   }
-  
+
+  // Función para reiniciar el autoplay
   function resetAutoSlide() {
     clearInterval(autoSlideInterval);
     startAutoSlide();
   }
-  
-  function touchStart(e) {
-    startPos = e.touches[0].clientX;
-    isDragging = true;
-    carousel.style.transition = 'none';
-    prevTranslate = currentIndex * -window.innerWidth;
-    clearInterval(autoSlideInterval);
-    cancelAnimationFrame(animationID);
-  }
-  
-  function touchMove(e) {
-    if (!isDragging) return;
-    const currentPos = e.touches[0].clientX;
-    currentTranslate = prevTranslate + currentPos - startPos;
-    carousel.style.transform = `translateX(${currentTranslate}px)`;
-  }
-  
-  function touchEnd() {
-    if (!isDragging) return;
-    isDragging = false;
+
+  // Configurar eventos táctiles para móviles
+  function setupTouchEvents() {
+    let touchStartX = 0;
+    let isDragging = false;
     
-    const movedBy = currentTranslate - prevTranslate;
-    if (movedBy < -100 && currentIndex < slides.length - 1) {
-      goToSlide(currentIndex + 1);
-    } else if (movedBy > 100 && currentIndex > 0) {
-      goToSlide(currentIndex - 1);
+    carousel.addEventListener('touchstart', (e) => {
+      touchStartX = e.touches[0].clientX;
+      isDragging = true;
+      carousel.style.transition = 'none';
+      clearInterval(autoSlideInterval);
+    }, { passive: true });
+    
+    carousel.addEventListener('touchmove', (e) => {
+      if (!isDragging) return;
+      const touchX = e.touches[0].clientX;
+      const diff = touchX - touchStartX;
+      carousel.style.transform = `translateX(calc(-${currentIndex * 100}% + ${diff}px)`;
+    }, { passive: true });
+    
+    carousel.addEventListener('touchend', () => {
+      if (!isDragging) return;
+      isDragging = false;
+      
+      const touchEndX = event.changedTouches[0].clientX;
+      const diff = touchEndX - touchStartX;
+      
+      if (diff < -50 && currentIndex < slides.length - 1) {
+        goToSlide(currentIndex + 1);
+      } else if (diff > 50 && currentIndex > 0) {
+        goToSlide(currentIndex - 1);
+      } else {
+        goToSlide(currentIndex);
+      }
+    }, { passive: true });
+  }
+
+  // Función para manejar el video de inicio
+  function handleSplashVideo() {
+    const splashVideo = document.getElementById('splashVideo');
+    const skipSplashBtn = document.getElementById('skipSplashBtn');
+    
+    if (splashVideo) {
+      // Verificar si el video ya terminó
+      if (splashVideo.readyState >= 3 && splashVideo.currentTime >= splashVideo.duration - 0.5) {
+        // Video ya terminó, iniciar carrusel después de 8 segundos
+        setTimeout(initCarousel, 1000);
+      } else {
+        // Esperar a que termine el video
+        splashVideo.addEventListener('ended', function() {
+          // Iniciar carrusel después de 8 segundos
+          setTimeout(initCarousel, 1000);
+        });
+        
+        // Manejar el botón de saltar
+        if (skipSplashBtn) {
+          skipSplashBtn.addEventListener('click', function() {
+            // Iniciar carrusel después de 8 segundos al saltar
+            setTimeout(initCarousel, 1000);
+          });
+        }
+      }
     } else {
-      goToSlide(currentIndex);
+      // Si no hay video, iniciar carrusel inmediatamente
+      initCarousel();
     }
   }
-  
-  // Event listeners
-  prevBtn.addEventListener('click', () => goToSlide(currentIndex - 1));
-  nextBtn.addEventListener('click', () => goToSlide(currentIndex + 1));
-  
-  indicators.forEach((indicator, index) => {
-    indicator.addEventListener('click', () => goToSlide(index));
-  });
-  
-  // Botón flotante
+
+  // Botón flotante "volver arriba"
   const backToTopBtn = document.getElementById('backToTop');
-  
-  window.addEventListener('scroll', () => {
-    backToTopBtn.classList.toggle('visible', window.scrollY > 300);
-  });
-  
-  backToTopBtn.addEventListener('click', () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
+  if (backToTopBtn) {
+    window.addEventListener('scroll', () => {
+      backToTopBtn.classList.toggle('visible', window.scrollY > 300);
     });
-  });
-  
-  // Inicializar
-  initCarousel();
-  
+    
+    backToTopBtn.addEventListener('click', () => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+  }
+
   // Optimización de imágenes
   document.querySelectorAll('img').forEach(img => {
     if (!img.loading) {
       img.loading = 'lazy';
     }
   });
+
+  // Iniciar todo
+  handleSplashVideo();
   
-  // Prevenir FOUC
+  // Prevenir FOUC (Flash of Unstyled Content)
   document.body.style.visibility = 'visible';
 });
 </script>
