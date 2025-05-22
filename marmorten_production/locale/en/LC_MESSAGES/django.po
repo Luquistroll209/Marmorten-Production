@@ -58,9 +58,9 @@ msgstr "Marmorten Production. All rights reserved."
 
 #: .\blog\templates\blog\contacto.html:318
 msgid ""
-"Estamos aquí para responder tus preguntas y escuchar tus ideas. ¡Contáctanos!"
+"Estamos aquí para responder tus preguntas y escuchar tus ideas ¡Contáctanos!"
 msgstr ""
-"We're here to answer your questions and listen to your ideas. Contact us!"
+"We’re here to answer your questions and hear your ideas. Contact us!"
 
 #: .\blog\templates\blog\contacto.html:372
 msgid "Información de Contacto"
