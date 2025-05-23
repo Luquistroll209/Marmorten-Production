@@ -358,6 +358,7 @@ p {
   margin-top: clamp(40px, 5vw, 60px);
   position: relative;
   z-index: 2;
+  align-items: stretch; /* Añadido para igualar altura */
 }
 
 .produccion-card {
@@ -369,6 +370,9 @@ p {
   border: 1px solid var(--color-borde);
   position: relative;
   will-change: transform;
+  display: flex; /* Añadido */
+  flex-direction: column; /* Añadido */
+  height: 100%; /* Añadido */
 }
 
 .produccion-card:hover {
@@ -384,6 +388,7 @@ p {
   border-radius: var(--borde-redondeado) var(--borde-redondeado) 0 0;
   overflow: hidden;
   position: relative;
+  flex-shrink: 0; /* Añadido para prevenir que cambie de tamaño */
 }
 
 .produccion-image-container:before {
@@ -411,6 +416,9 @@ p {
 .produccion-content {
   padding: clamp(25px, 3vw, 40px);
   position: relative;
+  flex-grow: 1; 
+  display: flex; 
+  flex-direction: column; 
 }
 
 .produccion-title {
@@ -425,6 +433,7 @@ p {
   justify-content: space-between;
   align-items: center;
   margin-top: clamp(20px, 3vw, 30px);
+  margin-top: auto; 
 }
 
 .produccion-category {
@@ -435,7 +444,6 @@ p {
   letter-spacing: 2px;
 }
 
-/* Botones premium mejorados */
 .btn {
   display: inline-flex;
   align-items: center;
