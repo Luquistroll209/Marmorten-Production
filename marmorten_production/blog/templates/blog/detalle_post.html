@@ -791,7 +791,7 @@
         </div>
         <div class="related-content">
           <h3 class="related-title">{{ post.title }}</h3>
-          <p class="related-excerpt">{{ post.resumen|truncatechars:150 }}</p>
+          <p class="related-excerpt">{{ post.resumen|default:""|truncatechars:150 }}</p>
           <a href="{% url 'detalle_post' post.id %}" class="read-more">
             Ver detalles <i class="fas fa-arrow-right"></i>
           </a>

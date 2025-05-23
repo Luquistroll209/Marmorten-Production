@@ -185,12 +185,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Tema de dominios
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://allow-buttons-behavioral-visible.trycloudflare.com',
+    'https://jennifer-agreed-guides-thread.trycloudflare.com',
 ]
 
 
 
-ALLOWED_HOSTS = ['allow-buttons-behavioral-visible.trycloudflare.com', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['jennifer-agreed-guides-thread.trycloudflare.com', 'localhost', '127.0.0.1']
 
 
 
