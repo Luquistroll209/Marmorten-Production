@@ -5,7 +5,6 @@
     {% load static %}
     {% load i18n %}
 
-
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -197,6 +196,8 @@
             transform: scale(1.5);
             transition: var(--transicion-suave);
             filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.3));
+            order: 1;
+            margin-right: auto;
         }
 
         .nav-brand:hover {
@@ -208,6 +209,9 @@
             display: flex;
             align-items: center;
             gap: 25px;
+            margin-right: auto;
+            order: 2;
+            margin-left: 30px;
         }
 
         .nav-item {
@@ -254,6 +258,53 @@
             background: var(--color-destacado);
         }
 
+        /* Selector de idioma */
+        .language-switcher {
+            position: relative;
+            margin-right: 20px;
+            z-index: 100;
+            order: 3;
+        }
+
+        .language-flag-button {
+            background: rgba(30, 30, 30, 0.8);
+            color: var(--color-texto-principal);
+            border: 1px solid var(--color-borde-suave);
+            border-radius: var(--radio-borde-pequeno);
+            padding: 8px 15px;
+            cursor: pointer;
+            transition: var(--transicion-suave);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            font-size: 1.7rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+        }
+
+        .language-flag-button:hover {
+            background: rgba(40, 40, 40, 0.9);
+            border-color: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
+        }
+
+        .flag-icon {
+            display: inline-block;
+            width: 20px;
+            height: 15px;
+            background-size: cover;
+        }
+
+        .flag-icon-es {
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 40"><rect width="60" height="40" fill="#c60b1e"/><rect y="10" width="60" height="20" fill="#ffc400"/><rect y="15" width="60" height="10" fill="#c60b1e"/></svg>');
+        }
+
+        .flag-icon-us {
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 40"><rect width="60" height="40" fill="#3c78d8"/><path fill="#fff" d="M0,0 L60,0 L60,4 L0,4 Z M0,8 L60,8 L60,12 L0,12 Z M0,16 L60,16 L60,20 L0,20 Z M0,24 L60,24 L60,28 L0,28 Z M0,32 L60,32 L60,36 L0,36 Z"/><path fill="#fff" d="M0,0 L24,0 L24,20 L0,20 Z"/><path fill="#c60b1e" d="M0,2 L24,2 L24,4 L0,4 Z M0,8 L24,8 L24,10 L0,10 Z M2,0 L2,20 L4,20 L4,0 Z M8,0 L8,20 L10,20 L10,0 Z M16,0 L16,20 L18,20 L18,0 Z"/></svg>');
+        }
+
         /* Buscador */
         .search-wrapper {
             position: relative;
@@ -266,6 +317,7 @@
             transition: var(--transicion-suave);
             backdrop-filter: blur(5px);
             -webkit-backdrop-filter: blur(5px);
+            order: 4;
         }
 
         .search-wrapper:focus-within {
@@ -328,6 +380,7 @@
             transition: var(--transicion-suave);
             padding: 10px;
             border-radius: 5px;
+            order: 0;
         }
 
         .mobile-nav-toggle:hover {
@@ -487,10 +540,15 @@
             }
             
             .nav-brand {
-                order: 1;
-                margin-right: 20px;
+                order: 2;
+                margin-right: auto;
                 height: 35px;
                 transform: scale(1.5);
+            }
+            
+            .language-switcher {
+                order: 3;
+                margin-right: 0;
             }
             
             .search-wrapper {
@@ -505,12 +563,13 @@
                 flex-direction: column;
                 width: 100%;
                 padding: 20px 0;
-                order: 3;
+                order: 5;
                 background-color: var(--color-tarjeta-oscura);
                 border-radius: var(--radio-borde-pequeno);
                 margin-top: 15px;
                 border: 1px solid var(--color-borde-suave);
                 box-shadow: var(--sombra-intensa);
+                margin-left: 0;
             }
             
             .nav-menu.active {
@@ -601,53 +660,8 @@
 
         @keyframes pulse {
             0%, 100% { opacity: 1; }
-            50% { opacity: 0.6); }
+            50% { opacity: 0.6; }
         }
-        /* Selector de idioma mejorado */
-.language-switcher {
-    position: relative;
-    margin-left: 20px;
-    z-index: 100;
-}
-
-.language-flag-button {
-    background: rgba(30, 30, 30, 0.8);
-    color: var(--color-texto-principal);
-    border: 1px solid var(--color-borde-suave);
-    border-radius: var(--radio-borde-pequeno);
-    padding: 8px 15px;
-    cursor: pointer;
-    transition: var(--transicion-suave);
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
-    font-size: 1.7rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 40px;
-    height: 40px;
-}
-
-.language-flag-button:hover {
-    background: rgba(40, 40, 40, 0.9);
-    border-color: rgba(255, 255, 255, 0.3);
-    transform: scale(1.1);
-}
-
-.flag-icon {
-    display: inline-block;
-    width: 20px;
-    height: 15px;
-    background-size: cover;
-}
-
-.flag-icon-es {
-    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 40"><rect width="60" height="40" fill="#c60b1e"/><rect y="10" width="60" height="20" fill="#ffc400"/><rect y="15" width="60" height="10" fill="#c60b1e"/></svg>');
-}
-
-.flag-icon-us {
-    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 40"><rect width="60" height="40" fill="#3c78d8"/><path fill="#fff" d="M0,0 L60,0 L60,4 L0,4 Z M0,8 L60,8 L60,12 L0,12 Z M0,16 L60,16 L60,20 L0,20 Z M0,24 L60,24 L60,28 L0,28 Z M0,32 L60,32 L60,36 L0,36 Z"/><path fill="#fff" d="M0,0 L24,0 L24,20 L0,20 Z"/><path fill="#c60b1e" d="M0,2 L24,2 L24,4 L0,4 Z M0,8 L24,8 L24,10 L0,10 Z M2,0 L2,20 L4,20 L4,0 Z M8,0 L8,20 L10,20 L10,0 Z M16,0 L16,20 L18,20 L18,0 Z"/></svg>');
-}
     </style>
 </head>
 <body>
@@ -681,9 +695,11 @@
                 {% get_current_language as LANGUAGE_CODE %}
                 <button type="submit" name="language" value="{% if LANGUAGE_CODE == 'es' %}en{% else %}es{% endif %}" class="language-flag-button" aria-label="Change language">
                     {% if LANGUAGE_CODE == 'es' %}
-                        🇪🇸  <!-- Bandera España -->
+                        <!-- 🇪🇸 Bandera España -->
+                        <img src="{% static 'img/flags/spain.webp' %}" alt="ES" class="flag-icon flag-icon-es">
                     {% else %}
-                        🇺🇸  <!-- Bandera USA -->
+                          <!--🇺🇸 Bandera USA -->
+                        <img src="{% static 'img/flags/ingles.jpg' %}" alt="ES" class="flag-icon flag-icon-es">
                     {% endif %}
                 </button>
             </form>
@@ -691,7 +707,7 @@
 
         <div class="search-wrapper" id="searchWrapper">
             <form action="{% url 'buscar_posts' %}" method="get" class="search-form">
-                <input type="search" name="q" class="search-field" placeholder='{% trans "Buscar producciones..." %}'' value="{{ request.GET.q }}">
+                <input type="search" name="q" class="search-field" placeholder='{% trans "Buscar producciones..." %}' value="{{ request.GET.q }}">
                 <button type="submit" class="search-submit">
                     <i class="fas fa-search search-icon"></i>
                 </button>

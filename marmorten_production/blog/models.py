@@ -138,7 +138,7 @@ from django.db import models
 class Equipo(models.Model):
     nombre = models.CharField(max_length=100)
     puesto = models.CharField(max_length=100)
-    biografia = models.TextField()
+    biografia = models.TextField(blank=True)
     foto = models.ImageField(upload_to='equipo/')
     orden = models.PositiveIntegerField(default=0)
     redes_sociales = models.JSONField(default=dict, blank=True)
