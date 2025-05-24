@@ -19,7 +19,6 @@ urlpatterns = [
     path('i18n/', include('django.conf.urls.i18n')),
 ]
 
-handler404 = 'blog.views.custom_404'
 
 # Configuración para desarrollo (DEBUG=True)
 if settings.DEBUG:

@@ -693,6 +693,8 @@
                 {% csrf_token %}
                 <input name="next" type="hidden" value="{{ request.get_full_path|default:request.path }}">
                 {% get_current_language as LANGUAGE_CODE %}
+                {% get_available_languages as LANGUAGES %}
+                {% get_language_info_list for LANGUAGES as languages %}
                 <button type="submit" name="language" value="{% if LANGUAGE_CODE == 'es' %}en{% else %}es{% endif %}" class="language-flag-button" aria-label="Change language">
                     {% if LANGUAGE_CODE == 'es' %}
                         <!-- 🇪🇸 Bandera España -->

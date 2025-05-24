@@ -799,6 +799,22 @@ body:after {
 </style>
 
 <!-- Carrusel hero premium -->
+<div class="description-container">
+  <div class="description-content">
+    <h2 class="description-title">Marmorten Production</h2>
+    <div class="description-text">
+      {% if config %}
+          {% if request.LANGUAGE_CODE == 'en' and config.descripcion_en %}
+              <p>{{ config.descripcion_en }}</p>
+          {% else %}
+              <p>{{ config.descripcion }}</p>
+          {% endif %}
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+
 
 <div class="hero-carousel-container">
   <div class="hero-carousel">
@@ -831,20 +847,6 @@ body:after {
       {% for item in carrusel_items %}
       <button class="carousel-indicator {% if forloop.first %}active{% endif %}" aria-label="Ir al slide {{ forloop.counter }}"></button>
       {% endfor %}
-    </div>
-  </div>
-</div>
-<div class="description-container">
-  <div class="description-content">
-    <h2 class="description-title">Marmorten Production</h2>
-    <div class="description-text">
-      {% if config %}
-          {% if request.LANGUAGE_CODE == 'en' and config.descripcion_en %}
-              <p>{{ config.descripcion_en }}</p>
-          {% else %}
-              <p>{{ config.descripcion }}</p>
-          {% endif %}
-      {% endif %}
     </div>
   </div>
 </div>

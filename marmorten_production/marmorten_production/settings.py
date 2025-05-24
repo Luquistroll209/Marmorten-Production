@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 from pathlib import Path
 import os
-
+from django.utils.translation import gettext_lazy as _
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -75,6 +75,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
+    'blog.middleware.SetLanguageFromURLMiddleware',  # Middleware personalizado para establecer el idioma desde la URL  
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -152,8 +153,8 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'es'
 LANGUAGES = [
-    ('es', 'Español'),
-    ('en', 'English'),
+    ('en', _('English')),
+    ('es', _('Spanish')),
 ]
 TIME_ZONE = 'UTC'
 LOCALE_PATHS = [
@@ -163,6 +164,15 @@ USE_I18N = True
 MODELTRANSLATION_LANGUAGES = ('es', 'en')  # Orden importante
 MODELTRANSLATION_DEFAULT_LANGUAGE = 'es'
 MODELTRANSLATION_PREPOPULATE_LANGUAGE = 'es'
+
+
+LANGUAGE_COOKIE_NAME = 'Marmorten_language' 
+LANGUAGE_COOKIE_AGE = 365 * 24 * 60 * 60  # 1 año
+LANGUAGE_COOKIE_DOMAIN = None
+LANGUAGE_COOKIE_PATH = '/'
+LANGUAGE_COOKIE_SECURE = False
+LANGUAGE_COOKIE_HTTPONLY = False
+LANGUAGE_COOKIE_SAMESITE = 'Lax'
 
 # Opcional: Para que no se vea "[es]" en los campos originales
 
@@ -185,12 +195,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Tema de dominios
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://isolated-rise-collect-victim.trycloudflare.com',
+    'https://souls-water-appointment-wicked.trycloudflare.com',
 ]
 
 
 
-ALLOWED_HOSTS = ['isolated-rise-collect-victim.trycloudflare.com', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['souls-water-appointment-wicked.trycloudflare.com', 'localhost', '127.0.0.1']
 
 
 
