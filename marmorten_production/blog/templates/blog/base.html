@@ -164,7 +164,7 @@
         /* Navbar premium - ESTILO ORIGINAL */
         .main-navigation {
             margin-top: 20px;
-            padding: 15px 5%;
+            padding: 10px 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -180,7 +180,7 @@
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
             transition: var(--transicion-suave);
-            max-width: 90%;
+            max-width: 90%; 
             margin: 0 auto;
             will-change: transform, backdrop-filter;
         }
@@ -219,7 +219,7 @@
             text-decoration: none;
             font-weight: 500;
             text-transform: uppercase;
-            font-size: 0.9rem;
+            font-size: 0.7rem;
             letter-spacing: 1.5px;
             padding: 10px 20px;
             border-radius: var(--radio-borde-pequeno);
@@ -589,8 +589,12 @@
                 grid-template-columns: 1fr;
             }
         }
+        .footer-grid {
+            grid-template-columns: repeat(auto-fit, minmax(25px, 1fr));
+        }
         
         @media (max-width: 768px) {
+            .
             .nav-item {
                 padding: 12px 15px;
                 width: 100%;

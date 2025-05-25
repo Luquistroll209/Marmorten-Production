@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-17 09:41+0200\n"
+"POT-Creation-Date: 2025-05-25 16:01+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,92 +19,150 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? "
 "1 : 2;\n"
 
-#: .\blog\models.py:11
+#: blog/models.py:11
 msgid "Título"
 msgstr ""
 
-#: .\blog\models.py:12
+#: blog/models.py:12
 msgid "Contenido"
 msgstr ""
 
-#: .\blog\templates\blog\base.html:672 .\blog\templates\blog\base.html:740
+#: blog/templates/blog/base.html:690 blog/templates/blog/base.html:762
 msgid "Inicio"
 msgstr ""
 
-#: .\blog\templates\blog\base.html:673 .\blog\templates\blog\base.html:741
+#: blog/templates/blog/base.html:691 blog/templates/blog/base.html:763
 msgid "Sobre Nosotros"
 msgstr ""
 
-#: .\blog\templates\blog\base.html:674 .\blog\templates\blog\base.html:675
-#: .\blog\templates\blog\base.html:743
+#: blog/templates/blog/base.html:692 blog/templates/blog/base.html:735
+#: blog/templates/blog/base.html:765 blog/templates/blog/contacto.html:319
 msgid "Contacto"
 msgstr ""
 
-#: .\blog\templates\blog\base.html:739
-msgid "Enlaces Rápidos"
-msgstr ""
-
-#: .\blog\templates\blog\base.html:742
+#: blog/templates/blog/base.html:693 blog/templates/blog/base.html:764
+#: blog/templates/blog/nuestro_equipo.html:383
 msgid "Nuestro Equipo"
 msgstr ""
 
-#: .\blog\templates\blog\base.html:766
+#: blog/templates/blog/base.html:717
+msgid "Buscar producciones..."
+msgstr ""
+
+#: blog/templates/blog/base.html:761
+msgid "Enlaces Rápidos"
+msgstr ""
+
+#: blog/templates/blog/base.html:792
 msgid "Marmorten Production. Todos los derechos reservados."
 msgstr ""
 
-#: .\blog\templates\blog\index.html:827
-msgid "NUESTRA FILOSOFÍA"
-msgstr ""
-
-#: .\blog\templates\blog\index.html:830
+#: blog/templates/blog/contacto.html:320
 msgid ""
-"Podrán hacer realidad vuestro sueño,  porque Marmorten production no cree en "
-"lo imposible.  Junto a un equipo de profesionales de primera clase, desde la "
-"producción a la gestión, pasando por los diseñadores, a su disposición. "
-"Nuestro equipo creativo de estrellas incluye a los mejores expertos en todo "
-"el espectro de la producción, exactamente lo que necesita para lograr un "
-"valor de producción de alta calidad."
+"Estamos aquí para responder tus preguntas y escuchar tus ideas ¡Contáctanos!"
 msgstr ""
 
-#: .\blog\templates\blog\index.html:832
-msgid ""
-"Con la colaboración, creatividad y excelencia técnica de Marmorten "
-"production, obtendrá una producción pulida y lista para su emisión que "
-"cumplirá con los más altos estándares. Nuestra experiencia con anuncios, "
-"vídeos en línea, cortometrajes y mucho más significa que pueden ejecutar "
-"cualquier proyecto con cuidado y arte."
+#: blog/templates/blog/contacto.html:374
+msgid "Información de Contacto"
 msgstr ""
 
-#: .\blog\templates\blog\index.html:834
-msgid ""
-"No renuncies a la calidad; da vida a tu visión creativa con profesionales "
-"dedicados a la excelencia narrativa. Nuestro equipo de ensueño le ofrece las "
-"habilidades que necesita para alcanzar el éxito."
+#: blog/templates/blog/contacto.html:382
+msgid "Correo Electrónico"
 msgstr ""
 
-#: .\blog\templates\blog\index.html:844
+#: blog/templates/blog/contacto.html:394
+msgid "Teléfonos"
+msgstr ""
+
+#: blog/templates/blog/contacto.html:413
+msgid "Dirección"
+msgstr ""
+
+#: blog/templates/blog/index.html:834
+msgid "Ver Proyecto"
+msgstr ""
+
+#: blog/templates/blog/index.html:862
 msgid "Cortometrajes"
 msgstr ""
 
-#: .\blog\templates\blog\index.html:845
+#: blog/templates/blog/index.html:863
 msgid ""
 "Nuestros trabajos más emblemáticos que representan nuestra calidad y estilo "
 "único en producción audiovisual"
 msgstr ""
 
-#: .\blog\templates\blog\index.html:867
+#: blog/templates/blog/index.html:886
 msgid "Cortometraje"
 msgstr ""
 
-#: .\blog\templates\blog\index.html:868
+#: blog/templates/blog/index.html:887
 msgid "Detalles"
 msgstr ""
 
-#: .\blog\templates\blog\index.html:880
+#: blog/templates/blog/index.html:898
 msgid "Últimas Noticias"
 msgstr ""
 
-#: .\blog\templates\blog\index.html:881
+#: blog/templates/blog/index.html:899
 msgid ""
 "Mantente al día con nuestros proyectos, anuncios y eventos más recientes"
+msgstr ""
+
+#: blog/templates/blog/nuestro_equipo.html:384
+msgid "El talento creativo detrás de Marmorten Production"
+msgstr ""
+
+#: blog/templates/blog/resultados_busqueda.html:303
+msgid "Resultados de Búsqueda"
+msgstr ""
+
+#: blog/templates/blog/resultados_busqueda.html:304
+msgid "Explora los resultados que coinciden con tu consulta"
+msgstr ""
+
+#: blog/templates/blog/resultados_busqueda.html:310
+msgid "resulto"
+msgstr ""
+
+#: blog/templates/blog/resultados_busqueda.html:310
+msgid "encontrado"
+msgstr ""
+
+#: blog/templates/blog/resultados_busqueda.html:310
+msgid "para"
+msgstr ""
+
+#: blog/templates/blog/resultados_busqueda.html:312
+msgid "No se encontraron resultados para"
+msgstr ""
+
+#: blog/templates/blog/resultados_busqueda.html:332
+msgid "Producción"
+msgstr ""
+
+#: blog/templates/blog/resultados_busqueda.html:334
+msgid "Ver más"
+msgstr ""
+
+#: blog/templates/blog/resultados_busqueda.html:342
+msgid "No encontramos resultados"
+msgstr ""
+
+#: blog/templates/blog/resultados_busqueda.html:343
+msgid ""
+"No hay producciones que coincidan con tu búsqueda. Intenta con diferentes "
+"términos o revisa nuestro catálogo completo."
+msgstr ""
+
+#: blog/templates/blog/resultados_busqueda.html:345
+msgid "Ir a la página de inicio"
+msgstr ""
+
+#: marmorten_production/settings.py:157
+msgid "English"
+msgstr ""
+
+#: marmorten_production/settings.py:158
+msgid "Spanish"
 msgstr ""
