@@ -15,6 +15,7 @@ admin.site.site_header = 'Marmorten Productión'
 admin.site.index_title = 'Panel de Administración'
 
 
+
 class BaseAdmin(admin.ModelAdmin):
     class Media:
         css = {

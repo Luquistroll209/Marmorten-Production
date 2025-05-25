@@ -37,6 +37,7 @@ CKEDITOR_BASEPATH = "/static/ckeditor/ckeditor/"
 INSTALLED_APPS = [
     #'admin_interface',
     'tailwind',
+    'ckeditor',
     'modeltranslation',
     'django.contrib.admin',
     'django.contrib.auth',
