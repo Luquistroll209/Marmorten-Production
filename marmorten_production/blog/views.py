@@ -8,6 +8,7 @@ from django.contrib import messages
 from django.utils.translation import get_language
 from urllib.parse import urlparse, urlunparse
 
+
 def get_config():
     """Función helper para obtener la configuración del sitio una sola vez por request"""
     config = ConfiguracionSitio.objects.first()

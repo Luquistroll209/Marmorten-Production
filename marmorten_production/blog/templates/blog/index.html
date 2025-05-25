@@ -789,6 +789,18 @@
       margin-bottom: 25px;
     }
   }
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 1em 0;
+  }
+  table, th, td {
+    border: 1px solid #ccc;
+  }
+  th, td {
+    padding: 8px;
+    text-align: left;
+  }
 
   /* Preload de fuentes */
   body:after {
@@ -809,9 +821,9 @@
       <div class="description-text">
         {% if config %}
             {% if request.LANGUAGE_CODE == 'en' and config.descripcion_en %}
-                <p>{{ config.descripcion_en }}</p>
+                <p>{{ config.descripcion_en|safe }}</p>
             {% else %}
-                <p>{{ config.descripcion }}</p>
+                <p>{{ config.descripcion|safe }}</p>
             {% endif %}
         {% endif %}
       </div>

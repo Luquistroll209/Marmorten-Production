@@ -5,12 +5,12 @@ from django.db.models import Q
 from django.shortcuts import render, get_object_or_404
 from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
-
+from ckeditor.fields import RichTextField
 
 class Post(models.Model):
     title = models.CharField(_('Título'), max_length=200)
-    content = models.TextField(_('Contenido'), blank=True, null=True)
-    resumen = models.TextField(blank=True, null=True, help_text="Breve resumen para mostrar en las tarjetas")
+    content = RichTextField(_('Contenido'), blank=True, null=True)
+    resumen = RichTextField(blank=True, null=True, help_text="Breve resumen para mostrar en las tarjetas")
     fecha_publicacion = models.DateTimeField(default=timezone.now)
     imagen = models.ImageField(upload_to='images/', blank=True, null=True)
     video = models.FileField(upload_to='videos/', blank=True, null=True)
@@ -138,7 +138,7 @@ from django.db import models
 class Equipo(models.Model):
     nombre = models.CharField(max_length=100)
     puesto = models.CharField(max_length=100)
-    biografia = models.TextField(blank=True)
+    biografia = RichTextField(blank=True)
     foto = models.ImageField(upload_to='equipo/')
     orden = models.PositiveIntegerField(default=0)
     redes_sociales = models.JSONField(default=dict, blank=True)
@@ -161,8 +161,8 @@ class ConfiguracionSitio(models.Model):
     logo = models.ImageField(upload_to='config/', blank=True, null=True)
     email_contacto = models.EmailField(default='contacto@marmoten.com')
     direccion = models.TextField(blank=True)
-    descripcion = models.TextField(blank=True)
-    descripcion_en = models.TextField(blank=True, verbose_name="Descripción (Inglés)")
+    descripcion = RichTextField(blank=True)
+    descripcion_en = RichTextField(blank=True, null=True, verbose_name="Descripción (Inglés)")
     
     # Sobre Nosotros - Contenido
     sobre_nosotros = models.TextField(blank=True)
@@ -248,7 +248,7 @@ class SeccionSobreNosotros(models.Model):
     
     titulo = models.CharField(max_length=100, blank=True)
     tipo = models.CharField(max_length=10, choices=TIPO_SECCION)
-    contenido_texto = models.TextField(blank=True, null=True)
+    contenido_texto = RichTextField(blank=True, null=True)
     imagen = models.ImageField(upload_to='sobre_nosotros/secciones/', blank=True, null=True)
     orden = models.PositiveIntegerField(default=0)
     

@@ -13,8 +13,8 @@ from django.utils.safestring import mark_safe
 
 admin.site.site_header = 'Marmorten Productión'
 admin.site.index_title = 'Panel de Administración'
-
-
+from ckeditor.widgets import CKEditorWidget
+from django import forms
 
 class BaseAdmin(admin.ModelAdmin):
     class Media:
@@ -66,6 +66,15 @@ class TelefonoContactoInline(admin.StackedInline):
 
 @admin.register(ConfiguracionSitio)
 class ConfiguracionSitioAdmin(admin.ModelAdmin):
+    descripcion = forms.CharField(widget=CKEditorWidget(), required=False)
+    descripcion_en = forms.CharField(widget=CKEditorWidget(), required=False)
+    sobre_nosotros = forms.CharField(widget=CKEditorWidget(), required=False)
+    sobre_nosotros_en = forms.CharField(widget=CKEditorWidget(), required=False)
+    mision = forms.CharField(widget=CKEditorWidget(), required=False)
+    mision_en = forms.CharField(widget=CKEditorWidget(), required=False)
+    vision = forms.CharField(widget=CKEditorWidget(), required=False)
+    vision_en = forms.CharField(widget=CKEditorWidget(), required=False)
+    
     inlines = [TelefonoContactoInline]
     list_display = ('titulo_sitio', 'email_contacto', 'preview_logo')
 

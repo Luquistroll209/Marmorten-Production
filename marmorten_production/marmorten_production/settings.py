@@ -51,7 +51,28 @@ INSTALLED_APPS = [
     'blog',
 ]
 ROSETTA_ENABLE_TRANSLATION_SUGGESTIONS = False
-
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'Full',
+        'height': 300,
+        'width': '100%',
+        'extraPlugins': ','.join([
+            'uploadimage',  # Para subir imágenes
+            'div',
+            'autolink',
+            'embed',
+            'autoembed',
+            'embedsemantic',
+            'autogrow',
+            'widget',
+            'lineutils',
+            'clipboard',
+            'dialog',
+            'dialogui',
+            'elementspath'
+        ]),
+    },
+}
 ADMIN_INTERFACE = {
     'THEME': 'default',  # Puedes crear tus propios temas
     'LOGO': 'img/logo.png',
