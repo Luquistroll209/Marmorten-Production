@@ -17,8 +17,7 @@ from django.utils.translation import gettext_lazy as _
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media' 
+
 
 
 # Quick-start development settings - unsuitable for production
@@ -197,12 +196,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Tema de dominios
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://souls-water-appointment-wicked.trycloudflare.com',
+    'https://billion-terry-select-heart.trycloudflare.com',
 ]
 
 
 
-ALLOWED_HOSTS = ['souls-water-appointment-wicked.trycloudflare.com', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['billion-terry-select-heart.trycloudflare.com', 'localhost', '127.0.0.1']
 
 
 

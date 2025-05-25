@@ -1,926 +1,930 @@
-{% extends 'blog/base.html' %}
-{% load static %}
-{% block title %}Inicio - MARMOTEN PRODUCTION{% endblock %}
-{% load i18n %}
-
-{% block content %}
-<style>
-:root {
-  /* Paleta de colores profesional mejorada */
-  --color-negro: #0a0a0a;
-  --color-fondo: #121212;
-  --color-borde: rgba(255, 255, 255, 0.1);
-  --color-texto: #ffffff;
-  --color-texto-claro: #e0e0e0;
-  --color-acento: #c0c0c0; /* Plateado */
-  --color-acento-hover: #ffffff;
-  --color-tarjeta: #1e1e1e;
-  --color-texto-bg: rgba(18, 18, 18, 0.92);
-  --color-overlay: rgba(10, 10, 10, 0.7);
-  
-  --borde-redondeado: 20px;
-  --borde-redondeado-pequeno: 10px;
-  --sombra: 0 12px 40px rgba(0, 0, 0, 0.25);
-  --sombra-hover: 0 16px 50px rgba(0, 0, 0, 0.35);
-  --transicion: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  background-color: var(--color-fondo);
-  color: var(--color-texto);
-  line-height: 1.7;
-  margin: 0;
-  padding: 0;
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
-  overflow-x: hidden;
-}
-
-/* Tipografía premium mejorada */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Bebas+Neue&family=Playfair+Display:wght@700;800&display=swap');
-
-h1, h2, h3, h4 {
-  font-family: 'Bebas Neue', sans-serif;
-  font-weight: 400;
-  line-height: 1.1;
-  letter-spacing: 1px;
-  color: var(--color-texto);
-  margin-bottom: 1.5rem;
-}
-
-h2 {
-  font-size: clamp(2.5rem, 5vw, 3.5rem);
-  position: relative;
-  text-transform: uppercase;
-}
-
-h3 {
-  font-size: clamp(1.5rem, 3vw, 1.8rem);
-  letter-spacing: 1.5px;
-}
-
-p {
-  margin-bottom: 1.8rem;
-  color: var(--color-texto-claro);
-  font-size: clamp(1rem, 1.1vw, 1.1rem);
-  line-height: 1.8;
-  font-weight: 300;
-}
-
-/* Estructura principal mejorada */
-.main-container {
-  max-width: 1800px;
-  margin: 20px auto;
-  position: relative;
-}
-
-.section {
-  padding: clamp(60px, 8vw, 120px) 0;
-  position: relative;
-}
-
-.section-header {
-  text-align: center;
-  margin-bottom: clamp(40px, 6vw, 70px);
-  position: relative;
-}
-
-.section-header h2 {
-  display: inline-block;
-  padding-bottom: 15px;
-}
-
-.section-header h2:after {
-  content: '';
-  display: block;
-  width: 100px;
-  height: 3px;
-  background: var(--color-acento);
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-/* Carrusel hero premium mejorado */
-.hero-carousel-container {
-  width: 100%;
-  position: relative;
-  overflow: hidden;
-  margin: 0;
-  border-radius: 0;
-  height: 100vh;
-  max-height: 100vh;
-  min-height: 600px;
-}
-
-.hero-carousel {
-  width: 100%;
-  height: 100%;
-  position: relative;
-}
-
-.carousel-inner {
-  display: flex;
-  height: 100%;
-  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: transform;
-}
-
-.carousel-slide {
-  min-width: 100%;
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-}
-
-.carousel-bg-image {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  filter: blur(50px) brightness(0.6);
-  transform: scale(1.1);
-  z-index: 1;
-  transition: filter 0.8s ease;
-  background: white;
-}
-
-.carousel-slide.active .carousel-bg-image {
-  filter: blur(80px) brightness(0.7);
-}
-
-.carousel-content {
-  display: flex;
-  width: 90%;
-  max-width: 1400px;
-  margin: 0 auto;
-  position: relative;
-  z-index: 3;
-  align-items: center;
-  gap: clamp(30px, 4vw, 60px);
-  padding: 40px 0;
-}
-
-.carousel-text {
-  flex: 1;
-  background-color: var(--color-texto-bg);
-  padding: clamp(30px, 4vw, 60px);
-  border-radius: var(--borde-redondeado);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: var(--sombra);
-  transform: translateY(20px);
-  opacity: 0;
-  transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.3s;
-}
-
-.carousel-slide.active .carousel-text {
-  transform: translateY(0);
-  opacity: 1;
-}
-
-.carousel-image-container {
-  flex: 1;
-  position: relative;
-  height: clamp(300px, 50vh, 500px);
-  border-radius: var(--borde-redondeado);
-  overflow: hidden;
-  box-shadow: var(--sombra);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  transform: translateY(20px);
-  opacity: 0;
-  transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.5s;
-  aspect-ratio: 16/9; /* Nueva propiedad añadida */
-}
-
-.carousel-slide.active .carousel-image-container {
-  transform: translateY(0);
-  opacity: 1;
-}
-
-.carousel-image {
-  width: 100%;
-  height: 100%;
-  object-fit: contain; /* Cambiado de 'cover' a 'contain' */
-  object-position: center;
-  transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
-  background-color: var(--color-tarjeta); /* Nuevo fondo añadido */
-}
-
-.carousel-slide.active .carousel-image {
-  transform: scale(1.03);
-}
-
-.carousel-title {
-  font-size: clamp(2.5rem, 5vw, 4rem);
-  margin-bottom: clamp(15px, 2vw, 25px);
-  color: var(--color-texto);
-  line-height: 1;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-}
-
-.carousel-description {
-  color: var(--color-texto-claro);
-  margin-bottom: clamp(20px, 3vw, 40px);
-  font-size: clamp(1rem, 1.2vw, 1.2rem);
-  line-height: 1.8;
-  max-width: 600px;
-}
-
-/* Controles del carrusel mejorados */
-.carousel-nav {
-  position: absolute;
-  top: 50%;
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  padding: 0 clamp(20px, 4vw, 40px);
-  transform: translateY(-50%);
-  z-index: 10;
-  pointer-events: none;
-}
-
-.carousel-btn {
-  width: clamp(50px, 5vw, 70px);
-  height: clamp(50px, 5vw, 70px);
-  border-radius: 50%;
-  background: rgba(0,0,0,0.3);
-  backdrop-filter: blur(5px);
-  -webkit-backdrop-filter: blur(5px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: var(--color-acento);
-  font-size: clamp(1.5rem, 2vw, 1.8rem);
-  cursor: pointer;
-  transition: var(--transicion);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  pointer-events: auto;
-}
-
-.carousel-btn:hover {
-  background: rgba(255,255,255,0.2);
-  color: white;
-  transform: scale(1.1);
-  border-color: rgba(255, 255, 255, 0.4);
-}
-
-.carousel-indicators {
-  position: absolute;
-  bottom: clamp(30px, 5vw, 60px);
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  gap: 15px;
-  z-index: 10;
-}
-
-.carousel-indicator {
-  width: clamp(10px, 1.5vw, 14px);
-  height: clamp(10px, 1.5vw, 14px);
-  border-radius: 50%;
-  background: rgba(255,255,255,0.2);
-  border: 1px solid rgba(255,255,255,0.4);
-  cursor: pointer;
-  transition: var(--transicion);
-}
-
-.carousel-indicator.active {
-  background: var(--color-acento);
-  transform: scale(1.3);
-  border-color: var(--color-acento);
-}
-
-/* Sección de cortometrajes premium mejorada */
-.cortometrajes-section {
-  position: relative;
-  padding: 30px;
-  border-radius: 40px;
-  background: linear-gradient(to bottom, rgba(30,30,30,0.9), rgba(10,10,10,1));
-  box-shadow: 0 0px 20px 20px rgba(0, 0, 0, 0.6);
-}
-
-.cortometrajes-section:before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: url('{% static "images/noise.png" %}') repeat;
-  opacity: 0.03;
-  pointer-events: none;
-  z-index: 1;
-}
-
-.cortometrajes-header {
-  background-color: var(--color-texto-bg);
-  padding: clamp(30px, 4vw, 40px);
-  border-radius: var(--borde-redondeado);
-  margin-bottom: clamp(40px, 5vw, 60px);
-  max-width: 1200px;
-  margin-left: auto;
-  margin-right: auto;
-  text-align: center;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: var(--sombra);
-  position: relative;
-  z-index: 2;
-}
-
-.cortometrajes-header h2 {
-  font-size: clamp(2.5rem, 5vw, 3.5rem);
-  letter-spacing: 3px;
-}
-
-.cortometrajes-header p {
-  font-size: clamp(1rem, 1.2vw, 1.2rem);
-  max-width: 800px;
-  margin: 0 auto;
-}
-
-.producciones-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(clamp(300px, 30vw, 400px), 1fr));
-  gap: clamp(30px, 4vw, 50px);
-  margin-top: clamp(40px, 5vw, 60px);
-  position: relative;
-  z-index: 2;
-  align-items: stretch; /* Añadido para igualar altura */
-}
-
-.produccion-card {
-  background: var(--color-tarjeta);
-  border-radius: var(--borde-redondeado);
-  overflow: hidden;
-  box-shadow: var(--sombra);
-  transition: var(--transicion);
-  border: 1px solid var(--color-borde);
-  position: relative;
-  will-change: transform;
-  display: flex; /* Añadido */
-  flex-direction: column; /* Añadido */
-  height: 100%; /* Añadido */
-}
-
-.produccion-card:hover {
-  transform: translateY(-15px);
-  box-shadow: var(--sombra-hover);
-  border-color: rgba(255, 255, 255, 0.3);
-}
-
-.produccion-image-container {
-  width: 100%;
-  height: clamp(250px, 30vw, 300px);
-  background: white;
-  border-radius: var(--borde-redondeado) var(--borde-redondeado) 0 0;
-  overflow: hidden;
-  position: relative;
-  flex-shrink: 0; /* Añadido para prevenir que cambie de tamaño */
-}
-
-.produccion-image-container:before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(to bottom, transparent 60%, rgba(0,0,0,0.7));
-  z-index: 1;
-}
-
-.produccion-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.produccion-card:hover .produccion-image {
-  transform: scale(1.1);
-}
-
-.produccion-content {
-  padding: clamp(25px, 3vw, 40px);
-  position: relative;
-  flex-grow: 1; 
-  display: flex; 
-  flex-direction: column; 
-}
-
-.produccion-title {
-  font-size: clamp(1.5rem, 2.5vw, 2rem);
-  margin-bottom: clamp(15px, 2vw, 20px);
-  color: var(--color-texto);
-  letter-spacing: 1.5px;
-}
-
-.produccion-meta {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: clamp(20px, 3vw, 30px);
-  margin-top: auto; 
-}
-
-.produccion-category {
-  color: var(--color-acento);
-  font-weight: 600;
-  font-size: clamp(0.8rem, 1vw, 0.9rem);
-  text-transform: uppercase;
-  letter-spacing: 2px;
-}
-
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: clamp(12px, 1.5vw, 16px) clamp(20px, 2.5vw, 32px);
-  border-radius: var(--borde-redondeado-pequeno);
-  font-weight: 600;
-  text-decoration: none;
-  transition: var(--transicion);
-  border: none;
-  cursor: pointer;
-  font-size: clamp(0.9rem, 1.1vw, 1rem);
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  font-family: 'Bebas Neue', sans-serif;
-  position: relative;
-  overflow: hidden;
-  will-change: transform;
-  white-space: nowrap;
-}
-
-.btn:after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(rgba(255,255,255,0.1), transparent);
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.btn:hover:after {
-  opacity: 1;
-}
-
-.btn-primary {
-  background: var(--color-acento);
-  color: var(--color-negro);
-  box-shadow: 0 5px 15px rgba(192, 192, 192, 0.2);
-}
-
-.btn-primary:hover {
-  background: var(--color-acento-hover);
-  transform: translateY(-5px);
-  box-shadow: 0 15px 30px rgba(192, 192, 192, 0.3);
-}
-
-.btn-outline {
-  background: transparent;
-  border: 2px solid var(--color-acento);
-  color: var(--color-acento);
-  padding: clamp(10px, 1.5vw, 14px) clamp(20px, 2.5vw, 30px);
-}
-
-.btn-outline:hover {
-  background: var(--color-acento);
-  color: var(--color-negro);
-  transform: translateY(-5px);
-  box-shadow: 0 10px 25px rgba(192, 192, 192, 0.2);
-}
-
-/* Sección de noticias premium mejorada */
-.news-section {
-  background: var(--color-tarjeta);
-  border-radius: var(--borde-redondeado);
-  padding: clamp(40px, 6vw, 100px) clamp(30px, 5vw, 100px);
-  margin: clamp(60px, 10vw, 120px) 0;
-  border: 1px solid var(--color-borde);
-  box-shadow: var(--sombra);
-  position: relative;
-  overflow: hidden;
-}
-
-.news-section:before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 5px;
-  background: linear-gradient(to right, var(--color-acento), transparent);
-}
-
-.news-section:after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: url('{% static "images/noise.png" %}') repeat;
-  opacity: 0.03;
-  pointer-events: none;
-  z-index: 1;
-}
-
-.news-header {
-  margin-bottom: clamp(40px, 6vw, 60px);
-  text-align: center;
-  position: relative;
-  z-index: 2;
-}
-
-.news-header h2 {
-  font-size: clamp(2.5rem, 5vw, 3.5rem);
-  letter-spacing: 3px;
-}
-
-.news-header p {
-  font-size: clamp(1rem, 1.2vw, 1.2rem);
-  max-width: 700px;
-  margin: 0 auto;
-}
-
-/* Botón flotante premium mejorado */
-.floating-btn {
-  position: fixed;
-  bottom: clamp(30px, 5vw, 50px);
-  right: clamp(30px, 5vw, 50px);
-  width: clamp(50px, 6vw, 70px);
-  height: clamp(50px, 6vw, 70px);
-  border-radius: 50%;
-  background: var(--color-acento);
-  color: var(--color-negro);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: clamp(1.5rem, 2.5vw, 1.8rem);
-  box-shadow: 0 10px 30px rgba(192, 192, 192, 0.3);
-  cursor: pointer;
-  opacity: 0;
-  visibility: hidden;
-  transition: var(--transicion);
-  z-index: 100;
-  border: none;
-  font-family: 'Bebas Neue', sans-serif;
-  will-change: transform;
-}
-
-.floating-btn.visible {
-  opacity: 1;
-  visibility: visible;
-}
-
-.floating-btn:hover {
-  transform: translateY(-8px) scale(1.1);
-  background: var(--color-acento-hover);
-  box-shadow: 0 15px 40px rgba(192, 192, 192, 0.4);
-}
-
-/* Efectos decorativos mejorados */
-.divider {
-  height: 1px;
-  width: 100%;
-  background: linear-gradient(to right, transparent, rgba(255,255,255,0.1), transparent);
-  margin: clamp(20px, 3vw, 40px) 0;
-}
-
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
-
-/* Media queries optimizadas */
-@media (max-width: 992px) {
-  .carousel-content {
-    flex-direction: column;
-    gap: 40px;
+  {% extends 'blog/base.html' %}
+  {% load static %}
+  {% block title %}Inicio - MARMOTEN PRODUCTION{% endblock %}
+  {% load i18n %}
+
+  {% block content %}
+  <style>
+  :root {
+    /* Paleta de colores profesional mejorada */
+    --color-negro: #0a0a0a;
+    --color-fondo: #121212;
+    --color-borde: rgba(255, 255, 255, 0.1);
+    --color-texto: #ffffff;
+    --color-texto-claro: #e0e0e0;
+    --color-acento: #c0c0c0; /* Plateado */
+    --color-acento-hover: #ffffff;
+    --color-tarjeta: #1e1e1e;
+    --color-texto-bg: rgba(18, 18, 18, 0.92);
+    --color-overlay: rgba(10, 10, 10, 0.7);
+    
+    --borde-redondeado: 20px;
+    --borde-redondeado-pequeno: 10px;
+    --sombra: 0 12px 40px rgba(0, 0, 0, 0.25);
+    --sombra-hover: 0 16px 50px rgba(0, 0, 0, 0.35);
+    --transicion: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
   }
-  
-  .carousel-text {
-    order: 2;
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background-color: var(--color-fondo);
+    color: var(--color-texto);
+    line-height: 1.7;
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+  }
+
+  /* Tipografía premium mejorada */
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Bebas+Neue&family=Playfair+Display:wght@700;800&display=swap');
+
+  h1, h2, h3, h4 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-weight: 400;
+    line-height: 1.1;
+    letter-spacing: 1px;
+    color: var(--color-texto);
+    margin-bottom: 1.5rem;
+  }
+
+  h2 {
+    font-size: clamp(2.5rem, 5vw, 3.5rem);
+    position: relative;
+    text-transform: uppercase;
+  }
+
+  h3 {
+    font-size: clamp(1.5rem, 3vw, 1.8rem);
+    letter-spacing: 1.5px;
+  }
+
+  p {
+    margin-bottom: 1.8rem;
+    color: var(--color-texto-claro);
+    font-size: clamp(1rem, 1.1vw, 1.1rem);
+    line-height: 1.8;
+    font-weight: 300;
+  }
+
+  /* Estructura principal mejorada */
+  .main-container {
+    max-width: 1800px;
+    margin: 20px auto;
+    position: relative;
+  }
+
+  .section {
+    padding: clamp(60px, 8vw, 120px) 0;
+    position: relative;
+  }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: clamp(40px, 6vw, 70px);
+    position: relative;
+  }
+
+  .section-header h2 {
+    display: inline-block;
+    padding-bottom: 15px;
+  }
+
+  .section-header h2:after {
+    content: '';
+    display: block;
+    width: 100px;
+    height: 3px;
+    background: var(--color-acento);
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  /* Carrusel hero premium mejorado */
+  .hero-carousel-container {
     width: 100%;
+    position: relative;
+    overflow: hidden;
+    margin: 0;
+    border-radius: 0;
+    height: 100vh;
+    max-height: 100vh;
+    min-height: 600px;
+  }
+
+  .hero-carousel {
+    width: 100%;
+    height: 100%;
+    position: relative;
+  }
+
+  .carousel-inner {
+    display: flex;
+    height: 100%;
+    transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: transform;
+  }
+
+  .carousel-slide {
+    min-width: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .carousel-bg-image {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: blur(50px) brightness(0.6);
+    transform: scale(1.1);
+    z-index: 1;
+    transition: filter 0.8s ease;
+    background: white;
+  }
+
+  .carousel-slide.active .carousel-bg-image {
+    filter: blur(80px) brightness(0.7);
+  }
+
+  .carousel-content {
+    display: flex;
+    width: 90%;
+    max-width: 1400px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 3;
+    align-items: center;
+    gap: clamp(30px, 4vw, 60px);
+    padding: 40px 0;
+  }
+
+  .carousel-text {
+    flex: 1;
+    background-color: var(--color-texto-bg);
+    padding: clamp(30px, 4vw, 60px);
+    border-radius: var(--borde-redondeado);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: var(--sombra);
+    transform: translateY(20px);
+    opacity: 0;
+    transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.3s;
+  }
+
+  .carousel-slide.active .carousel-text {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  .carousel-image-container {
+    flex: 1;
+    position: relative;
+    height: clamp(300px, 50vh, 500px);
+    border-radius: var(--borde-redondeado);
+    overflow: hidden;
+    box-shadow: var(--sombra);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transform: translateY(20px);
+    opacity: 0;
+    transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.5s;
+    aspect-ratio: 16/9; /* Nueva propiedad añadida */
+  }
+
+  .carousel-slide.active .carousel-image-container {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  .carousel-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* Cambiado de 'cover' a 'contain' */
+    object-position: center;
+    transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+    background-color: var(--color-tarjeta); /* Nuevo fondo añadido */
+  }
+
+  .carousel-slide.active .carousel-image {
+    transform: scale(1.03);
+  }
+
+  .carousel-title {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    margin-bottom: clamp(15px, 2vw, 25px);
+    color: var(--color-texto);
+    line-height: 1;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  .carousel-description {
+    color: var(--color-texto-claro);
+    margin-bottom: clamp(20px, 3vw, 40px);
+    font-size: clamp(1rem, 1.2vw, 1.2rem);
+    line-height: 1.8;
+    max-width: 600px;
+  }
+
+  /* Controles del carrusel mejorados */
+  .carousel-nav {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 clamp(20px, 4vw, 40px);
+    transform: translateY(-50%);
+    z-index: 10;
+    pointer-events: none;
+  }
+
+  .carousel-btn {
+    width: clamp(50px, 5vw, 70px);
+    height: clamp(50px, 5vw, 70px);
+    border-radius: 50%;
+    background: rgba(0,0,0,0.3);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: var(--color-acento);
+    font-size: clamp(1.5rem, 2vw, 1.8rem);
+    cursor: pointer;
+    transition: var(--transicion);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: auto;
+  }
+
+  .carousel-btn:hover {
+    background: rgba(255,255,255,0.2);
+    color: white;
+    transform: scale(1.1);
+    border-color: rgba(255, 255, 255, 0.4);
+  }
+
+  .carousel-indicators {
+    position: absolute;
+    bottom: clamp(30px, 5vw, 60px);
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 15px;
+    z-index: 10;
+  }
+
+  .carousel-indicator {
+    width: clamp(10px, 1.5vw, 14px);
+    height: clamp(10px, 1.5vw, 14px);
+    border-radius: 50%;
+    background: rgba(255,255,255,0.2);
+    border: 1px solid rgba(255,255,255,0.4);
+    cursor: pointer;
+    transition: var(--transicion);
+  }
+
+  .carousel-indicator.active {
+    background: var(--color-acento);
+    transform: scale(1.3);
+    border-color: var(--color-acento);
+  }
+
+  /* Sección de cortometrajes premium mejorada */
+  .cortometrajes-section {
+    position: relative;
+    padding: 30px;
+    border-radius: 40px;
+    background: linear-gradient(to bottom, rgba(30,30,30,0.9), rgba(10,10,10,1));
+    box-shadow: 0 0px 20px 20px rgba(0, 0, 0, 0.6);
+  }
+
+  .cortometrajes-section:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('{% static "images/noise.png" %}') repeat;
+    opacity: 0.03;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .cortometrajes-header {
+    background-color: var(--color-texto-bg);
+    padding: clamp(30px, 4vw, 40px);
+    border-radius: var(--borde-redondeado);
+    margin-bottom: clamp(40px, 5vw, 60px);
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: var(--sombra);
+    position: relative;
+    z-index: 2;
+  }
+
+  .cortometrajes-header h2 {
+    font-size: clamp(2.5rem, 5vw, 3.5rem);
+    letter-spacing: 3px;
+  }
+
+  .cortometrajes-header p {
+    font-size: clamp(1rem, 1.2vw, 1.2rem);
     max-width: 800px;
     margin: 0 auto;
   }
-  
-  .carousel-image-container {
-    order: 1;
-    width: 100%;
-    max-width: 600px;
-    height: auto;
-    aspect-ratio: 16/9;
-  }
-}
 
-@media (max-width: 768px) {
-  .hero-carousel-container {
-    min-height: 500px;
-  }
-  
-  .carousel-title {
-    font-size: clamp(2rem, 6vw, 2.5rem);
-  }
-  
-  .carousel-description {
-    font-size: 1rem;
-  }
-  
-  .carousel-text {
-    padding: 25px;
-  }
-  
-  .carousel-btn {
-    width: 40px;
-    height: 40px;
-    font-size: 1.2rem;
-  }
-  
   .producciones-grid {
-    grid-template-columns: 1fr;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(clamp(300px, 30vw, 400px), 1fr));
+    gap: clamp(30px, 4vw, 50px);
+    margin-top: clamp(40px, 5vw, 60px);
+    position: relative;
+    z-index: 2;
+    align-items: stretch; /* Añadido para igualar altura */
   }
-}
 
-@media (max-width: 576px) {
-  .hero-carousel-container {
-    min-height: 400px;
+  .produccion-card {
+    background: var(--color-tarjeta);
+    border-radius: var(--borde-redondeado);
+    overflow: hidden;
+    box-shadow: var(--sombra);
+    transition: var(--transicion);
+    border: 1px solid var(--color-borde);
+    position: relative;
+    will-change: transform;
+    display: flex; /* Añadido */
+    flex-direction: column; /* Añadido */
+    height: 100%; /* Añadido */
   }
-  .cortometrajes-header h2{
-    font-size: 1.5rem;
+
+  .produccion-card:hover {
+    transform: translateY(-15px);
+    box-shadow: var(--sombra-hover);
+    border-color: rgba(255, 255, 255, 0.3);
   }
-  
-  .carousel-content {
-    padding-top: 60px;
-    padding-bottom: 60px;
+
+  .produccion-image-container {
+    width: 100%;
+    height: clamp(250px, 30vw, 300px);
+    background: white;
+    border-radius: var(--borde-redondeado) var(--borde-redondeado) 0 0;
+    overflow: hidden;
+    position: relative;
+    flex-shrink: 0; /* Añadido para prevenir que cambie de tamaño */
   }
-  
-  .carousel-indicators {
+
+  .produccion-image-container:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, transparent 60%, rgba(0,0,0,0.7));
+    z-index: 1;
+  }
+
+  .produccion-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .produccion-card:hover .produccion-image {
+    transform: scale(1.1);
+  }
+
+  .produccion-content {
+    padding: clamp(25px, 3vw, 40px);
+    position: relative;
+    flex-grow: 1; 
+    display: flex; 
+    flex-direction: column; 
+    position: relative;
+    margin-bottom: 50px;
+  }
+
+  .produccion-title { 
+    font-size: clamp(1.5rem, 2.5vw, 2rem);
+    margin-bottom: clamp(15px, 2vw, 20px);
+    color: var(--color-texto);
+    letter-spacing: 1.5px;
+  }
+
+  .produccion-meta {
+    display: flex;
+    
+    
+    gap: 50px;
+    right: 20px;
+    position: absolute;
     bottom: 20px;
   }
-  
+
+  .produccion-category {
+    color: var(--color-acento);
+    font-weight: 600;
+    font-size: clamp(0.8rem, 1vw, 0.9rem);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: clamp(12px, 1.5vw, 16px) clamp(20px, 2.5vw, 32px);
+    border-radius: var(--borde-redondeado-pequeno);
+    font-weight: 600;
+    text-decoration: none;
+    transition: var(--transicion);
+    border: none;
+    cursor: pointer;
+    font-size: clamp(0.9rem, 1.1vw, 1rem);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-family: 'Bebas Neue', sans-serif;
+    position: relative;
+    overflow: hidden;
+    will-change: transform;
+    white-space: nowrap;
+  }
+
+  .btn:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(rgba(255,255,255,0.1), transparent);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .btn:hover:after {
+    opacity: 1;
+  }
+
+  .btn-primary {
+    background: var(--color-acento);
+    color: var(--color-negro);
+    box-shadow: 0 5px 15px rgba(192, 192, 192, 0.2);
+  }
+
+  .btn-primary:hover {
+    background: var(--color-acento-hover);
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(192, 192, 192, 0.3);
+  }
+
+  .btn-outline {
+    background: transparent;
+    border: 2px solid var(--color-acento);
+    color: var(--color-acento);
+    padding: clamp(10px, 1.5vw, 14px) clamp(20px, 2.5vw, 30px);
+  }
+
+  .btn-outline:hover {
+    background: var(--color-acento);
+    color: var(--color-negro);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(192, 192, 192, 0.2);
+  }
+
+  /* Sección de noticias premium mejorada */
+  .news-section {
+    background: var(--color-tarjeta);
+    border-radius: var(--borde-redondeado);
+    padding: clamp(40px, 6vw, 100px) clamp(30px, 5vw, 100px);
+    margin: clamp(60px, 10vw, 120px) 0;
+    border: 1px solid var(--color-borde);
+    box-shadow: var(--sombra);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .news-section:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background: linear-gradient(to right, var(--color-acento), transparent);
+  }
+
+  .news-section:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('{% static "images/noise.png" %}') repeat;
+    opacity: 0.03;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .news-header {
+    margin-bottom: clamp(40px, 6vw, 60px);
+    text-align: center;
+    position: relative;
+    z-index: 2;
+  }
+
+  .news-header h2 {
+    font-size: clamp(2.5rem, 5vw, 3.5rem);
+    letter-spacing: 3px;
+  }
+
+  .news-header p {
+    font-size: clamp(1rem, 1.2vw, 1.2rem);
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  /* Botón flotante premium mejorado */
   .floating-btn {
-    width: 50px;
-    height: 50px;
-    font-size: 1.3rem;
+    position: fixed;
+    bottom: clamp(30px, 5vw, 50px);
+    right: clamp(30px, 5vw, 50px);
+    width: clamp(50px, 6vw, 70px);
+    height: clamp(50px, 6vw, 70px);
+    border-radius: 50%;
+    background: var(--color-acento);
+    color: var(--color-negro);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: clamp(1.5rem, 2.5vw, 1.8rem);
+    box-shadow: 0 10px 30px rgba(192, 192, 192, 0.3);
+    cursor: pointer;
+    opacity: 0;
+    visibility: hidden;
+    transition: var(--transicion);
+    z-index: 100;
+    border: none;
+    font-family: 'Bebas Neue', sans-serif;
+    will-change: transform;
   }
-  
-  .carousel-image-container {
-    height: auto;
-    max-height: 40vh;
+
+  .floating-btn.visible {
+    opacity: 1;
+    visibility: visible;
   }
-}
-.description-container {
-  background: linear-gradient(135deg, var(--color-tarjeta) 0%, var(--color-negro) 100%);
-  padding: clamp(60px, 8vw, 100px) 0;
-  position: relative;
-  overflow: hidden;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  margin: 0;
-}
 
-.description-container:before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: url('{% static "images/noise.png" %}') repeat;
-  opacity: 0.03;
-  pointer-events: none;
-  z-index: 1;
-}
+  .floating-btn:hover {
+    transform: translateY(-8px) scale(1.1);
+    background: var(--color-acento-hover);
+    box-shadow: 0 15px 40px rgba(192, 192, 192, 0.4);
+  }
 
-.description-content {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 clamp(20px, 5vw, 40px);
-  position: relative;
-  z-index: 2;
-}
+  /* Efectos decorativos mejorados */
+  .divider {
+    height: 1px;
+    width: 100%;
+    background: linear-gradient(to right, transparent, rgba(255,255,255,0.1), transparent);
+    margin: clamp(20px, 3vw, 40px) 0;
+  }
 
-.description-title {
-  font-family: 'Playfair Display', serif;
-  font-weight: 700;
-  font-size: clamp(1.8rem, 4vw, 3rem);
-  color: var(--color-acento);
-  text-align: center;
-  margin-bottom: clamp(30px, 4vw, 50px);
-  letter-spacing: 1px;
-  position: relative;
-  display: inline-block;
-  left: 50%;
-  transform: translateX(-50%);
-}
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
 
-.description-title:after {
-  content: '';
-  display: block;
-  width: 80px;
-  height: 3px;
-  background: var(--color-acento);
-  position: absolute;
-  bottom: -15px;
-  left: 50%;
-  transform: translateX(-50%);
-}
+  /* Media queries optimizadas */
+  @media (max-width: 992px) {
+    .carousel-content {
+      flex-direction: column;
+      gap: 40px;
+    }
+    
+    .carousel-text {
+      order: 2;
+      width: 100%;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    
+    .carousel-image-container {
+      order: 1;
+      width: 100%;
+      max-width: 600px;
+      height: auto;
+      aspect-ratio: 16/9;
+    }
+  }
 
-.description-text {
-  background-color: var(--color-texto-bg);
-  padding: clamp(40px, 5vw, 60px);
-  border-radius: var(--borde-redondeado);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: var(--sombra);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  text-align: center;
-  line-height: 1.8;
-}
+  @media (max-width: 768px) {
+    .hero-carousel-container {
+      min-height: 500px;
+    }
+    
+    .carousel-title {
+      font-size: clamp(2rem, 6vw, 2.5rem);
+    }
+    
+    .carousel-description {
+      font-size: 1rem;
+    }
+    
+    .carousel-text {
+      padding: 25px;
+    }
+    
+    .carousel-btn {
+      width: 40px;
+      height: 40px;
+      font-size: 1.2rem;
+    }
+    
+    .producciones-grid {
+      grid-template-columns: 1fr;
+    }
+  }
 
-.description-text p {
-  font-size: clamp(1rem, 1.3vw, 1.2rem);
-  color: var(--color-texto-claro);
-  margin-bottom: 1.5rem;
-  max-width: 900px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.description-text p:last-child {
-  margin-bottom: 0;
-}
-
-@media (max-width: 768px) {
+  @media (max-width: 576px) {
+    .hero-carousel-container {
+      min-height: 400px;
+    }
+    .cortometrajes-header h2{
+      font-size: 1.5rem;
+    }
+    
+    .carousel-content {
+      padding-top: 60px;
+      padding-bottom: 60px;
+    }
+    
+    .carousel-indicators {
+      bottom: 20px;
+    }
+    
+    .floating-btn {
+      width: 50px;
+      height: 50px;
+      font-size: 1.3rem;
+    }
+    
+    .carousel-image-container {
+      height: auto;
+      max-height: 40vh;
+    }
+  }
   .description-container {
-    padding: 40px 0;
-    margin: 0px 0;
+    background: linear-gradient(135deg, var(--color-tarjeta) 0%, var(--color-negro) 100%);
+    padding: clamp(60px, 8vw, 100px) 0;
+    position: relative;
+    overflow: hidden;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    margin: 0;
   }
+
+  .description-container:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('{% static "images/noise.png" %}') repeat;
+    opacity: 0.03;
+    pointer-events: none;
+    z-index: 1;
+  }
+
   .description-content {
-    padding-top: 70px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 clamp(20px, 5vw, 40px);
+    position: relative;
+    z-index: 2;
   }
-  .description-text {
-    padding: 30px;
-  }
-  
+
   .description-title {
-    margin-bottom: 25px;
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: clamp(1.8rem, 4vw, 3rem);
+    color: var(--color-acento);
+    text-align: center;
+    margin-bottom: clamp(30px, 4vw, 50px);
+    letter-spacing: 1px;
+    position: relative;
+    display: inline-block;
+    left: 50%;
+    transform: translateX(-50%);
   }
-}
 
-/* Preload de fuentes */
-body:after {
-  position: absolute;
-  width: 0;
-  height: 0;
-  overflow: hidden;
-  z-index: -1;
-  content: url('{% static "images/noise.png" %}') 
-           url('{% static "images/placeholder.jpg" %}');
-}
-</style>
+  .description-title:after {
+    content: '';
+    display: block;
+    width: 80px;
+    height: 3px;
+    background: var(--color-acento);
+    position: absolute;
+    bottom: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
 
-<!-- Carrusel hero premium -->
-<div class="description-container">
-  <div class="description-content">
-    <h2 class="description-title">Marmorten Production</h2>
-    <div class="description-text">
-      {% if config %}
-          {% if request.LANGUAGE_CODE == 'en' and config.descripcion_en %}
-              <p>{{ config.descripcion_en }}</p>
-          {% else %}
-              <p>{{ config.descripcion }}</p>
-          {% endif %}
-      {% endif %}
+  .description-text {
+    background-color: var(--color-texto-bg);
+    padding: clamp(40px, 5vw, 60px);
+    border-radius: var(--borde-redondeado);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: var(--sombra);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    text-align: center;
+    line-height: 1.8;
+  }
+
+  .description-text p {
+    font-size: clamp(1rem, 1.3vw, 1.2rem);
+    color: var(--color-texto-claro);
+    margin-bottom: 1.5rem;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .description-text p:last-child {
+    margin-bottom: 0;
+  }
+
+  @media (max-width: 768px) {
+    .description-container {
+      padding: 40px 0;
+      margin: 0px 0;
+    }
+    .description-content {
+      padding-top: 70px;
+    }
+    .description-text {
+      padding: 30px;
+    }
+    
+    .description-title {
+      margin-bottom: 25px;
+    }
+  }
+
+  /* Preload de fuentes */
+  body:after {
+    position: absolute;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+    z-index: -1;
+    content: url('{% static "images/noise.png" %}') 
+            url('{% static "images/placeholder.jpg" %}');
+  }
+  </style>
+
+  <!-- Carrusel hero premium -->
+  <div class="description-container">
+    <div class="description-content">
+      <h2 class="description-title">Marmorten Production</h2>
+      <div class="description-text">
+        {% if config %}
+            {% if request.LANGUAGE_CODE == 'en' and config.descripcion_en %}
+                <p>{{ config.descripcion_en }}</p>
+            {% else %}
+                <p>{{ config.descripcion }}</p>
+            {% endif %}
+        {% endif %}
+      </div>
     </div>
   </div>
-</div>
 
 
 
-<div class="hero-carousel-container">
-  <div class="hero-carousel">
-    <div class="carousel-inner" id="mainCarousel">
-      {% for item in carrusel_items %}
-      {% if item.post.imagen %}
-      <div class="carousel-slide {% if forloop.first %}active{% endif %}">
-        <img src="{{ item.post.imagen.url }}" alt="{{ item.titulo }}" class="carousel-bg-image">
-        <div class="carousel-content">
-          <div class="carousel-text">
-            <h2 class="carousel-title">{{ item.titulo|default:item.post.title|default:"" }}</h2>
-            <p class="carousel-description">{{ item.descripcion|default:item.post.resumen|default:"" }}</p>
-            <a href="{% url 'detalle_post' item.post.id %}" class="btn btn-primary">{% trans "Ver Proyecto" %}</a>
-          </div>
-          <div class="carousel-image-container">
-            <img src="{{ item.post.imagen.url }}" alt="{{ item.titulo }}" class="carousel-image" loading="lazy">
+  <div class="hero-carousel-container">
+    <div class="hero-carousel">
+      <div class="carousel-inner" id="mainCarousel">
+        {% for item in carrusel_items %}
+        {% if item.post.imagen %}
+        <div class="carousel-slide {% if forloop.first %}active{% endif %}">
+          <img src="{{ item.post.imagen.url }}" alt="{{ item.titulo }}" class="carousel-bg-image">
+          <div class="carousel-content">
+            <div class="carousel-text">
+              <h2 class="carousel-title">{{ item.titulo|default:item.post.title|default:"" }}</h2>
+              <p class="carousel-description">{{ item.descripcion|default:item.post.resumen|default:"" }}</p>
+              <a href="{% url 'detalle_post' item.post.id %}" class="btn btn-primary">{% trans "Ver Proyecto" %}</a>
+            </div>
+            <div class="carousel-image-container">
+              <img src="{{ item.post.imagen.url }}" alt="{{ item.titulo }}" class="carousel-image" loading="lazy">
+            </div>
           </div>
         </div>
+        {% endif %}
+        {% endfor %}
       </div>
-      {% endif %}
-      {% endfor %}
-    </div>
-    
-    <div class="carousel-nav">
-      <button class="carousel-btn" id="prevBtn" aria-label="Slide anterior">❮</button>
-      <button class="carousel-btn" id="nextBtn" aria-label="Slide siguiente">❯</button>
-    </div>
-    
-    <div class="carousel-indicators" id="carouselIndicators">
-      {% for item in carrusel_items %}
-      <button class="carousel-indicator {% if forloop.first %}active{% endif %}" aria-label="Ir al slide {{ forloop.counter }}"></button>
-      {% endfor %}
+      
+      <div class="carousel-nav">
+        <button class="carousel-btn" id="prevBtn" aria-label="Slide anterior">❮</button>
+        <button class="carousel-btn" id="nextBtn" aria-label="Slide siguiente">❯</button>
+      </div>
+      
+      <div class="carousel-indicators" id="carouselIndicators">
+        {% for item in carrusel_items %}
+        <button class="carousel-indicator {% if forloop.first %}active{% endif %}" aria-label="Ir al slide {{ forloop.counter }}"></button>
+        {% endfor %}
+      </div>
     </div>
   </div>
-</div>
-<!-- Contenido principal -->
-<div class="main-container">
-  <!-- Sección de cortometrajes premium -->
-  <section class="cortometrajes-section">
-    <div class="cortometrajes-header">
-      <h2>{% trans "Cortometrajes" %}</h2>
-      <p>{% trans "Nuestros trabajos más emblemáticos que representan nuestra calidad y estilo único en producción audiovisual" %}</p>
-    </div>
-    
-    <div class="producciones-grid">
-      {% for post in posts_destacados %}
-      <article class="produccion-card">
-        <a href="{% url 'detalle_post' post.id %}" style="text-decoration: none; color: inherit;">
-          <div class="produccion-image-container">
-            {% if post.imagen %}
-            <img src="{{ post.imagen.url }}" alt="{{ post.title }}" class="produccion-image" loading="lazy">
-            {% endif %}
-          </div>
-          <div class="produccion-content">
-            <h3 class="produccion-title">{{ post.title }}</h3>
-              <p>
-                {% if LANGUAGE_CODE == 'es' %}
-                  {{ post.resumen|default:""|truncatechars:180 }}
-                {% else %}
-                  {{ post.resumen_en|default:post.resumen|default:""|truncatechars:180 }}
-                {% endif %}
-            </p>
+  <!-- Contenido principal -->
+  <div class="main-container">
+    <!-- Sección de cortometrajes premium -->
+    <section class="cortometrajes-section">
+      <div class="cortometrajes-header">
+        <h2>{% trans "Cortometrajes" %}</h2>
+        <p>{% trans "Nuestros trabajos más emblemáticos que representan nuestra calidad y estilo único en producción audiovisual" %}</p>
+      </div>
+      
+      <div class="producciones-grid">
+        {% for post in posts_destacados %}
+        <article class="produccion-card">
+          <a href="{% url 'detalle_post' post.id %}" style="text-decoration: none; color: inherit;">
+            <div class="produccion-image-container">
+              {% if post.imagen %}
+              <img src="{{ post.imagen.url }}" alt="{{ post.title }}" class="produccion-image" loading="lazy">
+              {% endif %}
+            </div>
+            <div class="produccion-content">
+              <h3 class="produccion-title">{{ post.title }}</h3>
+                <p>
+                  {% if LANGUAGE_CODE == 'es' %}
+                    {{ post.resumen|default:""|truncatechars:180 }}
+                  {% else %}
+                    {{ post.resumen_en|default:post.resumen|default:""|truncatechars:180 }}
+                  {% endif %}
+              </p>
+            </div>
             <div class="produccion-meta">
               <span class="produccion-category">{% trans "Cortometraje" %}</span>
               <span class="btn btn-outline">{% trans "Detalles" %}</span>
             </div>
-          </div>
-        </a>
-      </article>
-      {% endfor %}
-    </div>
-  </section>
-  
-  <!-- Sección de noticias -->
-  <section class="news-section">
-    <div class="news-header">
-      <h2>{% trans "Últimas Noticias" %}</h2>
-      <p>{% trans "Mantente al día con nuestros proyectos, anuncios y eventos más recientes" %}</p>
-    </div>
+          </a>
+        </article>
+        {% endfor %}
+      </div>
+    </section>
     
-    <div class="producciones-grid">
-      {% for post in ultimos_posts %}
-      <article class="produccion-card">
-        <a href="{% url 'detalle_post' post.id %}" style="text-decoration: none; color: inherit;">
-          <div class="produccion-image-container">
-            {% if post.imagen %}
-            <img src="{{ post.imagen.url }}" alt="{{ post.title }}" class="produccion-image" loading="lazy">
-            {% endif %}
-          </div>
-          <div class="produccion-content">
-            <h3 class="produccion-title">{{ post.title }}</h3>
-            <p>{{ post.resumen|default:post.content|default:""|truncatechars:180 }}</p>
+    <!-- Sección de noticias -->
+    <section class="news-section">
+      <div class="news-header">
+        <h2>{% trans "Últimas Noticias" %}</h2>
+        <p>{% trans "Mantente al día con nuestros proyectos, anuncios y eventos más recientes" %}</p>
+      </div>
+      
+      <div class="producciones-grid">
+        {% for post in ultimos_posts %}
+        <article class="produccion-card">
+          <a href="{% url 'detalle_post' post.id %}" style="text-decoration: none; color: inherit;">
+            <div class="produccion-image-container">
+              {% if post.imagen %}
+              <img src="{{ post.imagen.url }}" alt="{{ post.title }}" class="produccion-image" loading="lazy">
+              {% endif %}
+            </div>
+            <div class="produccion-content">
+              <h3 class="produccion-title">{{ post.title }}</h3>
+              <p>{{ post.resumen|default:post.content|default:""|truncatechars:180 }}</p>
+            </div>
             <div class="produccion-meta">
-              <span class="produccion-category">Noticia</span>
+             <!--<span class="produccion-category">Noticia</span>-->
               <span class="btn btn-outline">Leer más</span>
             </div>
-          </div>
-        </a>
-      </article>
-      {% endfor %}
-    </div>
-  </section>
-</div>
+          </a>
+        </article>
+        {% endfor %}
+      </div>
+    </section>
+  </div>
 
-<!-- Botón flotante premium -->
-<button class="floating-btn" id="backToTop" aria-label="Volver arriba">↑</button>
+  <!-- Botón flotante premium -->
+  <button class="floating-btn" id="backToTop" aria-label="Volver arriba">↑</button>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
