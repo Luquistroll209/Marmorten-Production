@@ -1,0 +1,290 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}Nuestros Trabajos - Marmoten Production{% endblock %}
+
+{% block content %}
+<style>
+    .trabajos-section {
+        padding: clamp(60px, 8vw, 120px) 0;
+        position: relative;
+    }
+    
+    .trabajos-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 0 clamp(20px, 5vw, 40px);
+    }
+    
+    .trabajos-header {
+        text-align: center;
+        margin-bottom: clamp(40px, 6vw, 70px);
+    }
+    
+    .trabajos-header h2 {
+        font-size: clamp(2.5rem, 5vw, 3.5rem);
+        letter-spacing: 3px;
+        position: relative;
+        display: inline-block;
+        padding-bottom: 15px;
+    }
+    
+    .trabajos-header h2:after {
+        content: '';
+        display: block;
+        width: 100px;
+        height: 3px;
+        background: var(--color-acento);
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    
+    .trabajos-header p {
+        font-size: clamp(1rem, 1.2vw, 1.2rem);
+        max-width: 700px;
+        margin: 0 auto;
+    }
+    
+    .filtros-trabajos {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 15px;
+        margin-bottom: clamp(30px, 5vw, 60px);
+    }
+    
+    .filtro-btn {
+        padding: clamp(10px, 1.5vw, 14px) clamp(20px, 2.5vw, 30px);
+        border-radius: var(--borde-redondeado-pequeno);
+        font-weight: 600;
+        text-decoration: none;
+        transition: var(--transicion);
+        border: 2px solid var(--color-acento);
+        background: transparent;
+        color: var(--color-acento);
+        cursor: pointer;
+        font-size: clamp(0.9rem, 1.1vw, 1rem);
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        font-family: 'Bebas Neue', sans-serif;
+        white-space: nowrap;
+    }
+    
+    .filtro-btn:hover, .filtro-btn.active {
+        background: var(--color-acento);
+        color: var(--color-negro);
+        transform: translateY(-3px);
+        box-shadow: 0 10px 25px rgba(192, 192, 192, 0.2);
+    }
+    
+    .filtro-btn.active {
+        background: var(--color-acento);
+        color: var(--color-negro);
+        border-color: var(--color-acento);
+    }
+    
+    .trabajos-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(clamp(300px, 30vw, 400px), 1fr));
+        gap: clamp(30px, 4vw, 50px);
+    }
+    
+    .trabajo-card {
+        background: var(--color-tarjeta);
+        border-radius: var(--borde-redondeado);
+        overflow: hidden;
+        box-shadow: var(--sombra);
+        transition: var(--transicion);
+        border: 1px solid var(--color-borde);
+        position: relative;
+        will-change: transform;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+    }
+    
+    .trabajo-card:hover {
+        transform: translateY(-15px);
+        box-shadow: var(--sombra-hover);
+        border-color: rgba(255, 255, 255, 0.3);
+    }
+    
+    .trabajo-imagen {
+        width: 100%;
+        height: clamp(250px, 30vw, 300px);
+        background: white;
+        border-radius: var(--borde-redondeado) var(--borde-redondeado) 0 0;
+        overflow: hidden;
+        position: relative;
+        flex-shrink: 0;
+    }
+    
+    .trabajo-imagen:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(to bottom, transparent 60%, rgba(0,0,0,0.7));
+        z-index: 1;
+    }
+    
+    .trabajo-imagen img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    
+    .trabajo-card:hover .trabajo-imagen img {
+        transform: scale(1.1);
+    }
+    
+    .trabajo-info {
+        padding: clamp(25px, 3vw, 40px);
+        position: relative;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 50px;
+    }
+    
+    .trabajo-info h3 {
+        font-size: clamp(1.5rem, 2.5vw, 2rem);
+        margin-bottom: clamp(15px, 2vw, 20px);
+        color: var(--color-texto);
+        letter-spacing: 1.5px;
+    }
+    
+    .trabajo-resumen {
+        color: var(--color-texto-claro);
+        margin-bottom: clamp(20px, 3vw, 30px);
+        font-size: clamp(0.95rem, 1.1vw, 1.05rem);
+        line-height: 1.7;
+    }
+    
+    .trabajo-tipo {
+        display: inline-block;
+        background: rgba(192, 192, 192, 0.1);
+        color: var(--color-acento);
+        padding: 5px 15px;
+        border-radius: 20px;
+        font-size: clamp(0.8rem, 1vw, 0.9rem);
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        margin-bottom: 15px;
+        font-weight: 500;
+    }
+    
+    .ver-mas-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: clamp(10px, 1.5vw, 14px) clamp(20px, 2.5vw, 30px);
+        border-radius: var(--borde-redondeado-pequeno);
+        font-weight: 600;
+        text-decoration: none;
+        transition: var(--transicion);
+        border: 2px solid var(--color-acento);
+        background: transparent;
+        color: var(--color-acento);
+        cursor: pointer;
+        font-size: clamp(0.9rem, 1.1vw, 1rem);
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        font-family: 'Bebas Neue', sans-serif;
+        position: absolute;
+        bottom: 20px;
+        right: 20px;
+    }
+    
+    .ver-mas-btn:hover {
+        background: var(--color-acento);
+        color: var(--color-negro);
+        transform: translateY(-3px);
+        box-shadow: 0 10px 25px rgba(192, 192, 192, 0.2);
+    }
+    
+    .no-trabajos {
+        grid-column: 1 / -1;
+        text-align: center;
+        padding: 40px;
+        color: var(--color-texto-claro);
+        font-size: clamp(1rem, 1.2vw, 1.2rem);
+    }
+    
+    @media (max-width: 768px) {
+        .trabajos-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        .filtros-trabajos {
+            gap: 10px;
+        }
+        
+        .filtro-btn {
+            padding: 8px 15px;
+            font-size: 0.85rem;
+        }
+    }
+</style>
+
+<section class="trabajos-section">
+    <div class="trabajos-container">
+        <div class="trabajos-header">
+            <h2>{% trans "Nuestros Trabajos" %}</h2>
+            <p>{% trans "Explora nuestra colección de producciones audiovisuales que representan nuestra pasión y dedicación" %}</p>
+        </div>
+        
+        <!-- Filtros por tipo -->
+        <div class="filtros-trabajos">
+            <a href="{% url 'trabajos' %}" class="filtro-btn {% if not tipo_activo %}active{% endif %}">
+                {% trans "Todos" %}
+            </a>
+            {% for tipo in tipos_trabajo %}
+                <a href="{% url 'trabajos_por_tipo' tipo.slug %}" class="filtro-btn {% if tipo.slug == tipo_activo %}active{% endif %}">
+                    {{ tipo.nombre }}
+                </a>
+            {% endfor %}
+        </div>
+        
+        <!-- Grid de trabajos -->
+        <div class="trabajos-grid">
+            {% for trabajo in trabajos %}
+            <article class="trabajo-card">
+                <a href="{% url 'detalle_post' trabajo.id %}" style="text-decoration: none; color: inherit;">
+                    <div class="trabajo-imagen">
+                        {% if trabajo.imagen %}
+                        <img src="{{ trabajo.imagen.url }}" alt="{{ trabajo.title }}" loading="lazy">
+                        {% endif %}
+                    </div>
+                    <div class="trabajo-info">
+                        {% if trabajo.tipo_trabajo %}
+                        <span class="trabajo-tipo">{{ trabajo.tipo_trabajo.nombre }}</span>
+                        {% endif %}
+                        <h3>{{ trabajo.title }}</h3>
+                        <div class="trabajo-resumen">
+                            {% if trabajo.resumen %}
+                                {{ trabajo.resumen|safe|truncatechars:150 }}
+                            {% else %}
+                                {{ trabajo.content|striptags|truncatechars:150 }}
+                            {% endif %}
+                        </div>
+                        <span class="ver-mas-btn">{% trans "Ver más" %}</span>
+                    </div>
+                </a>
+            </article>
+            {% empty %}
+            <div class="no-trabajos">
+                <p>{% trans "No hay trabajos disponibles en esta categoría." %}</p>
+                <a href="{% url 'trabajos' %}" class="btn btn-primary" style="margin-top: 20px;">{% trans "Ver todos los trabajos" %}</a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

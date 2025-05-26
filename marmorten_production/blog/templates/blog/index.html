@@ -2,7 +2,7 @@
 {% load static %}
 {% block title %}Inicio - MARMOTEN PRODUCTION{% endblock %}
 {% load i18n %}
-
+{% load filtros %}
 {% block content %}
 <style>
 :root {
@@ -14,7 +14,7 @@
   --color-texto-claro: #e0e0e0;
   --color-acento: #c0c0c0; /* Plateado */
   --color-acento-hover: #ffffff;
-  --color-tarjeta: #1e1e1e;
+  --color-tarjeta:rgb(36, 34, 34);
   --color-texto-bg: rgba(18, 18, 18, 0.92);
   --color-overlay: rgba(10, 10, 10, 0.7);
   
@@ -108,7 +108,12 @@ p {
   left: 50%;
   transform: translateX(-50%);
 }
-
+.learn-container{
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+  wi
+}
 /* Carrusel hero premium mejorado */
 .hero-carousel-container {
   width: 100%;
@@ -689,8 +694,6 @@ p {
     max-height: 40vh;
   }
 }
-
-/* Estilos para la sección de descripción mejorados */
 .description-container {
   background: linear-gradient(135deg, var(--color-tarjeta) 0%, var(--color-negro) 100%);
   padding: clamp(60px, 8vw, 100px) 0;
@@ -699,6 +702,7 @@ p {
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   margin: 0;
+  
 }
 
 .description-container:before {
@@ -708,151 +712,60 @@ p {
   left: 0;
   width: 100%;
   height: 100%;
-  background: url('{% static "images/noise.png" %}') repeat;
   opacity: 0.03;
   pointer-events: none;
   z-index: 1;
 }
-
-.description-content {
+/* Estilos para la sección de descripción mejorados */
+.description-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 40px;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 clamp(20px, 5vw, 40px);
-  position: relative;
-  z-index: 2;
+  padding: 0 20px;
 }
 
-.description-title {
-  font-family: 'Playfair Display', serif;
-  font-weight: 700;
-  font-size: clamp(1.8rem, 4vw, 3rem);
-  color: var(--color-acento);
-  text-align: center;
-  margin-bottom: clamp(30px, 4vw, 50px);
-  letter-spacing: 1px;
-  position: relative;
-  display: inline-block;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.description-title:after {
-  content: '';
-  display: block;
-  width: 80px;
-  height: 3px;
-  background: var(--color-acento);
-  position: absolute;
-  bottom: -15px;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.description-text {
-  background-color: var(--color-texto-bg);
-  padding: clamp(40px, 5vw, 60px);
-  border-radius: var(--borde-redondeado);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: var(--sombra);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  text-align: center;
-  line-height: 1.8;
-}
-
-.description-text p {
-  font-size: clamp(1rem, 1.3vw, 1.2rem);
-  color: var(--color-texto-claro);
-  margin-bottom: 1.5rem;
-  max-width: 900px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.description-text p:last-child {
-  margin-bottom: 0;
-}
-
-/* Estilos para la tabla mejorada */
-.description-table-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 40px;
-  align-items: flex-start;
-  justify-content: center;
-  margin: 50px 0;
-}
-
-.description-text-content {
+.description-text-container {
   flex: 1;
-  min-width: 300px;
-  max-width: 600px;
-  text-align: left;
-  opacity: 0;
-  transform: translateY(30px);
-  transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  min-width: 50%;
 }
 
-.description-table-wrapper {
+.description-image-container {
   flex: 1;
-  min-width: 300px;
-  max-width: 500px;
-  opacity: 0;
-  transform: translateY(30px);
-  transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.3s;
+  min-width: 40%;
 }
 
-.description-table {
+.description-image {
   width: 100%;
-  border-collapse: separate;
-  border-spacing: 0;
-  border-radius: var(--borde-redondeado-pequeno);
-  overflow: hidden;
-  background: var(--color-tarjeta);
+  border-radius: var(--borde-redondeado);
   box-shadow: var(--sombra);
-  border: 1px solid var(--color-borde);
-  animation: fadeInUp 0.8s ease-out forwards;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+  transition: transform 0.5s ease;
 }
 
-.description-table th {
-  background-color: rgba(192, 192, 192, 0.1);
-  color: var(--color-acento);
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  font-size: 0.85rem;
-  padding: 15px 20px;
-  text-align: left;
-  border-bottom: 1px solid var(--color-borde);
+.description-image:hover {
+  transform: scale(1.02);
 }
 
-.description-table td {
-  padding: 15px 20px;
-  border-bottom: 1px solid var(--color-borde);
-  color: var(--color-texto-claro);
-  font-size: 0.95rem;
-}
-
-.description-table tr:last-child td {
-  border-bottom: none;
-}
-
-.description-table tr:hover td {
-  background-color: rgba(255, 255, 255, 0.03);
-}
-
-.description-table img {
-  max-width: 100%;
-  height: auto;
-  border-radius: var(--borde-redondeado-pequeno);
-  transition: transform 0.5s ease, opacity 0.5s ease;
-  opacity: 0;
-  transform: scale(0.95);
-}
-
-.description-table img.loaded {
-  opacity: 1;
-  transform: scale(1);
+/* Estilos responsivos */
+@media (max-width: 768px) {
+  .description-wrapper {
+    flex-direction: column;
+    gap: 30px;
+  }
+  
+  .description-text-container,
+  .description-image-container {
+    width: 100%;
+    min-width: 100%;
+  }
+  
+  .description-image {
+    max-height: 300px;
+    width: 100%;
+  }
 }
 
 /* Animaciones */
@@ -892,7 +805,9 @@ p {
   text-align: left;
   border-bottom: 1px solid var(--color-borde);
 }
-
+.section-title{
+  font-size: clamp(1rem, 0.5vw, 2rem);
+}
 .description-text table td {
   padding: 15px 20px;
   border-bottom: 1px solid var(--color-borde);
@@ -979,15 +894,26 @@ body:after {
 <!-- Carrusel hero premium -->
 <div class="description-container">
   <div class="description-content">
-    <h2 class="description-title">Marmoten Production</h2>
-    <div class="description-text">
-      {% if config %}
-        {% if request.LANGUAGE_CODE == 'en' and config.descripcion_en %}
-            {{ config.descripcion_en|safe }}
-        {% else %}
-            {{ config.descripcion|safe }}
-        {% endif %}
-      {% endif %}
+    <div class="description-wrapper">
+      <div class="description-text-container">
+        <h2 class="section-title">ACERCA DE MARMOTEN PRODUCTION</h2>
+        <h3 class="section-subtitle">Nos Centramos En Construirte A Ti Y A Tus Sueños</h3>
+        <div class="description-text">
+          {% if config %}
+            {% if request.LANGUAGE_CODE == 'en' and config.descripcion_en %}
+                {{ config.descripcion_en|safe }}
+            {% else %}
+                {{ config.descripcion|safe }}
+            {% endif %}
+          {% endif %}
+          <div class="learn-more">
+            <a href="{% url 'sobre_nosotros' %}" class="btn btn-primary">Saber más</a>
+          </div>
+        </div>
+      </div>
+      <div class="description-image-container">
+        <img src="{% static 'img/kim.jpg' %}" alt="Marmoten Production" class="description-image" loading="lazy">
+      </div>
     </div>
   </div>
 </div>
@@ -1026,10 +952,10 @@ body:after {
     </div>
   </div>
 </div>
+<!--
 
-<!-- Contenido principal -->
 <div class="main-container">
-  <!-- Sección de cortometrajes premium -->
+
   <section class="cortometrajes-section">
     <div class="cortometrajes-header">
       <h2>{% trans "Cortometrajes" %}</h2>
@@ -1064,7 +990,7 @@ body:after {
       {% endfor %}
     </div>
   </section>
-  
+  -->
   <!-- Sección de noticias -->
   <section class="news-section">
     <div class="news-header">
@@ -1073,7 +999,8 @@ body:after {
     </div>
     
     <div class="producciones-grid">
-      {% for post in ultimos_posts %}
+      {% for post in ultimos_posts|slice:":3" %}
+
       <article class="produccion-card">
         <a href="{% url 'detalle_post' post.id %}" style="text-decoration: none; color: inherit;">
           <div class="produccion-image-container">
@@ -1083,7 +1010,7 @@ body:after {
           </div>
           <div class="produccion-content">
             <h3 class="produccion-title">{{ post.title }}</h3>
-            <p>{{ post.resumen|default:post.content|default:""|truncatechars:180 }}</p>
+            <p>{{ post.resumen|default:post.content|default:""|limpiar_y_resumir:30 }}</p>
           </div>
           <div class="produccion-meta">
            <!--<span class="produccion-category">Noticia</span>-->
@@ -1093,6 +1020,11 @@ body:after {
       </article>
       {% endfor %}
     </div>
+      <div class="learn-container">
+          <div class="learn-more">
+            <a href="{% url 'trabajos' %}" class="btn btn-primary">Saber más</a>
+          </div>
+      </div>
   </section>
 </div>
 

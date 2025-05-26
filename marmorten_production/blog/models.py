@@ -7,7 +7,25 @@ from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
 from ckeditor.fields import RichTextField
 
+class TipoTrabajo(models.Model):
+    nombre = models.CharField(max_length=100)
+    slug = models.SlugField(max_length=100, unique=True)
+    descripcion = models.TextField(blank=True)
+    orden = models.PositiveIntegerField(default=0)
+    
+    class Meta:
+        ordering = ['orden']
+        verbose_name_plural = "Tipos de Trabajo"
+    
+    def __str__(self):
+        return self.nombre
+    
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.nombre)
+        super().save(*args, **kwargs)
 class Post(models.Model):
+    
     title = models.CharField(_('Título'), max_length=200)
     content = RichTextField(_('Contenido'), blank=True, null=True)
     resumen = RichTextField(blank=True, null=True, help_text="Breve resumen para mostrar en las tarjetas")
@@ -17,6 +35,12 @@ class Post(models.Model):
     destacado = models.BooleanField(default=False)
     mostrar_en_carrusel = models.BooleanField(default=False)
     orden = models.PositiveIntegerField(default=0)
+    tipo_trabajo = models.ForeignKey(
+        TipoTrabajo, 
+        on_delete=models.SET_NULL, 
+        null=True, 
+        verbose_name='Tipo de trabajo'
+    )
 
 
     class Meta:

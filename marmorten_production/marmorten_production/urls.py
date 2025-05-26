@@ -9,7 +9,7 @@ from django.views.static import serve as static_serve
 from django.conf.urls.i18n import i18n_patterns
 from blog import views  # Importa las vistas desde tu app blog
 from django.contrib.auth.views import LoginView, LogoutView
-
+from blog.views import trabajos, trabajos_por_tipo
 handler404 = 'blog.views.custom_404'
 
 urlpatterns = [
@@ -30,6 +30,8 @@ urlpatterns += i18n_patterns(
     path('contacto/', views.contacto, name='contacto'),
     path('nuestro-equipo/', views.nuestro_equipo, name='nuestro_equipo'),
     path('buscar/', views.buscar_posts, name='buscar_posts'),
+    path('trabajos/', trabajos, name='trabajos'),
+    path('trabajos/<slug:tipo_slug>/', trabajos_por_tipo, name='trabajos_por_tipo'),
     prefix_default_language=True,
 )
 

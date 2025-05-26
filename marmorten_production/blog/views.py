@@ -7,6 +7,7 @@ from django.http import Http404
 from django.contrib import messages
 from django.utils.translation import get_language
 from urllib.parse import urlparse, urlunparse
+from .models import TipoTrabajo
 
 
 def get_config():
@@ -142,3 +143,28 @@ def your_view(request):
     ))
 
     return render(request, 'tu_template.html', {'redirect_to': redirect_to})
+
+def trabajos(request):
+    tipos_trabajo = TipoTrabajo.objects.all().order_by('orden')
+    trabajos = Post.objects.filter(tipo_trabajo__isnull=False).order_by('-fecha_publicacion')
+    
+    context = {
+        'config': get_config(),
+        'tipos_trabajo': tipos_trabajo,
+        'trabajos': trabajos,
+        'tipo_activo': None
+    }
+    return render(request, 'blog/trabajos.html', context)
+
+def trabajos_por_tipo(request, tipo_slug):
+    tipo = get_object_or_404(TipoTrabajo, slug=tipo_slug)
+    tipos_trabajo = TipoTrabajo.objects.all().order_by('orden')
+    trabajos = Post.objects.filter(tipo_trabajo=tipo).order_by('-fecha_publicacion')
+    
+    context = {
+        'config': get_config(),
+        'tipos_trabajo': tipos_trabajo,
+        'trabajos': trabajos,
+        'tipo_activo': tipo.slug
+    }
+    return render(request, 'blog/trabajos.html', context)

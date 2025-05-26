@@ -4,7 +4,7 @@ from django import forms
 from .models import (
     Post, CarruselPost, GaleriaImagenes, Equipo, ConfiguracionSitio,
     ImagenGaleriaSobreNosotros, ImagenCarruselSobreNosotros, SeccionSobreNosotros,
-    ImagenCarrusel, MensajeContacto, EnlaceExterno, TelefonoContacto, EnlaceSeccionSobreNosotros,
+    ImagenCarrusel, MensajeContacto, EnlaceExterno, TelefonoContacto, EnlaceSeccionSobreNosotros, TipoTrabajo
 )
 import json
 from modeltranslation.admin import TranslationAdmin
@@ -62,18 +62,15 @@ class TelefonoContactoInline(admin.StackedInline):
     model = TelefonoContacto
     extra = 1
     fields = ('numero', 'descripcion', 'orden')
-
+@admin.register(TipoTrabajo)
+class TipoTrabajoAdmin(admin.ModelAdmin):
+    list_display = ('nombre', 'slug', 'orden')
+    list_display_en = ('nombre', 'slug', 'orden')
+    prepopulated_fields = {'slug': ('nombre',)}
+    ordering = ('orden',)
 
 @admin.register(ConfiguracionSitio)
 class ConfiguracionSitioAdmin(admin.ModelAdmin):
-    descripcion = forms.CharField(widget=CKEditorWidget(), required=False)
-    descripcion_en = forms.CharField(widget=CKEditorWidget(), required=False)
-    sobre_nosotros = forms.CharField(widget=CKEditorWidget(), required=False)
-    sobre_nosotros_en = forms.CharField(widget=CKEditorWidget(), required=False)
-    mision = forms.CharField(widget=CKEditorWidget(), required=False)
-    mision_en = forms.CharField(widget=CKEditorWidget(), required=False)
-    vision = forms.CharField(widget=CKEditorWidget(), required=False)
-    vision_en = forms.CharField(widget=CKEditorWidget(), required=False)
     
     inlines = [TelefonoContactoInline]
     list_display = ('titulo_sitio', 'email_contacto', 'preview_logo')
@@ -133,21 +130,18 @@ class EnlaceExternoInline(admin.StackedInline):
 @admin.register(Post)
 class PostAdmin(TranslationAdmin):
     inlines = [GaleriaPostInline, EnlaceExternoInline]
-
-    list_display = ('title', 'fecha_publicacion', 'destacado')
+    list_display = ('title', 'fecha_publicacion', 'destacado', 'tipo_trabajo', 'destacado', 'tipo_trabajo')  # Añade tipo_trabajo aquí
+    list_filter = ('destacado', 'tipo_trabajo')  # Añade filtro por tipo de trabajo
 
     fieldsets = (
         ('Contenido (Español)', {
-            'fields': ('title', 'resumen', 'content')
+            'fields': ('title','tipo_trabajo', 'resumen', 'content')
         }),
-        #('Contenido (Inglés)', {
-        #    'fields': ('title_en', 'resumen_en', 'content_en')
-        #}),
         ('Multimedia', {
             'fields': ('imagen', 'video')
         }),
         ('Configuración', {
-            'fields': ('destacado', 'mostrar_en_carrusel', 'orden'),
+            'fields': ('destacado', 'mostrar_en_carrusel', 'orden'),  # Añade tipo_trabajo aquí
             'classes': ('collapse',)
         })
     )

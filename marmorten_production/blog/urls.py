@@ -7,7 +7,7 @@ from django.contrib.staticfiles.views import serve
 from django.views.static import serve as static_serve
 from django.conf.urls.i18n import i18n_patterns
 handler404 = 'blog.views.custom_404'
-
+from .views import trabajos, trabajos_por_tipo
 
 urlpatterns = [
     path('', views.inicio, name='inicio'),
@@ -17,6 +17,8 @@ urlpatterns = [
     path('nuestro-equipo/', views.nuestro_equipo, name='nuestro_equipo'),
     path('buscar/', views.buscar_posts, name='buscar_posts'),
     path('i18n/', include('django.conf.urls.i18n')),
+    path('trabajos/', trabajos, name='trabajos'),
+    path('trabajos/<slug:tipo_slug>/', trabajos_por_tipo, name='trabajos_por_tipo'),
 ]
 
 
