@@ -168,3 +168,22 @@ def trabajos_por_tipo(request, tipo_slug):
         'tipo_activo': tipo.slug
     }
     return render(request, 'blog/trabajos.html', context)
+
+def sobre_nosotros(request):
+    secciones = SeccionSobreNosotros.objects.exclude(tipo='PORTADA').order_by('orden')
+    carruseles_usados = set()
+    for seccion in secciones.filter(tipo='TEXTO'):
+        if seccion.carrusel_asociado:
+            carruseles_usados.add(seccion.carrusel_asociado.id)
+    
+    secciones_finales = []
+    for seccion in secciones:
+        if seccion.tipo != 'CAROUSEL' or seccion.id not in carruseles_usados:
+            secciones_finales.append(seccion)
+    
+    context = {
+        'portada': SeccionSobreNosotros.objects.filter(tipo='PORTADA').first(),
+        'secciones': secciones_finales,
+        'config': get_config()
+    }
+    return render(request, 'blog/sobre_nosotros.html', context)

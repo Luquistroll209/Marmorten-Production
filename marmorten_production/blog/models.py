@@ -267,13 +267,33 @@ class SeccionSobreNosotros(models.Model):
         ('TEXTO', 'Texto'),
         ('IMAGEN', 'Imagen'),
         ('CAROUSEL', 'Carrusel de imágenes'),
-        ('REDES', 'Enlaces/Redes Sociales'),  # Nueva opción
+        ('REDES', 'Enlaces/Redes Sociales'),
+    ]
+    
+    POSICION_CARRUSEL = [
+        ('DERECHA', 'Derecha'),
+        ('IZQUIERDA', 'Izquierda'),
+        ('NINGUNA', 'Sin carrusel'),
     ]
     
     titulo = models.CharField(max_length=100, blank=True)
     tipo = models.CharField(max_length=10, choices=TIPO_SECCION)
     contenido_texto = RichTextField(blank=True, null=True)
     imagen = models.ImageField(upload_to='sobre_nosotros/secciones/', blank=True, null=True)
+    carrusel_asociado = models.ForeignKey(
+        'self',
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+        limit_choices_to={'tipo': 'CAROUSEL'},
+        help_text="Selecciona un carrusel para mostrar con esta sección"
+    )
+    posicion_carrusel = models.CharField(
+        max_length=10,
+        choices=POSICION_CARRUSEL,
+        default='NINGUNA',
+        help_text="Posición del carrusel respecto al texto"
+    )
     orden = models.PositiveIntegerField(default=0)
     
     class Meta:
@@ -284,6 +304,10 @@ class SeccionSobreNosotros(models.Model):
         from django.core.exceptions import ValidationError
         if self.tipo == 'PORTADA' and SeccionSobreNosotros.objects.filter(tipo='PORTADA').exclude(id=self.id).exists():
             raise ValidationError('Solo puede haber una sección de tipo Portada')
+        if self.tipo == 'CAROUSEL' and self.carrusel_asociado:
+            raise ValidationError('Un carrusel no puede tener otro carrusel asociado')
+        if self.posicion_carrusel != 'NINGUNA' and not self.carrusel_asociado:
+            raise ValidationError('Debes seleccionar un carrusel asociado si especificas una posición')
 
     def __str__(self):
         return f"{self.titulo} ({self.get_tipo_display()})"

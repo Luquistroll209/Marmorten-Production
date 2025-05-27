@@ -252,15 +252,19 @@ class ImagenCarruselInline(admin.StackedInline):
 
 
 @admin.register(SeccionSobreNosotros)
-class SeccionSobreNosotrosAdmin(TranslationAdmin):  # ✅ Aquí estaba el error ❌
-    list_display = ('titulo', 'tipo', 'orden', 'preview_content')
-    list_editable = ('orden',)
-    list_filter = ('tipo',)
+class SeccionSobreNosotrosAdmin(TranslationAdmin):
+    list_display = ('titulo', 'tipo', 'carrusel_asociado', 'posicion_carrusel', 'orden', 'preview_content')
+    list_editable = ('orden', 'posicion_carrusel')
+    list_filter = ('tipo', 'posicion_carrusel')
     inlines = [ImagenCarruselInline]
 
+    
     fieldsets = (
         ('Contenido', {
-            'fields': ('titulo', 'tipo', 'contenido_texto', 'imagen', 'orden')
+            'fields': ('titulo', 'tipo','carrusel_asociado', 'posicion_carrusel', 'contenido_texto', 'imagen')
+        }),
+        ('Orden', {
+            'fields': ('orden',)
         }),
     )
 
