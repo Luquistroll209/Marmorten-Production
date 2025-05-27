@@ -565,7 +565,7 @@ const teamMembers = {
     puesto: "{{ miembro.puesto }}",
     biografia: `{{ miembro.biografia|safe }}`,
     foto: "{{ miembro.foto.url }}",
-    descripcion_foto: "{{ miembro.descripcion_foto|default:'Fotografía profesional del equipo' }}",
+    descripcion_foto: "{{ miembro.descripcion_foto|default:'' }}",
     redes: {
       {% for red, url in miembro.redes_sociales.items %}
         "{{ red }}": "{{ url }}"{% if not forloop.last %},{% endif %}

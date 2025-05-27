@@ -3,7 +3,7 @@
 {% load i18n %}
 
 {% block title %}{% trans "Nuestros Trabajos" %} - Marmoten Production{% endblock %}
-
+{% load filtros %}
 {% block content %}
 <style>
     /* Estilos consistentes con la paleta de colores de base.html */
@@ -378,9 +378,9 @@
                         <h3>{{ trabajo.title }}</h3>
                         <div class="trabajo-resumen">
                             {% if trabajo.resumen %}
-                                {{ trabajo.resumen|safe|truncatechars:180 }}
+                                {{ trabajo.resumen|limpiar_y_resumir:30 }}
                             {% else %}
-                                {{ trabajo.content|striptags|truncatechars:180 }}
+                                {{ trabajo.content|striptags|limpiar_y_resumir:30 }}
                             {% endif %}
                         </div>
                         <span class="ver-mas-btn">{% trans "Ver más" %}</span>

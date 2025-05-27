@@ -3,6 +3,7 @@
 {% block title %}Resultados de búsqueda - MARMOTEN PRODUCTION{% endblock %}
 {% load i18n %}
 {% block content %}
+{% load filtros %}
 <style>
     :root {
         /* Paleta de colores profesional consistente */
@@ -325,7 +326,7 @@
                 {% endif %}
                 <div class="produccion-content">
                     <h3 class="produccion-title">{{ post.title }}</h3>
-                    <p class="produccion-excerpt">{{ post.resumen|default:post.content|default:""|truncatechars:150 }}</p>
+                    <p class="produccion-excerpt">{{ post.resumen|default:post.content|default:""|limpiar_y_resumir:30 }}</p>
                     <div class="produccion-meta">
                         <span class="produccion-category">
                             {% if post.categoria %}{{ post.categoria }}
