@@ -6,8 +6,8 @@
 
 {% block content %}
 <style>
+  /* Variables de diseño consistentes con base.html */
   :root {
-    /* Paleta de colores consistente */
     --color-primario: #0a0a0a;
     --color-secundario: #121212;
     --color-borde-suave: rgba(255, 255, 255, 0.1);
@@ -28,72 +28,80 @@
   }
 
   /* Estructura principal */
-  .about-section {
+  .about-container {
     max-width: 1400px;
-    margin: 100px auto;
+    margin: 120px auto 60px;
     padding: 0 30px;
   }
 
-  /* Hero section */
-  .hero-container {
+  /* Hero section mejorada */
+  .hero-about {
     position: relative;
     width: 100%;
-    height: 70vh;
-    min-height: 500px;
-    max-height: 800px;
+    height: 80vh;
+    min-height: 600px;
+    max-height: 900px;
     border-radius: var(--radio-borde-grande);
     overflow: hidden;
-    margin-bottom: clamp(60px, 8vw, 100px);
+    margin-bottom: 80px;
     box-shadow: var(--sombra-intensa);
+    display: flex;
+    align-items: flex-end;
   }
 
-  .hero-image {
+  .hero-about-image {
+    position: absolute;
     width: 100%;
     height: 100%;
     object-fit: cover;
     filter: brightness(0.7);
     transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 1;
   }
 
-  .hero-content {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    padding: clamp(20px, 1vw, 80px);
+  .hero-about:hover .hero-about-image {
+    transform: scale(1.05);
+  }
+
+  .hero-about-content {
+    position: relative;
+    width: 100%;
+    padding: 60px;
     background: linear-gradient(to top, var(--color-overlay), transparent);
     z-index: 2;
-    
   }
 
-  .hero-title {
-    font-size: clamp(2.5rem, 5vw, 4rem);
+  .hero-about-title {
+    font-size: clamp(3rem, 6vw, 5rem);
     color: var(--color-texto-principal);
-    margin-bottom: 1.5rem;
-    margin-left: 25%;
-    line-height: 1.1;
-    letter-spacing: 2px;
+    margin-bottom: 2rem;
+    line-height: 1;
+    letter-spacing: 3px;
     text-transform: uppercase;
-    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-    
+    text-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    font-weight: 400;
+    max-width: 70%;
   }
 
-  .hero-description {
+  .hero-about-description {
     color: var(--color-texto-secundario);
-    font-size: clamp(1rem, 1.2vw, 1.2rem);
+    font-size: clamp(1rem, 1.3vw, 1.3rem);
     max-width: 700px;
     line-height: 1.8;
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+    margin-bottom: 2rem;
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
   }
 
   /* Secciones de contenido */
-  .content-section {
-    margin-bottom: clamp(60px, 8vw, 100px);
+  .about-section {
+    margin-bottom: 100px;
+    position: relative;
   }
 
   .section-header {
     text-align: center;
-    margin-bottom: clamp(40px, 6vw, 70px);
+    margin-bottom: 60px;
+    position: relative;
   }
 
   .section-title {
@@ -103,6 +111,9 @@
     position: relative;
     display: inline-block;
     padding-bottom: 15px;
+    font-weight: 400;
+    letter-spacing: 2px;
+    text-transform: uppercase;
   }
 
   .section-title:after {
@@ -126,17 +137,80 @@
   }
 
   /* Texto formateado */
-  .formatted-text {
+  .formatted-content {
     line-height: 1.8;
     font-size: clamp(1rem, 1.1vw, 1.1rem);
     color: var(--color-texto-secundario);
+    max-width: 1000px;
+    margin: 0 auto;
   }
 
-  .formatted-text p {
+  .formatted-content p {
     margin-bottom: 1.8rem;
   }
 
-  /* Carrusel personalizado para about */
+  .formatted-content h2, 
+  .formatted-content h3, 
+  .formatted-content h4 {
+    color: var(--color-texto-principal);
+    margin-top: 2.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .formatted-content h2 {
+    font-size: clamp(1.8rem, 3vw, 2.2rem);
+    border-bottom: 1px solid var(--color-borde-suave);
+    padding-bottom: 10px;
+  }
+
+  .formatted-content h3 {
+    font-size: clamp(1.5rem, 2.5vw, 1.8rem);
+  }
+
+  /* Imagen destacada */
+  .featured-image-section {
+    margin: 80px 0;
+    position: relative;
+  }
+
+  .featured-image-container {
+    border-radius: var(--radio-borde-grande);
+    overflow: hidden;
+    box-shadow: var(--sombra-intensa);
+    position: relative;
+    transition: var(--transicion-suave);
+  }
+
+  .featured-image-container:hover {
+    transform: translateY(-10px);
+    box-shadow: var(--sombra-intensa-hover);
+  }
+
+  .featured-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform 1.2s cubic-bezier(0.16, 1, 0.36, 1);
+  }
+
+  .featured-image-container:hover .featured-image {
+    transform: scale(1.05);
+  }
+
+  .image-caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 20px;
+    background: linear-gradient(to top, var(--color-overlay), transparent);
+    color: var(--color-texto-principal);
+    text-align: center;
+    font-size: 1rem;
+    z-index: 2;
+  }
+
+  /* Carrusel mejorado */
   .about-carousel-container {
     width: 100%;
     position: relative;
@@ -146,6 +220,7 @@
     min-height: 500px;
     max-height: 800px;
     box-shadow: var(--sombra-intensa);
+    margin: 60px 0;
   }
 
   .about-carousel {
@@ -197,9 +272,13 @@
   .about-carousel-img {
     width: 100%;
     height: 100%;
-    object-fit: contain;
+    object-fit: cover;
     object-position: center;
-    background-color: var(--color-secundario);
+    transition: transform 1.2s cubic-bezier(0.16, 1, 0.36, 1);
+  }
+
+  .about-carousel-slide.active .about-carousel-img {
+    transform: scale(1.03);
   }
 
   .about-carousel-caption {
@@ -212,6 +291,7 @@
     color: var(--color-texto-principal);
     text-align: center;
     font-size: 1rem;
+    z-index: 4;
   }
 
   .about-carousel-nav {
@@ -277,15 +357,16 @@
     border-color: var(--color-destacado);
   }
 
-  /* Sección de redes sociales */
+  /* Sección de redes sociales mejorada */
   .social-section {
     background: var(--color-tarjeta-oscura);
     border-radius: var(--radio-borde-grande);
-    padding: clamp(40px, 6vw, 80px);
-    margin: clamp(60px, 8vw, 100px) 0;
+    padding: 80px;
+    margin: 100px 0;
     box-shadow: var(--sombra-intensa);
     border: 1px solid var(--color-borde-suave);
     position: relative;
+    overflow: hidden;
   }
 
   .social-section:before {
@@ -302,7 +383,7 @@
 
   .social-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
     gap: 30px;
     margin-top: 50px;
   }
@@ -318,6 +399,19 @@
     background: rgba(30, 30, 30, 0.6);
     border-radius: var(--radio-borde-pequeno);
     border: 1px solid var(--color-borde-suave);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .social-card:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(192,192,192,0.05) 0%, transparent 100%);
+    z-index: 1;
   }
 
   .social-card:hover {
@@ -325,6 +419,7 @@
     background: rgba(40, 40, 40, 0.8);
     color: var(--color-destacado-hover);
     border-color: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
   }
 
   .social-icon {
@@ -339,6 +434,7 @@
     font-size: 1.8rem;
     color: var(--color-destacado);
     transition: var(--transicion-suave);
+    z-index: 2;
   }
 
   .social-card:hover .social-icon {
@@ -351,41 +447,10 @@
     font-size: 1.1rem;
     text-align: center;
     font-weight: 500;
+    z-index: 2;
   }
 
-  /* Imagen destacada */
-  .featured-image-container {
-    margin: clamp(40px, 6vw, 80px) 0;
-    border-radius: var(--radio-borde-grande);
-    overflow: hidden;
-    box-shadow: var(--sombra-intensa);
-    position: relative;
-  }
-
-  .featured-image {
-    width: 100%;
-    height: auto;
-    display: block;
-    transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-
-  .featured-image-container:hover .featured-image {
-    transform: scale(1.05);
-  }
-
-  .image-caption {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    padding: 20px;
-    background: linear-gradient(to top, var(--color-overlay), transparent);
-    color: var(--color-texto-principal);
-    text-align: center;
-    font-size: 0.9rem;
-  }
-
-  /* Popup de imagen */
+  /* Popup de imagen mejorado */
   .image-popup {
     position: fixed;
     top: 0;
@@ -448,9 +513,28 @@
   }
 
   /* Responsive */
+  @media (max-width: 1200px) {
+    .hero-about-title {
+      max-width: 80%;
+    }
+  }
+
   @media (max-width: 992px) {
-    .hero-container {
-      height: 60vh;
+    .about-container {
+      padding: 0 20px;
+    }
+    
+    .hero-about {
+      height: 70vh;
+      min-height: 500px;
+    }
+    
+    .hero-about-content {
+      padding: 40px;
+    }
+    
+    .hero-about-title {
+      max-width: 90%;
     }
     
     .about-carousel-container {
@@ -462,16 +546,25 @@
       width: 90%;
       height: 70%;
     }
+    
+    .social-section {
+      padding: 60px;
+    }
   }
 
   @media (max-width: 768px) {
-    .hero-container {
-      height: 50vh;
+    .hero-about {
+      height: 60vh;
       min-height: 400px;
     }
     
-    .hero-content {
+    .hero-about-content {
       padding: 30px;
+    }
+    
+    .hero-about-title {
+      max-width: 100%;
+      font-size: clamp(2.5rem, 7vw, 3.5rem);
     }
     
     .about-carousel-container {
@@ -484,25 +577,36 @@
       height: 40px;
       font-size: 1.2rem;
     }
+    
+    .social-section {
+      padding: 40px;
+    }
+    
+    .social-grid {
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    }
   }
 
   @media (max-width: 576px) {
-    .about-section {
-      padding: 0 20px;
+    .about-container {
+      padding: 0 15px;
+      margin-top: 80px;
     }
     
-    .hero-container {
-      height: 40vh;
+    .hero-about {
+      height: 50vh;
       min-height: 300px;
+      border-radius: var(--radio-borde-pequeno);
     }
     
-    .hero-title {
-      font-size: 2rem;
+    .hero-about-content {
+      padding: 20px;
     }
     
     .about-carousel-container {
       height: 40vh;
       min-height: 300px;
+      border-radius: var(--radio-borde-pequeno);
     }
     
     .about-carousel-image-container {
@@ -513,18 +617,27 @@
     .about-carousel-indicators {
       bottom: 20px;
     }
+    
+    .social-section {
+      padding: 30px 20px;
+      margin: 60px 0;
+    }
+    
+    .social-grid {
+      grid-template-columns: 1fr;
+    }
   }
 </style>
 
-<div class="about-section">
+<div class="about-container">
   <!-- Hero Section -->
   {% if portada and portada.imagen %}
-  <div class="hero-container">
-    <img src="{{ portada.imagen.url }}" alt="{{ portada.titulo }}" class="hero-image" loading="lazy">
-    <div class="hero-content">
-      <h1 class="hero-title">{{ portada.titulo }}</h1>
+  <div class="hero-about">
+    <img src="{{ portada.imagen.url }}" alt="{{ portada.titulo }}" class="hero-about-image" loading="lazy">
+    <div class="hero-about-content">
+      <h1 class="hero-about-title">{{ portada.titulo }}</h1>
       {% if portada.contenido_texto %}
-      <p class="hero-description">{{ portada.contenido_texto }}</p>
+      <div class="hero-about-description">{{ portada.contenido_texto|safe }}</div>
       {% endif %}
     </div>
   </div>
@@ -533,7 +646,7 @@
   <!-- Secciones de contenido -->
   {% for seccion in secciones %}
     {% if seccion.tipo == 'TEXTO' %}
-      <section class="content-section">
+      <section class="about-section">
         <div class="section-header">
           <h2 class="section-title">{{ seccion.titulo }}</h2>
           {% if seccion.descripcion %}
@@ -541,21 +654,23 @@
           {% endif %}
         </div>
         
-        <div class="formatted-text">
+        <div class="formatted-content">
           {{ seccion.contenido_texto|safe }}
         </div>
       </section>
     
     {% elif seccion.tipo == 'IMAGEN' and seccion.imagen %}
-      <div class="featured-image-container" onclick="openImagePopup('{{ seccion.imagen.url }}', '{{ seccion.titulo }}')">
-        <img src="{{ seccion.imagen.url }}" alt="{{ seccion.titulo }}" class="featured-image" loading="lazy">
-        {% if seccion.titulo %}
-        <div class="image-caption">{{ seccion.titulo }}</div>
-        {% endif %}
+      <div class="featured-image-section">
+        <div class="featured-image-container" onclick="openImagePopup('{{ seccion.imagen.url }}', '{{ seccion.titulo }}')">
+          <img src="{{ seccion.imagen.url }}" alt="{{ seccion.titulo }}" class="featured-image" loading="lazy">
+          {% if seccion.titulo %}
+          <div class="image-caption">{{ seccion.titulo }}</div>
+          {% endif %}
+        </div>
       </div>
     
     {% elif seccion.tipo == 'CAROUSEL' and seccion.imagenes_del_carrusel.all %}
-      <section class="content-section">
+      <section class="about-section">
         <div class="section-header">
           <h2 class="section-title">{{ seccion.titulo }}</h2>
           {% if seccion.descripcion %}

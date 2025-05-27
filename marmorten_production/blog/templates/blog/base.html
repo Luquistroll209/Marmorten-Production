@@ -685,7 +685,7 @@
     <!-- Navbar  -->
     <nav class="main-navigation" id="mainNav">
         <button class="mobile-nav-toggle" id="mobileNavToggle">☰</button>
-        <img src="{{ config.logo.url }}" alt="Marmoten Production Logo" class="nav-brand">
+        <img href="{% url 'inicio' %}" src="{{ config.logo.url }}" alt="Marmoten Production Logo" class="nav-brand">
         <div class="nav-menu" id="navMenu">
             <a href="{% url 'inicio' %}" class="nav-item active">{% trans "Inicio" %}</a>
             <a href="{% url 'trabajos' %}" class="nav-item">{% trans "Trabajos" %}</a>
