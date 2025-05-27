@@ -2,32 +2,57 @@
 {% load static %}
 {% load i18n %}
 
-{% block title %}Nuestros Trabajos - Marmoten Production{% endblock %}
+{% block title %}{% trans "Nuestros Trabajos" %} - Marmoten Production{% endblock %}
 
 {% block content %}
 <style>
+    /* Estilos consistentes con la paleta de colores de base.html */
+    :root {
+        --color-primario: #0a0a0a;
+        --color-secundario: #121212;
+        --color-borde-suave: rgba(255, 255, 255, 0.1);
+        --color-texto-principal: #ffffff;
+        --color-texto-secundario: #e0e0e0;
+        --color-destacado: #c0c0c0;
+        --color-destacado-hover: #ffffff;
+        --color-tarjeta-oscura: #1e1e1e;
+        --color-texto-fondo: rgba(18, 18, 18, 0.92);
+        --color-overlay: rgba(10, 10, 10, 0.7);
+        
+        --radio-borde-grande: 20px;
+        --radio-borde-pequeno: 10px;
+        --sombra-intensa: 0 12px 40px rgba(0, 0, 0, 0.25);
+        --sombra-intensa-hover: 0 16px 50px rgba(0, 0, 0, 0.35);
+        --transicion-suave: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+        --transicion-rapida: all 0.3s ease-out;
+    }
+
     .trabajos-section {
-        padding: clamp(60px, 8vw, 120px) 0;
+        padding: clamp(80px, 10vw, 140px) 0 clamp(60px, 8vw, 100px);
         position: relative;
+        background-color: var(--color-secundario);
     }
     
     .trabajos-container {
         max-width: 1400px;
         margin: 0 auto;
-        padding: 0 clamp(20px, 5vw, 40px);
+        padding: 0 clamp(20px, 5vw, 60px);
     }
     
     .trabajos-header {
         text-align: center;
-        margin-bottom: clamp(40px, 6vw, 70px);
+        margin-bottom: clamp(40px, 6vw, 80px);
+        position: relative;
     }
     
     .trabajos-header h2 {
-        font-size: clamp(2.5rem, 5vw, 3.5rem);
+        font-size: clamp(2.5rem, 5vw, 4rem);
         letter-spacing: 3px;
         position: relative;
         display: inline-block;
         padding-bottom: 15px;
+        color: var(--color-texto-principal);
+        text-transform: uppercase;
     }
     
     .trabajos-header h2:after {
@@ -35,7 +60,7 @@
         display: block;
         width: 100px;
         height: 3px;
-        background: var(--color-acento);
+        background: var(--color-destacado);
         position: absolute;
         bottom: 0;
         left: 50%;
@@ -43,9 +68,11 @@
     }
     
     .trabajos-header p {
-        font-size: clamp(1rem, 1.2vw, 1.2rem);
-        max-width: 700px;
-        margin: 0 auto;
+        font-size: clamp(1rem, 1.2vw, 1.3rem);
+        max-width: 800px;
+        margin: 20px auto 0;
+        color: var(--color-texto-secundario);
+        line-height: 1.8;
     }
     
     .filtros-trabajos {
@@ -53,37 +80,39 @@
         flex-wrap: wrap;
         justify-content: center;
         gap: 15px;
-        margin-bottom: clamp(30px, 5vw, 60px);
+        margin-bottom: clamp(40px, 5vw, 70px);
     }
     
     .filtro-btn {
-        padding: clamp(10px, 1.5vw, 14px) clamp(20px, 2.5vw, 30px);
-        border-radius: var(--borde-redondeado-pequeno);
+        padding: clamp(12px, 1.5vw, 16px) clamp(20px, 2.5vw, 30px);
+        border-radius: var(--radio-borde-pequeno);
         font-weight: 600;
         text-decoration: none;
-        transition: var(--transicion);
-        border: 2px solid var(--color-acento);
+        transition: var(--transicion-suave);
+        border: 2px solid var(--color-destacado);
         background: transparent;
-        color: var(--color-acento);
+        color: var(--color-destacado);
         cursor: pointer;
-        font-size: clamp(0.9rem, 1.1vw, 1rem);
+        font-size: clamp(0.9rem, 1.1vw, 1.1rem);
         letter-spacing: 1.5px;
         text-transform: uppercase;
         font-family: 'Bebas Neue', sans-serif;
         white-space: nowrap;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     }
     
-    .filtro-btn:hover, .filtro-btn.active {
-        background: var(--color-acento);
-        color: var(--color-negro);
-        transform: translateY(-3px);
-        box-shadow: 0 10px 25px rgba(192, 192, 192, 0.2);
+    .filtro-btn:hover, 
+    .filtro-btn.active {
+        background: var(--color-destacado);
+        color: var(--color-primario);
+        transform: translateY(-5px);
+        box-shadow: 0 15px 30px rgba(192, 192, 192, 0.3);
     }
     
     .filtro-btn.active {
-        background: var(--color-acento);
-        color: var(--color-negro);
-        border-color: var(--color-acento);
+        background: var(--color-destacado);
+        color: var(--color-primario);
+        border-color: var(--color-destacado);
     }
     
     .trabajos-grid {
@@ -93,12 +122,12 @@
     }
     
     .trabajo-card {
-        background: var(--color-tarjeta);
-        border-radius: var(--borde-redondeado);
+        background: var(--color-tarjeta-oscura);
+        border-radius: var(--radio-borde-grande);
         overflow: hidden;
-        box-shadow: var(--sombra);
-        transition: var(--transicion);
-        border: 1px solid var(--color-borde);
+        box-shadow: var(--sombra-intensa);
+        transition: var(--transicion-suave);
+        border: 1px solid var(--color-borde-suave);
         position: relative;
         will-change: transform;
         display: flex;
@@ -108,15 +137,15 @@
     
     .trabajo-card:hover {
         transform: translateY(-15px);
-        box-shadow: var(--sombra-hover);
+        box-shadow: var(--sombra-intensa-hover);
         border-color: rgba(255, 255, 255, 0.3);
     }
     
     .trabajo-imagen {
         width: 100%;
-        height: clamp(250px, 30vw, 300px);
-        background: white;
-        border-radius: var(--borde-redondeado) var(--borde-redondeado) 0 0;
+        height: clamp(250px, 30vw, 350px);
+        background: var(--color-primario);
+        border-radius: var(--radio-borde-grande) var(--radio-borde-grande) 0 0;
         overflow: hidden;
         position: relative;
         flex-shrink: 0;
@@ -150,30 +179,32 @@
         flex-grow: 1;
         display: flex;
         flex-direction: column;
-        margin-bottom: 50px;
     }
     
     .trabajo-info h3 {
-        font-size: clamp(1.5rem, 2.5vw, 2rem);
+        font-size: clamp(1.5rem, 2.5vw, 2.2rem);
         margin-bottom: clamp(15px, 2vw, 20px);
-        color: var(--color-texto);
+        color: var(--color-texto-principal);
         letter-spacing: 1.5px;
+        font-family: 'Bebas Neue', sans-serif;
+        line-height: 1.2;
     }
     
     .trabajo-resumen {
-        color: var(--color-texto-claro);
+        color: var(--color-texto-secundario);
         margin-bottom: clamp(20px, 3vw, 30px);
-        font-size: clamp(0.95rem, 1.1vw, 1.05rem);
+        font-size: clamp(0.95rem, 1.1vw, 1.1rem);
         line-height: 1.7;
+        font-weight: 300;
     }
     
     .trabajo-tipo {
         display: inline-block;
         background: rgba(192, 192, 192, 0.1);
-        color: var(--color-acento);
-        padding: 5px 15px;
+        color: var(--color-destacado);
+        padding: 6px 18px;
         border-radius: 20px;
-        font-size: clamp(0.8rem, 1vw, 0.9rem);
+        font-size: clamp(0.8rem, 1vw, 0.95rem);
         text-transform: uppercase;
         letter-spacing: 1.5px;
         margin-bottom: 15px;
@@ -184,51 +215,127 @@
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        padding: clamp(10px, 1.5vw, 14px) clamp(20px, 2.5vw, 30px);
-        border-radius: var(--borde-redondeado-pequeno);
+        padding: clamp(12px, 1.5vw, 16px) clamp(20px, 2.5vw, 30px);
+        border-radius: var(--radio-borde-pequeno);
         font-weight: 600;
         text-decoration: none;
-        transition: var(--transicion);
-        border: 2px solid var(--color-acento);
+        transition: var(--transicion-suave);
+        border: 2px solid var(--color-destacado);
         background: transparent;
-        color: var(--color-acento);
+        color: var(--color-destacado);
         cursor: pointer;
-        font-size: clamp(0.9rem, 1.1vw, 1rem);
+        font-size: clamp(0.9rem, 1.1vw, 1.1rem);
         letter-spacing: 1.5px;
         text-transform: uppercase;
         font-family: 'Bebas Neue', sans-serif;
-        position: absolute;
-        bottom: 20px;
-        right: 20px;
+        margin-top: auto;
+        align-self: flex-start;
     }
     
     .ver-mas-btn:hover {
-        background: var(--color-acento);
-        color: var(--color-negro);
-        transform: translateY(-3px);
-        box-shadow: 0 10px 25px rgba(192, 192, 192, 0.2);
+        background: var(--color-destacado);
+        color: var(--color-primario);
+        transform: translateY(-5px);
+        box-shadow: 0 15px 30px rgba(192, 192, 192, 0.3);
     }
     
     .no-trabajos {
         grid-column: 1 / -1;
         text-align: center;
-        padding: 40px;
-        color: var(--color-texto-claro);
-        font-size: clamp(1rem, 1.2vw, 1.2rem);
+        padding: 60px 40px;
+        color: var(--color-texto-secundario);
+        font-size: clamp(1rem, 1.2vw, 1.3rem);
+        background: var(--color-tarjeta-oscura);
+        border-radius: var(--radio-borde-grande);
+        border: 1px solid var(--color-borde-suave);
+    }
+    
+    .no-trabajos p {
+        margin-bottom: 30px;
+    }
+
+    /* Efecto de ruido de fondo como en index.html */
+    .trabajos-section:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url('{% static "images/noise.png" %}') repeat;
+        opacity: 0.03;
+        pointer-events: none;
+        z-index: 1;
+    }
+
+    /* Responsive design */
+    @media (max-width: 992px) {
+        .trabajos-grid {
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        }
+        
+        .trabajo-imagen {
+            height: clamp(220px, 35vw, 300px);
+        }
     }
     
     @media (max-width: 768px) {
+        .trabajos-section {
+            padding: 60px 0 40px;
+        }
+        
+        .trabajos-header {
+            margin-bottom: 40px;
+        }
+        
         .trabajos-grid {
             grid-template-columns: 1fr;
+            gap: 30px;
         }
         
         .filtros-trabajos {
             gap: 10px;
+            margin-bottom: 40px;
         }
         
         .filtro-btn {
-            padding: 8px 15px;
-            font-size: 0.85rem;
+            padding: 10px 18px;
+            font-size: 0.9rem;
+        }
+        
+        .trabajo-card:hover {
+            transform: translateY(-8px);
+        }
+    }
+    
+    @media (max-width: 480px) {
+        .trabajos-header h2 {
+            font-size: 2.2rem;
+        }
+        
+        .trabajos-header p {
+            font-size: 1rem;
+        }
+        
+        .filtros-trabajos {
+            gap: 8px;
+        }
+        
+        .filtro-btn {
+            padding: 8px 14px;
+            font-size: 0.8rem;
+        }
+        
+        .trabajo-info {
+            padding: 20px;
+        }
+        
+        .trabajo-info h3 {
+            font-size: 1.5rem;
+        }
+        
+        .no-trabajos {
+            padding: 40px 20px;
         }
     }
 </style>
@@ -237,7 +344,7 @@
     <div class="trabajos-container">
         <div class="trabajos-header">
             <h2>{% trans "Nuestros Trabajos" %}</h2>
-            <p>{% trans "Explora nuestra colección de producciones audiovisuales que representan nuestra pasión y dedicación" %}</p>
+            <p>{% trans "Explora nuestra colección de producciones audiovisuales que representan nuestra pasión y dedicación por el cine y la narrativa visual." %}</p>
         </div>
         
         <!-- Filtros por tipo -->
@@ -260,6 +367,8 @@
                     <div class="trabajo-imagen">
                         {% if trabajo.imagen %}
                         <img src="{{ trabajo.imagen.url }}" alt="{{ trabajo.title }}" loading="lazy">
+                        {% else %}
+                        <img src="{% static 'img/placeholder.jpg' %}" alt="Placeholder" loading="lazy">
                         {% endif %}
                     </div>
                     <div class="trabajo-info">
@@ -269,9 +378,9 @@
                         <h3>{{ trabajo.title }}</h3>
                         <div class="trabajo-resumen">
                             {% if trabajo.resumen %}
-                                {{ trabajo.resumen|safe|truncatechars:150 }}
+                                {{ trabajo.resumen|safe|truncatechars:180 }}
                             {% else %}
-                                {{ trabajo.content|striptags|truncatechars:150 }}
+                                {{ trabajo.content|striptags|truncatechars:180 }}
                             {% endif %}
                         </div>
                         <span class="ver-mas-btn">{% trans "Ver más" %}</span>
@@ -281,10 +390,67 @@
             {% empty %}
             <div class="no-trabajos">
                 <p>{% trans "No hay trabajos disponibles en esta categoría." %}</p>
-                <a href="{% url 'trabajos' %}" class="btn btn-primary" style="margin-top: 20px;">{% trans "Ver todos los trabajos" %}</a>
+                <a href="{% url 'trabajos' %}" class="filtro-btn active" style="margin-top: 20px;">{% trans "Ver todos los trabajos" %}</a>
             </div>
             {% endfor %}
         </div>
     </div>
 </section>
+
+<!-- Botón flotante "volver arriba" como en index.html -->
+<button class="floating-btn" id="backToTop" aria-label="Volver arriba">↑</button>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Botón flotante "volver arriba"
+    const backToTopBtn = document.getElementById('backToTop');
+    if (backToTopBtn) {
+        window.addEventListener('scroll', () => {
+            backToTopBtn.classList.toggle('visible', window.scrollY > 300);
+        });
+        
+        backToTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    }
+
+    // Efecto hover en las tarjetas para dispositivos táctiles
+    const trabajoCards = document.querySelectorAll('.trabajo-card');
+    trabajoCards.forEach(card => {
+        card.addEventListener('touchstart', function() {
+            this.classList.add('hover-effect');
+        }, {passive: true});
+        
+        card.addEventListener('touchend', function() {
+            setTimeout(() => {
+                this.classList.remove('hover-effect');
+            }, 200);
+        }, {passive: true});
+    });
+
+    // Precarga de imágenes para mejor rendimiento
+    if ('IntersectionObserver' in window) {
+        const lazyImages = document.querySelectorAll('.trabajo-imagen img');
+        
+        const imageObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    img.src = img.dataset.src || img.src;
+                    img.classList.add('loaded');
+                    observer.unobserve(img);
+                }
+            });
+        });
+
+        lazyImages.forEach(img => {
+            if (!img.loading) img.loading = 'lazy';
+            imageObserver.observe(img);
+        });
+    }
+});
+</script>
 {% endblock %}
