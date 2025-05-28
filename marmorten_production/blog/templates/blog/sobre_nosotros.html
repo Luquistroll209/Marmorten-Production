@@ -25,22 +25,20 @@
 
   /* Estructura principal */
   .about-container {
-    margin: 0px auto 0px;
+    margin: 0px 150px 0px;
     padding: 0 30px;
   }
 
   /* Hero section mejorada */
   .hero-about {
     position: relative;
-    margin: 0px;
-    height: 70vh;
+    height: 60vh;
     border-radius: var(--radio-borde-grande);
     overflow: hidden;
-    margin-bottom: 80px;
     box-shadow: var(--sombra-intensa);
     display: flex;
     align-items: flex-end;
-    margin: -30px;
+    margin: 0 -190px 80px;
   }
 
   .hero-about-image {
@@ -656,6 +654,15 @@
 
     .carousel-wrapper {
       margin-top: 40px;
+    }
+  }
+  .reverse-order {
+    flex-direction: row-reverse;
+  }
+
+  @media (max-width: 992px) {
+    .reverse-order {
+      flex-direction: column;
     }
   }
 </style>
