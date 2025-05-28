@@ -218,12 +218,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Tema de dominios
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://sites-pope-climate-rivers.trycloudflare.com',
+    'https://stadium-med-clerk-sequences.trycloudflare.com',
 ]
 
 
 
-ALLOWED_HOSTS = ['sites-pope-climate-rivers.trycloudflare.com', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['stadium-med-clerk-sequences.trycloudflare.com', 'localhost', '127.0.0.1']
 
 
 
