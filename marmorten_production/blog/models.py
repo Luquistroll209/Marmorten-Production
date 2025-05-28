@@ -9,7 +9,7 @@ from ckeditor.fields import RichTextField
 
 class TipoTrabajo(models.Model):
     nombre = models.CharField(max_length=100)
-    #nombre_en = models.CharField(max_length=100)
+    nombre_en = models.CharField(max_length=100, null=True, verbose_name="Descripción (Inglés)")
     slug = models.SlugField(max_length=100, unique=True)
     descripcion = models.TextField(blank=True)
     orden = models.PositiveIntegerField(default=0)
