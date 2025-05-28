@@ -907,7 +907,7 @@ body:after {
             {% endif %}
           {% endif %}
           <div class="learn-more">
-            <a href="{% url 'sobre_nosotros' %}" class="btn btn-primary">Saber más</a>
+            <a href="{% url 'sobre_nosotros' %}" class="btn btn-primary">{% trans "Saber más" %}</a>
           </div>
         </div>
       </div>
@@ -1014,7 +1014,7 @@ body:after {
           </div>
           <div class="produccion-meta">
            <!--<span class="produccion-category">Noticia</span>-->
-            <span class="btn btn-outline">Leer más</span>
+            <span class="btn btn-outline">{% trans "Leer más" %}</span>
           </div>
         </a>
       </article>
@@ -1022,7 +1022,7 @@ body:after {
     </div>
       <div class="learn-container">
           <div class="learn-more">
-            <a href="{% url 'trabajos' %}" class="btn btn-primary">Saber más</a>
+            <a href="{% url 'trabajos' %}" class="btn btn-primary">{% trans "Saber más" %}</a>
           </div>
       </div>
   </section>
