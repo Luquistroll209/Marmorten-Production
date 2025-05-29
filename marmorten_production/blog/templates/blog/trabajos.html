@@ -120,10 +120,14 @@
         border-color: var(--color-destacado);
     }
     
-    .trabajos-grid {
+.trabajos-grid {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(clamp(300px, 30vw, 400px), 1fr));
         gap: clamp(30px, 4vw, 50px);
+        margin-top: clamp(40px, 5vw, 60px);
+        position: relative;
+        z-index: 2;
+        align-items: stretch;
     }
     
     .trabajo-card {
@@ -148,8 +152,8 @@
     
     .trabajo-imagen {
         width: 100%;
-        height: clamp(250px, 30vw, 350px);
-        background: var(--color-primario);
+        height: clamp(250px, 30vw, 300px);
+        background: white;
         border-radius: var(--radio-borde-grande) var(--radio-borde-grande) 0 0;
         overflow: hidden;
         position: relative;
@@ -184,15 +188,15 @@
         flex-grow: 1;
         display: flex;
         flex-direction: column;
+        position: relative;
+        margin-bottom: 50px;
     }
     
     .trabajo-info h3 {
-        font-size: clamp(1.5rem, 2.5vw, 2.2rem);
+        font-size: clamp(1.5rem, 2.5vw, 2rem);
         margin-bottom: clamp(15px, 2vw, 20px);
         color: var(--color-texto-principal);
         letter-spacing: 1.5px;
-        font-family: 'Bebas Neue', sans-serif;
-        line-height: 1.2;
     }
     
     .trabajo-resumen {
@@ -200,20 +204,22 @@
         margin-bottom: clamp(20px, 3vw, 30px);
         font-size: clamp(0.95rem, 1.1vw, 1.1rem);
         line-height: 1.7;
-        font-weight: 300;
+    }
+    
+    .trabajo-meta {
+        display: flex;
+        gap: 50px;
+        right: 20px;
+        position: absolute;
+        bottom: 20px;
     }
     
     .trabajo-tipo {
-        display: inline-block;
-        background: rgba(192, 192, 192, 0.1);
         color: var(--color-destacado);
-        padding: 6px 18px;
-        border-radius: 20px;
-        font-size: clamp(0.8rem, 1vw, 0.95rem);
+        font-weight: 600;
+        font-size: clamp(0.8rem, 1vw, 0.9rem);
         text-transform: uppercase;
-        letter-spacing: 1.5px;
-        margin-bottom: 15px;
-        font-weight: 500;
+        letter-spacing: 2px;
     }
     
     .ver-mas-btn {
@@ -225,23 +231,25 @@
         font-weight: 600;
         text-decoration: none;
         transition: var(--transicion-suave);
-        border: 2px solid var(--color-destacado);
         background: transparent;
+        border: 2px solid var(--color-destacado);
         color: var(--color-destacado);
         cursor: pointer;
-        font-size: clamp(0.9rem, 1.1vw, 1.1rem);
+        font-size: clamp(0.9rem, 1.1vw, 1rem);
         letter-spacing: 1.5px;
         text-transform: uppercase;
         font-family: 'Bebas Neue', sans-serif;
-        margin-top: auto;
-        align-self: flex-start;
+        position: relative;
+        overflow: hidden;
+        will-change: transform;
+        white-space: nowrap;
     }
     
     .ver-mas-btn:hover {
         background: var(--color-destacado);
         color: var(--color-primario);
         transform: translateY(-5px);
-        box-shadow: 0 15px 30px rgba(192, 192, 192, 0.3);
+        box-shadow: 0 10px 25px rgba(192, 192, 192, 0.2);
     }
     
     .no-trabajos {
@@ -382,6 +390,13 @@
         background: var(--color-acento-hover);
         box-shadow: 0 15px 40px rgba(192, 192, 192, 0.4);
       }
+      .produccion-meta{
+        display: flex;
+        gap: 50px;
+        right: 20px;
+        position: absolute;
+        bottom: 20px;
+      }
 </style>
 
 <section class="trabajos-section">
@@ -427,9 +442,13 @@
                                 {{ trabajo.content|striptags|limpiar_y_resumir:30 }}
                             {% endif %}
                         </div>
-                        <span class="ver-mas-btn">{% trans "Ver más" %}</span>
+                        
                     </div>
+                    
                 </a>
+                <div class="produccion-meta">
+                    <span class="ver-mas-btn">{% trans "Leer más" %}</span>
+                </div>
             </article>
             {% empty %}
             <div class="no-trabajos">

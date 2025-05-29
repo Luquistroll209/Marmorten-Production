@@ -1115,35 +1115,62 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   // Función para ir a un slide específico
-  function goToSlide(index) {
-    if (!carousel || isAnimating || index === currentIndex || index < 0 || index >= slides.length) return;
-    
-    isAnimating = true;
-    currentIndex = index;
-    
-    // Animación suave
-    carousel.style.transition = 'transform 0.8s cubic-bezier(0.16, 1, 0.3, 1)';
-    updateSlidePosition();
-    
-    // Reiniciar autoplay
-    resetAutoSlide();
-    
-    // Finalizar animación
-    setTimeout(() => {
-      isAnimating = false;
-    }, 800);
+// Función para ir a un slide específico
+function goToSlide(index) {
+  if (!carousel || isAnimating) return;
+  
+  // Ajustar el índice para el bucle infinito
+  if (index >= slides.length) {
+    index = 0;
+  } else if (index < 0) {
+    index = slides.length - 1;
   }
-
-  // Función para iniciar el autoplay
-  function startAutoSlide() {
-    if (slides.length <= 1) return;
+  
+  isAnimating = true;
+  currentIndex = index;
+  
+  // Animación suave
+  carousel.style.transition = 'transform 0.8s cubic-bezier(0.16, 1, 0.3, 1)';
+  updateSlidePosition();
+  
+  // Reiniciar autoplay
+  resetAutoSlide();
+  
+  // Finalizar animación
+  setTimeout(() => {
+    isAnimating = false;
     
-    autoSlideInterval = setInterval(() => {
-      if (!isAnimating && !isDragging) {
-        goToSlide((currentIndex + 1) % slides.length);
-      }
-    }, 8000); // 8 segundos entre slides
-  }
+    // Si estamos en el primer o último slide (clones), hacer un salto sin animación
+    if (currentIndex === 0 || currentIndex === slides.length - 1) {
+      carousel.style.transition = 'none';
+      updateSlidePosition();
+      setTimeout(() => {
+        carousel.style.transition = 'transform 0.8s cubic-bezier(0.16, 1, 0.3, 1)';
+      }, 50);
+    }
+  }, 800);
+}
+// Función para iniciar el autoplay
+function startAutoSlide() {
+  if (slides.length <= 1) return;
+  
+  autoSlideInterval = setInterval(() => {
+    if (!isAnimating && !isDragging) {
+      goToSlide(currentIndex + 1);
+    }
+  }, 8000); // 8 segundos entre slides
+}
+// Función para actualizar el slide activo
+function updateActiveSlide() {
+  slides.forEach((slide, index) => {
+    if (index === currentIndex) {
+      slide.classList.add('active');
+    } else {
+      slide.classList.remove('active');
+    }
+  });
+  updateIndicators();
+}
 
   // Función para reiniciar el autoplay
   function resetAutoSlide() {
