@@ -80,7 +80,12 @@
     font-weight: 400;
     max-width: 90%;
     word-break: break-word;
-    hyphens: auto;
+    hyphens: none;
+    text-align: center; /* Centra todo el texto dentro del contenedor */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
   }
 
   .hero-about-description {
@@ -116,6 +121,7 @@
     letter-spacing: 1.5px;
     text-transform: uppercase;
     line-height: 1.3;
+
   }
 
   .section-title:after {
@@ -147,8 +153,8 @@
     color: var(--color-texto-secundario);
     max-width: 1000px;
     margin: 0 auto;
-    word-break: break-word;
-    hyphens: auto;
+    word-break: none;
+    hyphens: none;
     padding: 0 15px;
   }
 
