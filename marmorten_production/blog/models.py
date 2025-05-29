@@ -5,13 +5,15 @@ from django.db.models import Q
 from django.shortcuts import render, get_object_or_404
 from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
+from django.utils.translation import get_language  # Add this line
 from ckeditor.fields import RichTextField
 
 class TipoTrabajo(models.Model):
-    nombre = models.CharField(max_length=100)
-    nombre_en = models.CharField(max_length=100, null=True, verbose_name="Descripción (Inglés)")
+    nombre = models.CharField(max_length=100, verbose_name="Nombre (Español)")
+    nombre_en = models.CharField(max_length=100, verbose_name="Nombre (Inglés)", blank=True, null=True)
     slug = models.SlugField(max_length=100, unique=True)
     descripcion = models.TextField(blank=True)
+    descripcion_en = models.TextField(blank=True, null=True, verbose_name="Descripción (Inglés)")
     orden = models.PositiveIntegerField(default=0)
     
     class Meta:
@@ -25,6 +27,12 @@ class TipoTrabajo(models.Model):
         if not self.slug:
             self.slug = slugify(self.nombre)
         super().save(*args, **kwargs)
+
+    def get_nombre_translated(self):
+        lang = get_language()
+        if lang == 'en' and self.nombre_en:
+            return self.nombre_en
+        return self.nombre
 
 
 class Post(models.Model):

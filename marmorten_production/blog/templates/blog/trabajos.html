@@ -398,7 +398,7 @@
             </a>
             {% for tipo in tipos_trabajo %}
                 <a href="{% url 'trabajos_por_tipo' tipo.slug %}" class="filtro-btn {% if tipo.slug == tipo_activo %}active{% endif %}">
-                    {{ tipo.nombre }}
+                    {{ tipo.get_nombre_translated }}
                 </a>
             {% endfor %}
         </div>

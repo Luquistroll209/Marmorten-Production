@@ -134,10 +134,19 @@ class ConfiguracionSitioAdmin(admin.ModelAdmin):
 # ===== TIPOS DE TRABAJO =====
 @admin.register(TipoTrabajo)
 class TipoTrabajoAdmin(admin.ModelAdmin):
-    list_display = ('nombre', 'slug', 'orden', 'color_tag')
+    list_display = ('nombre', 'nombre_en', 'slug', 'orden', 'color_tag')
     prepopulated_fields = {'slug': ('nombre',)}
     ordering = ('orden',)
     list_editable = ('orden',)
+    
+    fieldsets = (
+        ('Español', {
+            'fields': ('nombre', 'nombre_en',)
+        }),
+        ('Configuración', {
+            'fields': ('slug', 'orden')
+        })
+    )
     
     def color_tag(self, obj):
         colors = ['#FF9AA2', '#FFB7B2', '#FFDAC1', '#E2F0CB', '#B5EAD7', '#C7CEEA']
