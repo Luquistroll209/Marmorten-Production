@@ -26,8 +26,7 @@
   /* Estructura principal mejorada */
   .about-container {
     margin: 0 auto;
-    padding: 0 30px;
-    max-width: 1400px;
+    padding: 0 ;
     width: 100%;
     box-sizing: border-box;
   }
@@ -38,7 +37,7 @@
     height: 60vh;
     min-height: 400px;
     max-height: 800px;
-    border-radius: var(--radio-borde-grande);
+    border-radius: 0 0 var(--radio-borde-grande) var(--radio-borde-grande);
     overflow: hidden;
     box-shadow: var(--sombra-intensa);
     display: flex;
@@ -378,7 +377,7 @@
     background: var(--color-tarjeta-oscura);
     border-radius: var(--radio-borde-grande);
     padding: 60px;
-    margin: 80px 0;
+    margin: 80px 80px;
     box-shadow: var(--sombra-intensa);
     border: 1px solid var(--color-borde-suave);
     position: relative;
@@ -417,7 +416,6 @@
     border: 1px solid var(--color-borde-suave);
     position: relative;
     overflow: hidden;
-    min-height: 180px;
   }
 
   .social-card:before {

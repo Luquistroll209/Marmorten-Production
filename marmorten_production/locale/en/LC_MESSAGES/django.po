@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-28 16:36+0200\n"
-"PO-Revision-Date: 2025-05-28 14:39+0000\n"
+"POT-Creation-Date: 2025-05-29 14:24+0200\n"
+"PO-Revision-Date: 2025-05-29 14:29+0000\n"
 "Last-Translator:   <luquistroll@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -17,94 +17,112 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Translated-Using: django-rosetta 0.10.2\n"
+"X-Translated-Using: django-rosetta 0.9.8\n"
 
-#: blog/models.py:32
+#: .\blog\models.py:32
 msgid "Título"
 msgstr "Title"
 
-#: blog/models.py:33
+#: .\blog\models.py:33
 msgid "Contenido"
 msgstr "Content"
 
-#: blog/templates/blog/base.html:690 blog/templates/blog/base.html:763
+#: .\blog\templates\blog\base.html:821
+msgid ""
+"Este sitio web utiliza una cookie técnica para recordar el idioma que has "
+"elegido y mejorar tu experiencia. Al continuar navegando, aceptas su uso."
+msgstr ""
+"This website uses a technical cookie to remember your selected language and "
+"enhance your experience. By continuing to browse, you consent to its use."
+
+#: .\blog\templates\blog\base.html:823
+msgid "Aceptar"
+msgstr "Accept"
+
+#: .\blog\templates\blog\base.html:824
+msgid "Rechazar"
+msgstr "Decline"
+
+#: .\blog\templates\blog\base.html:831
+msgid "Cookies"
+msgstr ""
+
+#: .\blog\templates\blog\base.html:839 .\blog\templates\blog\base.html:912
 msgid "Inicio"
 msgstr "Home"
 
-#: blog/templates/blog/base.html:691
+#: .\blog\templates\blog\base.html:840
 msgid "Trabajos"
 msgstr "Jobs "
 
-#: blog/templates/blog/base.html:692 blog/templates/blog/base.html:764
+#: .\blog\templates\blog\base.html:841 .\blog\templates\blog\base.html:913
 msgid "Sobre Nosotros"
 msgstr "About Us"
 
-#: blog/templates/blog/base.html:693 blog/templates/blog/base.html:736
-#: blog/templates/blog/base.html:766 blog/templates/blog/contacto.html:319
+#: .\blog\templates\blog\base.html:842 .\blog\templates\blog\base.html:885
+#: .\blog\templates\blog\base.html:915 .\blog\templates\blog\contacto.html:319
 msgid "Contacto"
 msgstr "Contact"
 
-#: blog/templates/blog/base.html:694 blog/templates/blog/base.html:765
-#: blog/templates/blog/nuestro_equipo.html:506
+#: .\blog\templates\blog\base.html:843 .\blog\templates\blog\base.html:914
+#: .\blog\templates\blog\nuestro_equipo.html:507
 msgid "Nuestro Equipo"
 msgstr "Our Team"
 
-#: blog/templates/blog/base.html:718
+#: .\blog\templates\blog\base.html:867
 msgid "Buscar producciones..."
 msgstr "Searching Productions..."
 
-#: blog/templates/blog/base.html:762
+#: .\blog\templates\blog\base.html:911
 msgid "Enlaces Rápidos"
 msgstr "Quick Links"
 
-#: blog/templates/blog/base.html:793
+#: .\blog\templates\blog\base.html:942
 msgid "Marmorten Production. Todos los derechos reservados."
 msgstr "Marmorten Production. All rights reserved."
 
-#: blog/templates/blog/contacto.html:320
+#: .\blog\templates\blog\contacto.html:320
 msgid ""
 "Estamos aquí para responder tus preguntas y escuchar tus ideas ¡Contáctanos!"
 msgstr "We’re here to answer your questions and hear your ideas. Contact us!"
 
-#: blog/templates/blog/contacto.html:374
+#: .\blog\templates\blog\contacto.html:374
 msgid "Información de Contacto"
 msgstr "Contact Information"
 
-#: blog/templates/blog/contacto.html:382
+#: .\blog\templates\blog\contacto.html:382
 msgid "Correo Electrónico"
 msgstr "Email"
 
-#: blog/templates/blog/contacto.html:394
+#: .\blog\templates\blog\contacto.html:394
 msgid "Teléfonos"
 msgstr "Phones"
 
-#: blog/templates/blog/contacto.html:413
+#: .\blog\templates\blog\contacto.html:413
 msgid "Dirección"
 msgstr "Address"
 
-#: blog/templates/blog/index.html:899
+#: .\blog\templates\blog\index.html:912
 msgid "ACERCA DE MARMOTEN PRODUCTION"
 msgstr "ABOUT MARMORTEN PRODUCTION"
 
-#: blog/templates/blog/index.html:900
+#: .\blog\templates\blog\index.html:913
 msgid "En Marmorten production hacemos realidad tus sueños"
 msgstr "At Marmorten Production, we make your dreams come true"
 
-#: blog/templates/blog/index.html:910 blog/templates/blog/index.html:1025
-#, fuzzy
-#| msgid "Ver más"
+#: .\blog\templates\blog\index.html:923 .\blog\templates\blog\index.html:1038
 msgid "Saber más"
 msgstr "See more"
 
-#: blog/templates/blog/index.html:932
+#: .\blog\templates\blog\index.html:945
 msgid "Ver Proyecto"
 msgstr "View Proyect"
 
-#: blog/templates/blog/index.html:961
+#: .\blog\templates\blog\index.html:974
 msgid "Cortometrajes"
 msgstr "Short films"
 
-#: blog/templates/blog/index.html:962
+#: .\blog\templates\blog\index.html:975
 msgid ""
 "Nuestros trabajos más emblemáticos que representan nuestra calidad y estilo "
 "único en producción audiovisual"
@@ -112,73 +130,69 @@ msgstr ""
 "Our most emblematic works that represent our quality and unique style in "
 "audiovisual production"
 
-#: blog/templates/blog/index.html:985
+#: .\blog\templates\blog\index.html:998
 msgid "Cortometraje"
 msgstr "Short film"
 
-#: blog/templates/blog/index.html:986
+#: .\blog\templates\blog\index.html:999
 msgid "Detalles"
 msgstr "Details"
 
-#: blog/templates/blog/index.html:997
+#: .\blog\templates\blog\index.html:1010
 msgid "Últimas Noticias"
 msgstr "Latest News"
 
-#: blog/templates/blog/index.html:998
+#: .\blog\templates\blog\index.html:1011
 msgid ""
 "Mantente al día con nuestros proyectos, anuncios y eventos más recientes"
 msgstr "Stay up to date with our latest projects, announcements and events"
 
-#: blog/templates/blog/index.html:1017
-#, fuzzy
-#| msgid "Ver más"
+#: .\blog\templates\blog\index.html:1030
 msgid "Leer más"
 msgstr "See more"
 
-#: blog/templates/blog/nuestro_equipo.html:507
-msgid "El talento creativo detrás de Marmorten Production"
-msgstr "The creative talent of Marmorten Production"
+#: .\blog\templates\blog\nuestro_equipo.html:508
+msgid "El talento creativo detrás de Marmorten production"
+msgstr "The creative talent of Marmorten production"
 
-#: blog/templates/blog/resultados_busqueda.html:304
+#: .\blog\templates\blog\resultados_busqueda.html:304
 msgid "Resultados de Búsqueda"
 msgstr "Search results"
 
-#: blog/templates/blog/resultados_busqueda.html:305
+#: .\blog\templates\blog\resultados_busqueda.html:305
 msgid "Explora los resultados que coinciden con tu consulta"
 msgstr "Explore the results that match your query"
 
-#: blog/templates/blog/resultados_busqueda.html:311
+#: .\blog\templates\blog\resultados_busqueda.html:311
 msgid "resulto"
 msgstr "result"
 
-#: blog/templates/blog/resultados_busqueda.html:311
+#: .\blog\templates\blog\resultados_busqueda.html:311
 msgid "encontrado"
 msgstr "found"
 
-#: blog/templates/blog/resultados_busqueda.html:311
+#: .\blog\templates\blog\resultados_busqueda.html:311
 msgid "para"
 msgstr "for"
 
-#: blog/templates/blog/resultados_busqueda.html:313
+#: .\blog\templates\blog\resultados_busqueda.html:313
 msgid "No se encontraron resultados para"
 msgstr "No results were found for"
 
-#: blog/templates/blog/resultados_busqueda.html:333
-#, fuzzy
-#| msgid "Dirección"
+#: .\blog\templates\blog\resultados_busqueda.html:333
 msgid "Producción"
 msgstr "Address"
 
-#: blog/templates/blog/resultados_busqueda.html:335
-#: blog/templates/blog/trabajos.html:386
+#: .\blog\templates\blog\resultados_busqueda.html:335
+#: .\blog\templates\blog\trabajos.html:430
 msgid "Ver más"
 msgstr "See more"
 
-#: blog/templates/blog/resultados_busqueda.html:343
+#: .\blog\templates\blog\resultados_busqueda.html:343
 msgid "No encontramos resultados"
 msgstr "Don't found results"
 
-#: blog/templates/blog/resultados_busqueda.html:344
+#: .\blog\templates\blog\resultados_busqueda.html:344
 msgid ""
 "No hay producciones que coincidan con tu búsqueda. Intenta con diferentes "
 "términos o revisa nuestro catálogo completo."
@@ -186,19 +200,20 @@ msgstr ""
 "There are no productions that match your search. Try different ones. terms "
 "or check out our full catalog."
 
-#: blog/templates/blog/resultados_busqueda.html:346
+#: .\blog\templates\blog\resultados_busqueda.html:346
 msgid "Ir a la página de inicio"
 msgstr "Go home"
 
-#: blog/templates/blog/resultados_busqueda.html:352
+#: .\blog\templates\blog\resultados_busqueda.html:352
 msgid "Por favor ingresa un término de búsqueda para encontrar producciones."
 msgstr "Please enter a search term to find productions."
 
-#: blog/templates/blog/trabajos.html:5 blog/templates/blog/trabajos.html:346
+#: .\blog\templates\blog\trabajos.html:5
+#: .\blog\templates\blog\trabajos.html:390
 msgid "Nuestros Trabajos"
 msgstr "Our jobs"
 
-#: blog/templates/blog/trabajos.html:347
+#: .\blog\templates\blog\trabajos.html:391
 msgid ""
 "Explora nuestra colección de producciones audiovisuales que representan "
 "nuestra pasión y dedicación por el cine y la narrativa visual."
@@ -206,23 +221,23 @@ msgstr ""
 "Explore our collection of audiovisual productions that showcase our passion "
 "and dedication to cinema and"
 
-#: blog/templates/blog/trabajos.html:353
+#: .\blog\templates\blog\trabajos.html:397
 msgid "Todos"
 msgstr "All"
 
-#: blog/templates/blog/trabajos.html:392
+#: .\blog\templates\blog\trabajos.html:436
 msgid "No hay trabajos disponibles en esta categoría."
 msgstr "There are no works available in this category."
 
-#: blog/templates/blog/trabajos.html:393
+#: .\blog\templates\blog\trabajos.html:437
 msgid "Ver todos los trabajos"
 msgstr "View all jobs"
 
-#: marmorten_production/settings.py:179
+#: .\marmorten_production\settings.py:179
 msgid "English"
 msgstr ""
 
-#: marmorten_production/settings.py:180
+#: .\marmorten_production\settings.py:180
 msgid "Spanish"
 msgstr ""
 

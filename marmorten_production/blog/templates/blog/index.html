@@ -4,6 +4,17 @@
 {% load i18n %}
 {% load filtros %}
 {% block content %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    if (localStorage.getItem('cookieDecision') === 'rejected') {
+        // Eliminar la cookie de idioma
+        document.cookie = "Marmorten_language=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        
+        // Mostrar el botón mini de cookies
+        document.getElementById('cookieConsentMini').style.display = 'block';
+    }
+});
+</script>
 <style>
 :root {
   /* Paleta de colores profesional mejorada */
@@ -891,13 +902,15 @@ body:after {
 }
 </style>
 
+
+
 <!-- Carrusel hero premium -->
 <div class="description-container">
   <div class="description-content">
     <div class="description-wrapper">
       <div class="description-text-container">
         <h2 class="section-title">{% trans "ACERCA DE MARMOTEN PRODUCTION" %}</h2>
-        <h3 class="section-subtitle">{% trans "En Marmorten production hacemos realidad tus sueños" %}</h3>
+        <h3 class="section-subtitle">{% trans "En Marmorten production hacemos realidad tus sueños" %}.</h3>
         <div class="description-text">
           {% if config %}
             {% if request.LANGUAGE_CODE == 'en' and config.descripcion_en %}
