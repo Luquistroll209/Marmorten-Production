@@ -118,12 +118,12 @@
 <div class="main-container">
   <div class="error-container">
     <div class="error-code">404</div>
-    <h1 class="error-title">Página no encontrada</h1>
-    <p class="error-message">Lo sentimos, la página que estás buscando no existe o ha sido movida.</p>
+    <h1 class="error-title">{% trans "Página no encontrada" %}</h1>
+    <p class="error-message">{% trans "Lo sentimos, la página que estás buscando no existe o ha sido movida."%}</p>
     
     <div class="error-actions">
       <a href="{% url 'inicio' %}" class="btn_btn-primary">Volver al inicio</a>
-      <a href="{% url 'contacto' %}" class="btn_btn-primary">Contactar soporte</a>
+      <!--<a href="{% url 'contacto' %}" class="btn_btn-primary">Contactar soporte</a>-->
     </div>
   </div>
 </div>

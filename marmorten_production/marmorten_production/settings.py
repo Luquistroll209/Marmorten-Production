@@ -136,7 +136,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'marmorten_production.wsgi.application'
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles') 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
@@ -218,12 +218,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Tema de dominios
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://z-occurs-libs-ins.trycloudflare.com',
+    'https://cholesterol-mats-encourages-jesus.trycloudflare.com',
 ]
 
 
 
-ALLOWED_HOSTS = ['z-occurs-libs-ins.trycloudflare.com', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['cholesterol-mats-encourages-jesus.trycloudflare.com', 'localhost', '127.0.0.1']
 
 
 
