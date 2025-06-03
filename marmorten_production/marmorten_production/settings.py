@@ -136,6 +136,12 @@ TEMPLATES = [
 WSGI_APPLICATION = 'marmorten_production.wsgi.application'
 
 STATIC_URL = '/static/'
+#STATIC_URL = '/config/'
+#STATIC_URL = '/equipo/'
+#STATIC_URL = '/galeria/'
+#STATIC_URL = '/imagenes/'
+#STATIC_URL = '/sobre_nosotros/'
+#STATIC_URL = '/media/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles') 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
