@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-29 14:17+0200\n"
+"POT-Creation-Date: 2025-06-03 17:45+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,18 +19,26 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? "
 "1 : 2;\n"
 
-#: .\blog\models.py:32
+#: .\blog\models.py:40
 msgid "Título"
 msgstr ""
 
-#: .\blog\models.py:33
+#: .\blog\models.py:41
 msgid "Contenido"
+msgstr ""
+
+#: .\blog\templates\blog\404.html:121
+msgid "Página no encontrada"
+msgstr ""
+
+#: .\blog\templates\blog\404.html:122
+msgid "Lo sentimos, la página que estás buscando no existe o ha sido movida."
 msgstr ""
 
 #: .\blog\templates\blog\base.html:821
 msgid ""
-"Este sitio web utiliza cookies para mejorar tu experiencia. Al continuar "
-"navegando, aceptas nuestro uso de cookies."
+"Este sitio web utiliza una cookie técnica para recordar el idioma que has "
+"elegido y mejorar tu experiencia. Al continuar navegando, aceptas su uso."
 msgstr ""
 
 #: .\blog\templates\blog\base.html:823
@@ -41,41 +49,41 @@ msgstr ""
 msgid "Rechazar"
 msgstr ""
 
-#: .\blog\templates\blog\base.html:831
+#: .\blog\templates\blog\base.html:832
 msgid "Cookies"
 msgstr ""
 
-#: .\blog\templates\blog\base.html:839 .\blog\templates\blog\base.html:912
+#: .\blog\templates\blog\base.html:840 .\blog\templates\blog\base.html:913
 msgid "Inicio"
 msgstr ""
 
-#: .\blog\templates\blog\base.html:840
+#: .\blog\templates\blog\base.html:841
 msgid "Trabajos"
 msgstr ""
 
-#: .\blog\templates\blog\base.html:841 .\blog\templates\blog\base.html:913
+#: .\blog\templates\blog\base.html:842 .\blog\templates\blog\base.html:914
 msgid "Sobre Nosotros"
 msgstr ""
 
-#: .\blog\templates\blog\base.html:842 .\blog\templates\blog\base.html:885
-#: .\blog\templates\blog\base.html:915 .\blog\templates\blog\contacto.html:319
+#: .\blog\templates\blog\base.html:843 .\blog\templates\blog\base.html:886
+#: .\blog\templates\blog\base.html:916 .\blog\templates\blog\contacto.html:319
 msgid "Contacto"
 msgstr ""
 
-#: .\blog\templates\blog\base.html:843 .\blog\templates\blog\base.html:914
+#: .\blog\templates\blog\base.html:844 .\blog\templates\blog\base.html:915
 #: .\blog\templates\blog\nuestro_equipo.html:507
 msgid "Nuestro Equipo"
 msgstr ""
 
-#: .\blog\templates\blog\base.html:867
+#: .\blog\templates\blog\base.html:868
 msgid "Buscar producciones..."
 msgstr ""
 
-#: .\blog\templates\blog\base.html:911
+#: .\blog\templates\blog\base.html:912
 msgid "Enlaces Rápidos"
 msgstr ""
 
-#: .\blog\templates\blog\base.html:942
+#: .\blog\templates\blog\base.html:943
 msgid "Marmorten Production. Todos los derechos reservados."
 msgstr ""
 
@@ -105,7 +113,7 @@ msgid "ACERCA DE MARMOTEN PRODUCTION"
 msgstr ""
 
 #: .\blog\templates\blog\index.html:913
-msgid "En Marmorten production hacemos realidad tus sueños"
+msgid "En Marmorten production hacemos realidad sus sueños"
 msgstr ""
 
 #: .\blog\templates\blog\index.html:923 .\blog\templates\blog\index.html:1038
@@ -144,6 +152,7 @@ msgid ""
 msgstr ""
 
 #: .\blog\templates\blog\index.html:1030
+#: .\blog\templates\blog\trabajos.html:450
 msgid "Leer más"
 msgstr ""
 
@@ -180,7 +189,6 @@ msgid "Producción"
 msgstr ""
 
 #: .\blog\templates\blog\resultados_busqueda.html:335
-#: .\blog\templates\blog\trabajos.html:430
 msgid "Ver más"
 msgstr ""
 
@@ -198,37 +206,41 @@ msgstr ""
 msgid "Ir a la página de inicio"
 msgstr ""
 
+#: .\blog\templates\blog\resultados_busqueda.html:351
+msgid "Búsqueda vacía"
+msgstr ""
+
 #: .\blog\templates\blog\resultados_busqueda.html:352
 msgid "Por favor ingresa un término de búsqueda para encontrar producciones."
 msgstr ""
 
 #: .\blog\templates\blog\trabajos.html:5
-#: .\blog\templates\blog\trabajos.html:390
+#: .\blog\templates\blog\trabajos.html:405
 msgid "Nuestros Trabajos"
 msgstr ""
 
-#: .\blog\templates\blog\trabajos.html:391
+#: .\blog\templates\blog\trabajos.html:406
 msgid ""
 "Explora nuestra colección de producciones audiovisuales que representan "
 "nuestra pasión y dedicación por el cine y la narrativa visual."
 msgstr ""
 
-#: .\blog\templates\blog\trabajos.html:397
+#: .\blog\templates\blog\trabajos.html:412
 msgid "Todos"
 msgstr ""
 
-#: .\blog\templates\blog\trabajos.html:436
+#: .\blog\templates\blog\trabajos.html:455
 msgid "No hay trabajos disponibles en esta categoría."
 msgstr ""
 
-#: .\blog\templates\blog\trabajos.html:437
+#: .\blog\templates\blog\trabajos.html:456
 msgid "Ver todos los trabajos"
 msgstr ""
 
-#: .\marmorten_production\settings.py:179
+#: .\marmorten_production\settings.py:185
 msgid "English"
 msgstr ""
 
-#: .\marmorten_production\settings.py:180
+#: .\marmorten_production\settings.py:186
 msgid "Spanish"
 msgstr ""
