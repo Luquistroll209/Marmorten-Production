@@ -35,3 +35,7 @@ pip install Django==5.2 \
     django-admin-tools \
     django-rosetta \
     python-gettext
+
+sudo systemctl daemon-reload
+sudo systemctl restart gunicorn.service
+
