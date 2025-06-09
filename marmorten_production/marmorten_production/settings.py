@@ -27,7 +27,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-bh4c+q0w8r7gp%&f!l4+-l6ggf6led$sm3%jwz56i@ned@q!-6'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 handler404 = 'blog.views.custom_404'
 
 
