@@ -11,8 +11,13 @@ from blog import views  # Importa las vistas desde tu app blog
 from django.contrib.auth.views import LoginView, LogoutView
 from blog.views import trabajos, trabajos_por_tipo
 handler404 = 'blog.views.custom_404'
+from django.shortcuts import redirect
+
+def redirect_root_to_default_lang(request):
+    return redirect('/es/')
 
 urlpatterns = [
+    path('', redirect_root_to_default_lang),
     path('adminmarmorten/', admin.site.urls),
     path('i18n/', include('django.conf.urls.i18n')),  
     path('accounts/login/', LoginView.as_view(template_name='admin/login.html')), 
