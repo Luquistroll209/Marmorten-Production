@@ -147,8 +147,6 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = '/root/Marmorten-Production'
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
